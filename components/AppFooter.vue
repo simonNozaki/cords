@@ -1,9 +1,6 @@
 <template>
-  <v-footer padless>
-    <v-col
-      class="text-center"
-      cols="12"
-    >
+  <v-footer app padless>
+    <v-col class="text-center">
       {{ new Date().getFullYear() }} - <strong> Cords </strong>      
     </v-col>
   </v-footer>

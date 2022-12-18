@@ -1,24 +1,19 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col
-        cols="12"
-        sm="3"
-      >
-        <MainCardsList />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="9"
-      >
-        <MainTextForm />
-      </v-col>
-    </v-row>
-  </v-container>
+  <div>
+    <v-navigation-drawer app>
+      <main-cards-list />
+    </v-navigation-drawer>
+    <v-main>
+      <main-text-form />
+    </v-main>
+  </div>
 </template>
 
 <script>
+import MainCardsList from '~/components/MainCardsList.vue'
+import MainTextForm from '~/components/MainTextForm.vue'
 export default {
   name: 'IndexPage',
+  components: { MainCardsList, MainTextForm },
 }
 </script>
