@@ -1,14 +1,6 @@
 export const state = () => (
   {
-    list: [
-      {
-        id: 1,
-        title: 'タイトル1',
-        body: 'まだなにも！',
-        label: 'Ruby',
-        updatedAt: new Date(),
-      }
-    ]
+    list: []
   }
 );
 
