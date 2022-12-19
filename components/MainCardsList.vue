@@ -15,14 +15,14 @@
           <v-list-item-title
             class="text-subtitle-1"
           >
-            <nuxt-link to="{ id: { note.id } }"> {{ note.title }} </nuxt-link>
+            <nuxt-link :to="`/notes/${note.id}`"> {{ note.title }} </nuxt-link>
           </v-list-item-title>
           <v-list-item-subtitle>
             <v-chip
               class="ma-1 text-caption"
               label
             >
-              {{ note.label }}
+              {{ note.label ? note.label : 'なし' }}
             </v-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle>
@@ -42,10 +42,10 @@
 
 <script>
 export default {
-  computed: {
-    notes() {
-      return this.$store.state.notes.list;
+  data() {
+    return {
+      notes: this.$store.state.notes.list,
     }
-  }
+  },
 }
 </script>

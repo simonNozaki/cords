@@ -6,23 +6,24 @@
     >
     </v-text-field>
     <div id="main-editor"></div>
-    <v-btn
-      elevation="2"
-      color="primary"
-      class="white--text justify-center textarea-editor-font"
-      @click="addNote"
-    >
-      保存する
-    </v-btn>
+    <v-row>
+      <v-btn
+        elevation="2"
+        color="primary"
+        class="white--text justify-center textarea-editor-font mx-auto"
+        @click="addNote"
+      >
+        保存する
+      </v-btn>
+    </v-row>
     <v-snackbar
-      v-model="snackBarOnSuccess"
-      class="text-center"
+      v-model="saveResultSnackBar"
     >
-      {{ snackBarText }}
+        {{ snackBarText }}
       <v-btn
         color="primary"
         text
-        @click="snackBarOnSuccess = false"
+        @click="saveResultSnackBar = false"
       >
         DONE
       </v-btn>
@@ -35,12 +36,17 @@ export default {
   data() {
     return {
       editor: null,
-      snackBarOnSuccess: false,
+      saveResultSnackBar: false,
       snackBarText: '',
       title: '',
       body: '',
     }
   },
+    computed: {    
+      notes() {
+        return this.$store.state.notes.list
+      },
+    },
   mounted() {
     this.editor = this.$editor.EditorJS({
       holder: 'main-editor',  // エディタをマウントするブロックのID
@@ -51,24 +57,28 @@ export default {
   methods: {
     addNote() {
       let noteBody = null;
+      const maxId = this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id);
       this.editor.save()
         .then((text) => {
           // EditorJS#saveで流れてくる中身: https://editorjs.io/saving-data
-          noteBody = text.blocks[0].data.text;
+          noteBody = text.blocks[0] ? text.blocks[0].data.text : '';
           const titleOrUntitled = this.title ? this.title : '無題';
 
           const note = {
-            id: Math.random(),
+            id: maxId + 1,
             title: titleOrUntitled,
             body: noteBody,
             updatedAt: new Date(),
           };
-
+    
           this.$store.commit('notes/add', note);
-          this.snackBarOnSuccess = true;
+          this.saveResultSnackBar = true;
           this.snackBarText = 'メモが保存されました';
         })
-        .catch((e) => {});
+        .catch((e) => {
+          this.saveResultSnackBar = true;
+          this.snackBarText = 'メモの保存に失敗しました ...' + e;
+        });
     }
   }
 }
