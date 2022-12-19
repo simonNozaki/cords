@@ -11,6 +11,7 @@
       <v-list-item-content>
         <v-card
           class="pa-1"
+          outlined
         >
           <v-list-item-title
             class="text-subtitle-1"

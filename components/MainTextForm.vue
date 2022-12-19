@@ -57,7 +57,9 @@ export default {
   methods: {
     addNote() {
       let noteBody = null;
-      const maxId = this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id);
+      const maxId = this.notes.length === 0
+        ? 0
+        : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id)
       this.editor.save()
         .then((text) => {
           // EditorJS#saveで流れてくる中身: https://editorjs.io/saving-data
