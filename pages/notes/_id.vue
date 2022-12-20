@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <!-- TODO トップページと編集ページでドロアーも共通化  -->
-    <v-navigation-drawer
-      app
-    >
-      <main-cards-list></main-cards-list>
-    </v-navigation-drawer>
-    <v-main>
-      <div
-        class="ma-2"
-      >
-        <v-card
+  <v-main>
+    <v-container>
+      <v-row>
+        <v-col cols="3">
+          <v-card>
+            <MainCardsList />
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card
           flat
         >
           <v-card-title>
@@ -21,9 +19,10 @@
             {{ note.body }}
           </v-card-text>
         </v-card>
-      </div>
-    </v-main>
-  </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
 
 <script>
