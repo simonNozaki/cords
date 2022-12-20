@@ -14,7 +14,7 @@
           outlined
         >
           <v-list-item-title
-            class="text-subtitle-1"
+            class="text-subtitle-1 ma-1"
           >
             <nuxt-link :to="`/notes/${note.id}`"> {{ note.title }} </nuxt-link>
           </v-list-item-title>
