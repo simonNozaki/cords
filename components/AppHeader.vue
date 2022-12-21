@@ -7,7 +7,7 @@
     <template #extension>
       <v-tabs align-with-title>
         <v-tab to="/">
-          <v-icon left> mdi-plus </v-icon> カードを追加する
+          カード <v-icon right> mdi-plus </v-icon>
         </v-tab>
       </v-tabs>
     </template>

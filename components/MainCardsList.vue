@@ -2,6 +2,8 @@
   <v-list
     dense
     nav
+    min-height="536"
+    rounded
   >
     <v-list-item
       v-for="note in notes"

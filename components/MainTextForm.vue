@@ -2,13 +2,19 @@
   <v-form class="ma-3">
     <v-text-field
       v-model="title"
+      outlined
       label="タイトルを挿入..."
     >
     </v-text-field>
-    <!-- <div id="main-editor"></div> -->
     <v-textarea
       v-model="body"
       auto-grow
+      autofocus
+      flat
+      full-width
+      outlined
+      solo
+      rows="10"
     ></v-textarea>
     <v-row>
       <v-btn
@@ -18,6 +24,7 @@
         @click="addNote"
       >
         保存する
+        <v-icon right> mdi-pencil </v-icon>
       </v-btn>
     </v-row>
     <v-snackbar
@@ -53,11 +60,11 @@ export default {
       },
     },
   mounted() {
-    this.editor = this.$editor.EditorJS({
-      holder: 'main-editor',  // エディタをマウントするブロックのID
-      placeholder: 'No content',
-      data: {},
-    });
+    // this.editor = this.$editor.EditorJS({
+    //   holder: 'main-editor',  // エディタをマウントするブロックのID
+    //   placeholder: 'No content',
+    //   data: {},
+    // });
   },
   methods: {
     addNote() {
