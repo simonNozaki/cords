@@ -10,6 +10,9 @@
         <v-col>
           <main-text-form />
         </v-col>
+        <v-col cols="1">
+          <MainTagDialog />
+        </v-col>
       </v-row>
     </v-container>
   </v-main>
