@@ -6,6 +6,14 @@
       label="タイトルを挿入..."
     >
     </v-text-field>
+    <v-select
+      v-model="tag"
+      :items="tags"
+      outlined
+      label="タグを追加..."
+      dense
+    >
+    </v-select>
     <v-textarea
       v-model="body"
       auto-grow
@@ -52,11 +60,15 @@ export default {
       snackBarText: '',
       title: '',
       body: '',
+      tag: '',
     }
   },
     computed: {    
       notes() {
         return this.$store.state.notes.list
+      },
+      tags() {
+        return this.$store.state.tags.list;
       },
     },
   mounted() {
@@ -80,6 +92,7 @@ export default {
           const note = {
             id: maxId + 1,
             title: titleOrUntitled,
+            tag: this.tag,
             body: this.body,
             updatedAt: new Date(),
           };
