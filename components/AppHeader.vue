@@ -1,5 +1,8 @@
 <template>
-  <v-app-bar app>    
+  <v-app-bar
+    app
+    class="teal lighten-4"
+  >
     <v-app-bar-title> Cords </v-app-bar-title>
 
     <v-spacer></v-spacer>

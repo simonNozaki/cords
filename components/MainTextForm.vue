@@ -23,12 +23,13 @@
       outlined
       solo
       rows="10"
+      class="textarea-editor-font"
     ></v-textarea>
     <v-row>
       <v-btn
         elevation="2"
         color="primary"
-        class="white--text justify-center textarea-editor-font mx-auto"
+        class="white--text justify-center mx-auto"
         @click="addNote"
       >
         保存する
