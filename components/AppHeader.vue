@@ -2,6 +2,7 @@
   <v-app-bar
     app
     class="teal lighten-4"
+    flat
   >
     <v-app-bar-title> Cords </v-app-bar-title>
 

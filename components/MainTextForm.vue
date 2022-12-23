@@ -16,13 +16,13 @@
     </v-select>
     <v-textarea
       v-model="body"
-      auto-grow
       autofocus
       flat
+      no-resize
       full-width
       outlined
       solo
-      rows="10"
+      rows="12"
       class="textarea-editor-font"
     ></v-textarea>
     <v-row>
@@ -90,6 +90,7 @@ export default {
       this.$store.commit('notes/add', note);
       this.saveResultSnackBar = true;
       this.snackBarText = 'メモが保存されました';
+      this.body = '';
     }
   }
 }

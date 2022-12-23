@@ -2,7 +2,8 @@
   <v-list
     dense
     nav
-    min-height="536"
+    height="536"
+    class="force-size"
   >
     <v-list-item
       v-for="note in notes"
@@ -52,3 +53,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.force-size {
+  overflow-y: auto;
+}
+</style>
