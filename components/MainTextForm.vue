@@ -64,48 +64,32 @@ export default {
       tag: '',
     }
   },
-    computed: {    
-      notes() {
-        return this.$store.state.notes.list
-      },
-      tags() {
-        return this.$store.state.tags.list;
-      },
+  computed: {    
+    notes() {
+      return this.$store.state.notes.list
     },
-  mounted() {
-    // this.editor = this.$editor.EditorJS({
-    //   holder: 'main-editor',  // エディタをマウントするブロックのID
-    //   placeholder: 'No content',
-    //   data: {},
-    // });
+    tags() {
+      return this.$store.state.tags.list;
+    },
   },
   methods: {
     addNote() {
       const maxId = this.notes.length === 0
         ? 0
         : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id)
-      // this.editor.save()
-      //   .then((text) => {
-          // EditorJS#saveで流れてくる中身: https://editorjs.io/saving-data
-          // noteBody = text.blocks[0] ? text.blocks[0].data.text : '';
           const titleOrUntitled = this.title ? this.title : '無題';
 
-          const note = {
-            id: maxId + 1,
-            title: titleOrUntitled,
-            tag: this.tag,
-            body: this.body,
-            updatedAt: new Date(),
-          };
-    
-          this.$store.commit('notes/add', note);
-          this.saveResultSnackBar = true;
-          this.snackBarText = 'メモが保存されました';
-        // })
-        // .catch((e) => {
-        //   this.saveResultSnackBar = true;
-        //   this.snackBarText = 'メモの保存に失敗しました ...' + e;
-        // });
+      const note = {
+        id: maxId + 1,
+        title: titleOrUntitled,
+        tag: this.tag,
+        body: this.body,
+        updatedAt: new Date(),
+      };
+
+      this.$store.commit('notes/add', note);
+      this.saveResultSnackBar = true;
+      this.snackBarText = 'メモが保存されました';
     }
   }
 }
