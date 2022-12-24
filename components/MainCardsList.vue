@@ -83,21 +83,21 @@
                 </v-container>
               </v-card>
             </v-dialog>
-            <v-snackbar v-model="snackbar">
-              {{ snackbarText }}
-              <v-btn
-                text
-                color="primary"
-                right
-                @click="snackbar = false"
-              >
-                DONE
-              </v-btn>
-            </v-snackbar>
           </v-list-item-subtitle>
         </v-card>
       </v-list-item-content>
     </v-list-item>
+    <v-snackbar v-model="snackbar">
+      {{ snackbarText }}
+      <v-btn
+        text
+        color="primary"
+        right
+        @click="snackbar = false"
+      >
+        DONE
+      </v-btn>
+    </v-snackbar>
   </v-list>
 </template>
 
