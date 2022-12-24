@@ -1,5 +1,4 @@
 <template>
-  <v-main>
     <v-container>
       <v-row
         no-gutters
@@ -17,7 +16,6 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-main>
 </template>
 
 <script>
