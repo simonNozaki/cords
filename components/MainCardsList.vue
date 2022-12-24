@@ -17,7 +17,7 @@
           <v-list-item-title>
             <nuxt-link
               :to="`/notes/${note.id}`"
-              class="ma-2 text-lg-h4 text-decoration-none"
+              class="ma-2 text-md-body-1 text-decoration-none"
             >
               {{ note.title }}
             </nuxt-link>

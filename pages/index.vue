@@ -1,7 +1,9 @@
 <template>
   <v-main>
     <v-container>
-      <v-row>
+      <v-row
+        no-gutters
+      >
         <v-col cols="3">
           <v-card>
             <MainCardsList />
@@ -10,7 +12,7 @@
         <v-col>
           <main-text-form />
         </v-col>
-        <v-col cols="1">
+        <v-col cols="auto">
           <MainTagDialog />
         </v-col>
       </v-row>

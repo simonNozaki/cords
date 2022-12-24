@@ -3,6 +3,7 @@
     <v-text-field
       v-model="title"
       outlined
+      dense
       label="タイトルを挿入..."
     >
     </v-text-field>
@@ -76,8 +77,8 @@ export default {
     addNote() {
       const maxId = this.notes.length === 0
         ? 0
-        : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id)
-          const titleOrUntitled = this.title ? this.title : '無題';
+        : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id);
+      const titleOrUntitled = this.title ? this.title : '無題';
 
       const note = {
         id: maxId + 1,
