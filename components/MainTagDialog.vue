@@ -6,9 +6,8 @@
     >
       <template #activator="{ on, attrs }">
         <v-btn
-          elevation="2"
-          color="secondary"
-          class="white--text justify-center mx-auto ma-3"
+          color="#e0e0e0"
+          class="justify-center mx-auto ma-3"
           v-bind="attrs"
           v-on="on"
         >
@@ -46,7 +45,7 @@
                 <v-btn
                   :disabled="!isSubmittable"
                   elevation="2"
-                  color="primary"
+                  color="amber darken-4"
                   class="white--text justify-center mx-auto ma-5"
                   @click="addTag"
                 >

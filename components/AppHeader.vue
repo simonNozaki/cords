@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     app
-    class="teal lighten-4"
+    class="brown lighten-5"
     flat
   >
     <v-app-bar-title> Cords </v-app-bar-title>
@@ -9,9 +9,13 @@
     <v-spacer></v-spacer>
 
     <template #extension>
-      <v-tabs align-with-title>
+      <v-tabs
+        align-with-title
+        slider-color="amber darken-4"
+        color="amber darken-4"
+      >
         <v-tab to="/">
-          カード <v-icon right> mdi-plus </v-icon>
+          <v-icon> mdi-plus </v-icon> 新しいカード
         </v-tab>
       </v-tabs>
     </template>
