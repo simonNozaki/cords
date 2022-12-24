@@ -8,7 +8,7 @@
         <v-btn
           elevation="2"
           color="secondary"
-          class="white--text justify-centermx-auto ma-3"
+          class="white--text justify-center mx-auto ma-3"
           v-bind="attrs"
           v-on="on"
         >
@@ -89,7 +89,7 @@ export default {
     };
   },
   computed: {
-    notes() {
+    tags() {
       return this.$store.state.tags.list;
     },
     isSubmittable() {
@@ -98,6 +98,11 @@ export default {
   },
   methods: {
     addTag(event) {
+      if (this.tags.includes(this.newTag)) {
+        this.snackbar = true;
+        this.snackbarText = `タグ ${this.newTag} はすでに登録されています`;
+        return;
+      }
       this.$store.commit('tags/add', this.newTag);
       this.tagDialog = false;
       this.snackbar = true;
