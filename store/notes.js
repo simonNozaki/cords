@@ -15,6 +15,9 @@ export const mutations = {
     _note.title = note.title;
     _note.tag = note.tag;
     _note.body = note.body;
+  },
+  delete(state, id) {
+    state.list = state.list.filter((note) => note.id !== id);
   }
 };
 
