@@ -9,6 +9,12 @@ export const mutations = {
     note.tag = note.tag ? note.tag : 'なし'
     note.updatedAt = getDateString(note.updatedAt);
     state.list.push(note);
+  },
+  update(state, note) {
+    const _note = state.list.find((elm) => (elm.id).toString() === note.id);
+    _note.title = note.title;
+    _note.tag = note.tag;
+    _note.body = note.body;
   }
 };
 
