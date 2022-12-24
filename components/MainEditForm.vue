@@ -1,33 +1,45 @@
 <template>
   <v-form class="ma-3">
-    <v-text-field
-      v-model="title"
-      outlined
-      dense
-    >
-    </v-text-field>
-    <v-select
-      v-model="tag"
-      :items="tags"
-      outlined
-      dense
-    >
-    </v-select>
+    <v-container>
+      <v-row no-gutters>
+        <v-col cols="1"> 見出し </v-col>
+        <v-col>
+          <v-text-field
+            v-model="title"
+            outlined
+            dense
+          >
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col cols="1">
+          <v-icon left> mdi-tag-outline </v-icon>
+        </v-col>
+        <v-col>
+          <v-select
+            v-model="tag"
+            :items="tags"
+            outlined
+            dense
+          >
+          </v-select>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-textarea
       v-model="body"
       autofocus
       flat
       no-resize
       full-width
-      outlined
       solo
       rows="12"
       class="textarea-editor-font"
     ></v-textarea>
     <v-row>
       <v-btn
-        elevation="2"
-        color="primary"
+        color="amber darken-4"
         class="white--text justify-center mx-auto"
         @click="updateNote"
       >
@@ -87,10 +99,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .textarea-editor-font {
-    font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
-  }
-</style>
-
