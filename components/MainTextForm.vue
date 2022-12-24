@@ -57,7 +57,6 @@
 export default {
   data() {
     return {
-      editor: null,
       saveResultSnackBar: false,
       snackBarText: '',
       title: '',
