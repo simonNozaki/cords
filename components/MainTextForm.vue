@@ -1,5 +1,5 @@
 <template>
-  <v-form class="ma-3">
+  <v-form class="ma-5">
     <v-container>
       <v-row no-gutters>
         <v-col cols="1"> 見出し </v-col>
@@ -86,7 +86,7 @@ export default {
     addNote() {
       const maxId = this.notes.length === 0
         ? 0
-        : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id);
+        : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id).id;
       const titleOrUntitled = this.title ? this.title : '無題';
 
       const note = {
