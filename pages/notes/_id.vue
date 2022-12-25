@@ -1,9 +1,9 @@
 <template>
-    <v-container>
+    <v-container fluid>
       <v-row
         no-gutters
       >
-        <v-col cols="3">
+        <v-col cols="2">
           <v-card>
             <MainCardsList />
           </v-card>

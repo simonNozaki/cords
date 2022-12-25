@@ -1,5 +1,5 @@
 <template>
-  <v-form class="ma-3">
+  <v-form class="ma-5">
     <v-container>
       <v-row no-gutters>
         <v-col cols="1"> 見出し </v-col>
@@ -30,7 +30,6 @@
     <v-textarea
       v-model="body"
       autofocus
-      flat
       no-resize
       full-width
       solo

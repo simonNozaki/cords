@@ -1,7 +1,6 @@
 <template>
   <v-list
     dense
-    nav
     height="536"
     class="force-size"
   >
