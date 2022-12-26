@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "core-js": "^3.25.3",
+    "core-js": "^3.27.0",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
