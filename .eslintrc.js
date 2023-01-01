@@ -14,6 +14,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     // これがないと単一名称のコンポーネントを置けない
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
   },
 }

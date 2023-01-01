@@ -4,5 +4,5 @@
     <v-main class="grey lighten-5">
       <Nuxt />
     </v-main>
-  </v-app>  
+  </v-app>
 </template>

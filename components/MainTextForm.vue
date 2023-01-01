@@ -4,12 +4,7 @@
       <v-row no-gutters>
         <v-col cols="1"> 見出し </v-col>
         <v-col>
-          <v-text-field
-            v-model="title"
-            outlined
-            dense
-          >
-          </v-text-field>
+          <v-text-field v-model="title" outlined dense> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -17,13 +12,7 @@
           <v-icon left> mdi-tag-outline </v-icon>
         </v-col>
         <v-col>
-          <v-select
-            v-model="tag"
-            :items="tags"
-            outlined
-            dense
-          >
-          </v-select>
+          <v-select v-model="tag" :items="tags" outlined dense> </v-select>
         </v-col>
       </v-row>
     </v-container>
@@ -48,16 +37,9 @@
         保存する
       </v-btn>
     </v-row>
-    <v-snackbar
-      v-model="saveResultSnackBar"
-    >
-        {{ snackBarText }}
-      <v-btn
-        color="primary"
-        text
-        right
-        @click="saveResultSnackBar = false"
-      >
+    <v-snackbar v-model="saveResultSnackBar">
+      {{ snackBarText }}
+      <v-btn color="primary" text right @click="saveResultSnackBar = false">
         DONE
       </v-btn>
     </v-snackbar>
@@ -75,20 +57,22 @@ export default {
       tag: '',
     }
   },
-  computed: {    
+  computed: {
     notes() {
       return this.$store.state.notes.list
     },
     tags() {
-      return this.$store.state.tags.list;
+      return this.$store.state.tags.list
     },
   },
   methods: {
     addNote() {
-      const maxId = this.notes.length === 0
-        ? 0
-        : this.notes.reduce((lhs, rhs) => lhs.id > rhs.id ? lhs.id : rhs.id).id;
-      const titleOrUntitled = this.title ? this.title : '無題';
+      const maxId =
+        this.notes.length === 0
+          ? 0
+          : this.notes.reduce((lhs, rhs) => (lhs.id > rhs.id ? lhs.id : rhs.id))
+              .id
+      const titleOrUntitled = this.title ? this.title : '無題'
 
       const note = {
         id: maxId + 1,
@@ -96,13 +80,13 @@ export default {
         tag: this.tag,
         body: this.body,
         updatedAt: new Date(),
-      };
+      }
 
-      this.$store.commit('notes/add', note);
-      this.saveResultSnackBar = true;
-      this.snackBarText = 'カードが保存されました';
-      this.body = '';
-    }
-  }
+      this.$store.commit('notes/add', note)
+      this.saveResultSnackBar = true
+      this.snackBarText = 'カードが保存されました'
+      this.body = ''
+    },
+  },
 }
 </script>

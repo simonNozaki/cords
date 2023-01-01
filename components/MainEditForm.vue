@@ -4,12 +4,7 @@
       <v-row no-gutters>
         <v-col cols="1"> 見出し </v-col>
         <v-col>
-          <v-text-field
-            v-model="title"
-            outlined
-            dense
-          >
-          </v-text-field>
+          <v-text-field v-model="title" outlined dense> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -17,13 +12,7 @@
           <v-icon left> mdi-tag-outline </v-icon>
         </v-col>
         <v-col>
-          <v-select
-            v-model="tag"
-            :items="tags"
-            outlined
-            dense
-          >
-          </v-select>
+          <v-select v-model="tag" :items="tags" outlined dense> </v-select>
         </v-col>
       </v-row>
     </v-container>
@@ -47,18 +36,9 @@
         保存する
       </v-btn>
     </v-row>
-    <v-snackbar
-      v-model="snackbar"
-    >
-        {{ snackbarText }}
-      <v-btn
-        color="primary"
-        text
-        right
-        @click="snackbar = false"
-      >
-        DONE
-      </v-btn>
+    <v-snackbar v-model="snackbar">
+      {{ snackbarText }}
+      <v-btn color="primary" text right @click="snackbar = false"> DONE </v-btn>
     </v-snackbar>
   </v-form>
 </template>
@@ -66,9 +46,9 @@
 <script>
 export default {
   data() {
-    const _notes = this.$store.state.notes.list;
-    const id = this.$route.params.id;
-    const _note = _notes.find((note) => (note.id).toString() === id);
+    const _notes = this.$store.state.notes.list
+    const id = this.$route.params.id
+    const _note = _notes.find((note) => note.id.toString() === id)
     return {
       snackbar: false,
       snackbarText: '',
@@ -79,7 +59,7 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.state.tags.list;
+      return this.$store.state.tags.list
     },
   },
   methods: {
@@ -90,12 +70,12 @@ export default {
         tag: this.tag,
         body: this.body,
         updatedAt: new Date(),
-      };
+      }
       this.$store.commit('notes/update', note)
 
-      this.snackbar = true;
-      this.snackbarText = "カードを更新しました";
+      this.snackbar = true
+      this.snackbarText = 'カードを更新しました'
     },
-  }
+  },
 }
 </script>

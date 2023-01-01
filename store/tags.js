@@ -1,11 +1,11 @@
 export const state = () => {
   return {
-    list: []
-  };
-};
+    list: [],
+  }
+}
 
 export const mutations = {
   add(state, tag) {
-    state.list.push(tag);
-  }
+    state.list.push(tag)
+  },
 }
