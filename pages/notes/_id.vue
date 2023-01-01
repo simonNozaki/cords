@@ -4,9 +4,7 @@
         no-gutters
       >
         <v-col cols="2">
-          <v-card>
-            <MainCardsList />
-          </v-card>
+          <MainCardsList />
         </v-col>
         <v-col>
           <MainEditForm />

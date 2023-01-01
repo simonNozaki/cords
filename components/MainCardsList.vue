@@ -1,8 +1,11 @@
 <template>
+  <v-card
+    flat
+  >
   <v-list
     dense
     height="536"
-    class="force-size"
+    class="grey lighten-5 force-size"
   >
     <v-list-item
       v-for="note in notes"
@@ -98,6 +101,7 @@
       </v-btn>
     </v-snackbar>
   </v-list>
+  </v-card>
 </template>
 
 <script>

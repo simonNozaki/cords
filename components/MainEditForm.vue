@@ -1,5 +1,5 @@
 <template>
-  <v-form class="ma-5">
+  <v-form class="ml-2">
     <v-container>
       <v-row no-gutters>
         <v-col cols="1"> 見出し </v-col>
@@ -27,15 +27,17 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-textarea
-      v-model="body"
-      autofocus
-      no-resize
-      full-width
-      solo
-      rows="12"
-      class="textarea-editor-font"
-    ></v-textarea>
+    <v-row no-gutters>
+      <v-textarea
+        v-model="body"
+        autofocus
+        no-resize
+        full-width
+        outlined
+        rows="12"
+        class="textarea-editor-font"
+      ></v-textarea>
+    </v-row>
     <v-row>
       <v-btn
         color="amber darken-4"
@@ -43,7 +45,6 @@
         @click="updateNote"
       >
         保存する
-        <v-icon right> mdi-pencil </v-icon>
       </v-btn>
     </v-row>
     <v-snackbar
