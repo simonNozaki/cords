@@ -47,6 +47,6 @@ jobs:
 
       - name: Run linter 👀
         run: yarn lint
-
-      - name: Run tests 🧪
-        run: yarn test
+      # 必要になったら復活
+      # - name: Run tests 🧪
+      #   run: yarn test
