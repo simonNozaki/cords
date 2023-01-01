@@ -3,12 +3,13 @@
     <v-dialog v-model="tagDialog" max-width="500">
       <template #activator="{ on, attrs }">
         <v-btn
-          color="#e0e0e0"
+          small
+          outlined
           class="justify-center mx-auto ma-3"
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon left> mdi-tag-outline </v-icon> タグを登録
+          <v-icon left> mdi-plus </v-icon> タグ
         </v-btn>
       </template>
       <v-card>

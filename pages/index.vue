@@ -7,9 +7,6 @@
       <v-col>
         <main-text-form />
       </v-col>
-      <v-col cols="auto">
-        <MainTagDialog />
-      </v-col>
     </v-row>
   </v-container>
 </template>

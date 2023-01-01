@@ -1,15 +1,16 @@
 <template>
   <v-form class="ml-2">
-    <v-container>
+    <v-container fluid>
       <v-row no-gutters>
-        <v-col cols="1"> 見出し </v-col>
+        <v-col cols="2"> 見出し </v-col>
         <v-col>
           <v-text-field v-model="title" outlined dense> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col cols="1">
+        <v-col cols="2">
           <v-icon left> mdi-tag-outline </v-icon>
+          <MainTagDialog />
         </v-col>
         <v-col>
           <v-select v-model="tag" :items="tags" outlined dense> </v-select>

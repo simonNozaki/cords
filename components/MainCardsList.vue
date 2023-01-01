@@ -1,6 +1,9 @@
 <template>
   <v-card flat>
     <v-list dense height="536" class="grey lighten-5 force-size">
+      <v-btn text small outlined color="amber darken-4" to="/">
+        <v-icon> mdi-plus </v-icon> 新しいカード
+      </v-btn>
       <v-list-item v-for="note in notes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1" outlined>
