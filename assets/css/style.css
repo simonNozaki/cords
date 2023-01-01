@@ -1,3 +1,9 @@
 .textarea-editor-font {
-  font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+  font-family: 'JetBrains Mono', 'Courier New', Courier, Monaco, monospace;
+  font-weight: 300;
+}
+
+.v-application {
+  font-family: 'Noto Sans Japanese', Arial, Helvetica, sans-serif !important;
+  font-weight: 300;
 }

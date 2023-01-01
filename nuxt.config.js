@@ -36,7 +36,15 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/google-fonts',
   ],
+
+  googleFonts: {
+    families: {
+      NotoSansJapanese: [300, 400, 500],
+      JetBrainsMono: [300],
+    },
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
