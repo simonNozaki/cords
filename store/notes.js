@@ -21,9 +21,25 @@ export const actions = {
     note.id = id
     context.commit('put', note)
   },
+  async fetchAll(context) {
+    const notes = []
+    // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
+    await this.$fire.firestore.collection('notes').get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const note = doc.data()
+          note.id = doc.id
+          notes.push(note)
+        })
+      })
+    context.commit('init', notes)
+  }
 }
 
 export const mutations = {
+  init(state, notes) {
+    state.list = notes
+  },
   put(state, note) {
     state.list.push(note)
   },

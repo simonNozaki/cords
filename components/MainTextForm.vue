@@ -65,6 +65,9 @@ export default {
       return this.$store.state.tags.list
     },
   },
+  created() {
+    this.$store.dispatch('notes/fetchAll')
+  },
   methods: {
     addNote() {
       const titleOrUntitled = this.title ? this.title : '無題'
