@@ -79,6 +79,8 @@ export default {
       this.$store.dispatch('notes/add', note)
       this.saveResultSnackBar = true
       this.snackBarText = 'カードが保存されました'
+      this.title = ''
+      this.tag = ''
       this.body = ''
     },
   },
