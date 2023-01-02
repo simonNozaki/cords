@@ -1,11 +1,30 @@
-export const state = () => ({
-  list: [],
-})
+export const state = () => {
+  return {
+    list: [],
+  }
+}
 
-export const mutations = {
-  add(state, note) {
+export const actions = {
+  async add(context, note) {
     note.tag = note.tag ? note.tag : 'なし'
     note.updatedAt = getDateString(note.updatedAt)
+    let id;
+    await this.$fire.firestore.collection('notes').add({
+      title: note.title,
+      tag: note.tag,
+      body: note.body,
+      updatedAt: note.updatedAt,
+    })
+      .then((docRef) => {
+        id = docRef.id;
+      });
+    note.id = id
+    context.commit('put', note)
+  },
+}
+
+export const mutations = {
+  put(state, note) {
     state.list.push(note)
   },
   update(state, note) {
@@ -21,7 +40,7 @@ export const mutations = {
 
 function getDateString(date) {
   const y = date.getFullYear()
-  const month = date.getMonth()
+  const month = date.getMonth() + 1
   const d = date.getDate()
   const h = date.getHours()
   const m = date.getMinutes()

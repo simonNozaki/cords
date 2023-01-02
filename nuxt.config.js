@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
@@ -47,25 +49,33 @@ export default {
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxtjs/firebase'],
+
+  firebase: {
+    config: {
+      apiKey: process.env.API_KEY,
+      authDomain: process.env.AUTH_DOMAIN,
+      projectId: process.env.PROJECT_ID,
+      storageBucket: process.env.STORAGE_BUCKET,
+      messagingSenderId: process.env.MESSAGING_SENDER_ID,
+      appId: process.env.APP_ID,
+    },
+    services: {
+      auth: {
+        persistence: 'local',
+        initialize: {
+          onAuthStateChangedAction: 'onAuthStateChangedAction',
+          subscribeManually: false
+        },
+      },
+      firestore: true,
+      storage: true
+    },
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    theme: {
-      // dark: true,
-      // themes: {
-      //   dark: {
-      //     primary: colors.blue.darken2,
-      //     accent: colors.grey.darken3,
-      //     secondary: colors.amber.darken3,
-      //     info: colors.teal.lighten1,
-      //     warning: colors.amber.base,
-      //     error: colors.deepOrange.accent4,
-      //     success: colors.green.accent3,
-      //   },
-      // },
-    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -67,22 +67,16 @@ export default {
   },
   methods: {
     addNote() {
-      const maxId =
-        this.notes.length === 0
-          ? 0
-          : this.notes.reduce((lhs, rhs) => (lhs.id > rhs.id ? lhs.id : rhs.id))
-              .id
       const titleOrUntitled = this.title ? this.title : '無題'
 
       const note = {
-        id: maxId + 1,
         title: titleOrUntitled,
         tag: this.tag,
         body: this.body,
         updatedAt: new Date(),
       }
 
-      this.$store.commit('notes/add', note)
+      this.$store.dispatch('notes/add', note)
       this.saveResultSnackBar = true
       this.snackBarText = 'カードが保存されました'
       this.body = ''
