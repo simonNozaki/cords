@@ -90,6 +90,9 @@ export default {
       return this.$store.state.notes.list
     },
   },
+  created() {
+    this.$store.dispatch('tags/fetchAll')
+  },
   methods: {
     deleteNote(id) {
       this.$store.commit('notes/delete', id)

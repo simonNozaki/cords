@@ -12,10 +12,22 @@ export const actions = {
       updatedAt: new Date()
     })
     context.commit('put', tag)
+  },
+  async fetchAll(context) {
+    const tags = []
+    // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
+    await this.$fire.firestore.collection('tags').get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => tags.push(doc.data().name))
+      })
+    context.commit('init', tags)
   }
 }
 
 export const mutations = {
+  init(state, tags) {
+    state.list = tags
+  },
   put(state, tag) {
     state.list.push(tag)
   },
