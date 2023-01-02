@@ -75,13 +75,13 @@ export default {
     },
   },
   methods: {
-    addTag(event) {
+    addTag() {
       if (this.tags.includes(this.newTag)) {
         this.snackbar = true
         this.snackbarText = `タグ ${this.newTag} はすでに登録されています`
         return
       }
-      this.$store.commit('tags/add', this.newTag)
+      this.$store.dispatch('tags/add', this.newTag)
       this.tagDialog = false
       this.snackbar = true
       this.snackbarText = `タグ ${this.newTag} を追加しました`
