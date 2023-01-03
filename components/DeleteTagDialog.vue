@@ -5,7 +5,6 @@
         <v-btn
           small
           outlined
-          class="justify-center mx-auto ma-3"
           v-bind="attrs"
           v-on="on"
         >
@@ -16,25 +15,31 @@
         <v-btn class="ma-6" text @click="tagDeleteDialog = !tagDeleteDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
-        <v-card-title class="text-center"> 削除したいタグを選択してください </v-card-title>
-        <v-select
-          v-model="deletingTags"
-          :items="tags"
-          multiple
-          chips
-          solo
-          label="削除したいタグを一つ以上選択"
-        >
-        </v-select>
-        <v-btn
-          :disabled="!isDeletable"
-          elevation="2"
-          color="amber darken-4"
-          class="white--text justify-center mx-auto ma-5"
-          @click="deleteTag"
-        >
-          削除する
-        </v-btn>              
+        <v-card-title> 削除したいタグを選択してください </v-card-title>
+        <v-container>
+          <v-row>
+            <v-col>
+              <v-select
+                v-model="deletingTags"
+                :items="tags"
+                multiple
+                chips
+                solo
+                label="削除したいタグを一つ以上選択"
+              >
+              </v-select>
+              <v-btn
+                :disabled="!isDeletable"
+                elevation="2"
+                color="amber darken-4"
+                class="white--text justify-center mx-auto ma-5 text-center"
+                @click="deleteTag"
+              >
+                削除する
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card>
     </v-dialog>
     <v-snackbar v-model="snackbar">

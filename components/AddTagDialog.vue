@@ -5,7 +5,7 @@
         <v-btn
           small
           outlined
-          class="justify-center mx-auto ma-3"
+          class="justify-center"
           v-bind="attrs"
           v-on="on"
         >
@@ -16,8 +16,7 @@
         <v-btn class="ma-6" text @click="tagDialog = !tagDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
-        <v-card-text class="text-center"> タグを登録します </v-card-text>
-
+        <v-card-title> タグを登録します </v-card-title>
         <v-container>
           <v-row>
             <v-col>
@@ -81,6 +80,7 @@ export default {
         return
       }
       this.$store.dispatch('tags/add', this.newTag)
+      this.newTag = ''
       this.tagDialog = false
       this.snackbar = true
       this.snackbarText = `タグ ${this.newTag} を追加しました`
