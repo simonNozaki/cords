@@ -5,7 +5,7 @@
         <MainCardsList />
       </v-col>
       <v-col>
-        <MainEditForm />
+        <EditCardForm />
       </v-col>
     </v-row>
   </v-container>

@@ -5,16 +5,8 @@
         <MainCardsList />
       </v-col>
       <v-col>
-        <main-text-form />
+        <CreateCardForm />
       </v-col>
     </v-row>
   </v-container>
 </template>
-
-<script>
-import MainTextForm from '~/components/MainTextForm.vue'
-export default {
-  name: 'IndexPage',
-  components: { MainTextForm },
-}
-</script>
