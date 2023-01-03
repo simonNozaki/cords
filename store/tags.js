@@ -5,13 +5,14 @@ export const state = () => {
 }
 
 export const actions = {
-  async add(context, tag) {
+  async add(context, tagName) {
     let id;
-    await this.$fire.firestore.collection('tags').add({
-      name: tag,
+    const tag = {
+      name: tagName,
       createdAt: new Date(),
       updatedAt: new Date()
-    })
+    }
+    await this.$fire.firestore.collection('tags').add(tag)
       .then((docRef) => {
         id = docRef.id
       })
