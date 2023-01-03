@@ -6,19 +6,39 @@ export const state = () => {
 
 export const actions = {
   async add(context, tag) {
+    let id;
     await this.$fire.firestore.collection('tags').add({
       name: tag,
       createdAt: new Date(),
       updatedAt: new Date()
     })
+      .then((docRef) => {
+        id = docRef.id
+      })
+    tag.id = id
     context.commit('put', tag)
+  },
+  async delete(context, tagNames) {
+    for (const name of tagNames) {
+      const record = await this.$fire.firestore.collection('tags')
+        .where('name', '==', name)
+        .get()
+      record.forEach((doc) => {
+        doc.ref.delete()
+      })
+    }
+    context.commit('remove', tagNames)
   },
   async fetchAll(context) {
     const tags = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
     await this.$fire.firestore.collection('tags').get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => tags.push(doc.data().name))
+        querySnapshot.forEach((doc) => {
+          const tag = doc.data()
+          tag.id = doc.id
+          tags.push(tag)
+        })
       })
     context.commit('init', tags)
   }
@@ -31,4 +51,9 @@ export const mutations = {
   put(state, tag) {
     state.list.push(tag)
   },
+  remove(state, tagNames) {
+    tagNames.forEach((name) => {
+      state.list = state.list.filter((tag) => tag.name !== name)
+    })
+  }
 }

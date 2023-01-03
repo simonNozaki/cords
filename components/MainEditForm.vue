@@ -10,7 +10,8 @@
       <v-row no-gutters>
         <v-col cols="2">
           <v-icon left> mdi-tag-outline </v-icon>
-          <MainTagDialog />
+          <AddTagDialog />
+          <DeleteTagDialog :tags="tags" />
         </v-col>
         <v-col>
           <v-select v-model="tag" :items="tags" outlined dense> </v-select>

@@ -9,7 +9,7 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon left> mdi-plus </v-icon> タグ
+          <v-icon center dense> mdi-plus </v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -38,7 +38,6 @@
                   @click="addTag"
                 >
                   保存する
-                  <v-icon right> mdi-pencil </v-icon>
                 </v-btn>
               </v-form>
             </v-col>

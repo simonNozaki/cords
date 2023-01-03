@@ -10,7 +10,8 @@
       <v-row no-gutters>
         <v-col cols="2">
           <v-icon left> mdi-tag-outline </v-icon>
-          <MainTagDialog />
+          <AddTagDialog />
+          <DeleteTagDialog :tags="tags" />
         </v-col>
         <v-col>
           <v-select v-model="tag" :items="tags" outlined dense> </v-select>
@@ -62,7 +63,7 @@ export default {
       return this.$store.state.notes.list
     },
     tags() {
-      return this.$store.state.tags.list
+      return this.$store.state.tags.list.map(t => t.name)
     },
   },
   created() {
