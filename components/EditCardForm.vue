@@ -10,8 +10,8 @@
       <v-row no-gutters>
         <v-col cols="2">
           <v-icon left> mdi-tag-outline </v-icon>
-          <AddTagDialog />
-          <DeleteTagDialog :tags="tags" />
+          <AddTagDialog class="ma-1" />
+          <DeleteTagDialog :tags="tags" class="ma-1" />
         </v-col>
         <v-col>
           <v-select v-model="tag" :items="tags" outlined dense> </v-select>
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.state.tags.list
+      return this.$store.state.tags.list.map(t => t.name)
     },
   },
   methods: {
