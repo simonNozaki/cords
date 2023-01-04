@@ -33,7 +33,14 @@ export const actions = {
         })
       })
     context.commit('init', notes)
-  }
+  },
+  delete(context, id) {
+    this.$fire.firestore.collection('notes')
+      .doc(id)
+      .delete()
+      .then(_ => _)
+    context.commit('remove', id)
+  },
 }
 
 export const mutations = {
@@ -49,7 +56,7 @@ export const mutations = {
     _note.tag = note.tag
     _note.body = note.body
   },
-  delete(state, id) {
+  remove(state, id) {
     state.list = state.list.filter((note) => note.id !== id)
   },
 }

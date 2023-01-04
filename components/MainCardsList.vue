@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     deleteNote(id) {
-      this.$store.commit('notes/delete', id)
+      this.$store.dispatch('notes/delete', id)
 
       this.cardDeleteDialog = false
       this.snackbar = true
