@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-dialog v-model="tagDialog" max-width="500">
+    <v-dialog
+      v-model="tagDialog"
+      max-width="500"
+      transition="fade-transition"
+    >
       <template #activator="{ on, attrs }">
         <v-btn
           small
@@ -16,7 +20,7 @@
         <v-btn class="ma-6" text @click="tagDialog = !tagDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
-        <v-card-title> タグを登録します </v-card-title>
+        <v-card-title class="justify-center"> タグを登録します </v-card-title>
         <v-container>
           <v-row>
             <v-col>

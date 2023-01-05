@@ -6,7 +6,7 @@
       </v-btn>
       <v-list-item v-for="note in notes" :key="note.id">
         <v-list-item-content>
-          <v-card class="pa-1" outlined>
+          <v-card class="pa-1 ma-0" outlined>
             <v-list-item-title>
               <nuxt-link
                 :to="`/notes/${note.id}`"
@@ -26,7 +26,11 @@
               </v-chip>
             </v-list-item-subtitle>
             <v-list-item-subtitle>
-              <v-dialog v-model="cardDeleteDialog" max-width="500">
+              <v-dialog
+                v-model="cardDeleteDialog"
+                max-width="500"
+                transition="fade-transition"
+              >
                 <template #activator="{ on, attrs }">
                   <v-btn icon v-bind="attrs" v-on="on">
                     <v-icon> mdi-delete-outline </v-icon>
@@ -34,30 +38,29 @@
                 </template>
                 <v-card>
                   <v-container>
-                    <v-row>
-                      <v-btn
-                        class="ma-6"
-                        text
-                        @click="cardDeleteDialog = !cardDeleteDialog"
-                      >
-                        <v-icon> mdi-window-close </v-icon>
-                      </v-btn>
-                    </v-row>
+                    <v-card-title class="justify-center">カードを削除します</v-card-title>
                     <v-row>
                       <v-card-text class="text-center">
                         <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
-                        カードを削除します。よろしいですか？
+                        この操作は取り戻せません
                       </v-card-text>
                     </v-row>
-                    <v-row>
+                    <v-row justify="center">
+                      <v-btn
+                        text
+                        class="mb-3"
+                        @click="cardDeleteDialog = !cardDeleteDialog"
+                      >
+                        閉じる
+                      </v-btn>
                       <v-btn
                         text
                         color="error"
-                        class="mx-auto ma-2"
+                        class="mb-3"
                         @click="deleteNote(note.id)"
                       >
                         削除する
-                      </v-btn>
+                      </v-btn>                        
                     </v-row>
                   </v-container>
                 </v-card>

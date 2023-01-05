@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-dialog v-model="tagDeleteDialog" max-width="500">
+    <v-dialog
+      v-model="tagDeleteDialog"
+      max-width="500"
+      transition="fade-transition"
+    >
       <template #activator="{ on, attrs }">
         <v-btn
           small
@@ -15,9 +19,9 @@
         <v-btn class="ma-6" text @click="tagDeleteDialog = !tagDeleteDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
-        <v-card-title> 削除したいタグを選択してください </v-card-title>
+        <v-card-title class="justify-center"> 削除したいタグを選択してください </v-card-title>
         <v-container>
-          <v-row>
+          <v-row justify="center">
             <v-col>
               <v-select
                 v-model="deletingTags"
