@@ -2,19 +2,16 @@
   <v-form class="ml-2">
     <v-container fluid>
       <v-row no-gutters>
-        <v-col cols="2"> 見出し </v-col>
+        <!-- <v-col cols="2"> 見出し </v-col> -->
         <v-col>
-          <v-text-field v-model="title" outlined dense> </v-text-field>
+          <v-text-field v-model="title" label="要約" outlined dense> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col cols="2">
-          <v-icon left> mdi-tag-outline </v-icon>
-          <AddTagDialog class="ma-1" />
-          <DeleteTagDialog :tags="tags" class="ma-1" />
-        </v-col>
+        <AddTagDialog class="ma-1" />
+        <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="tag" :items="tags" outlined dense> </v-select>
+          <v-select v-model="tag" :items="tags" label="タグ" outlined dense> </v-select>
         </v-col>
       </v-row>
     </v-container>
