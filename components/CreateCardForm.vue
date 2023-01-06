@@ -16,15 +16,21 @@
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <v-textarea
-        v-model="body"
-        autofocus
-        no-resize
-        full-width
-        outlined
-        rows="12"
-        class="textarea-editor-font"
-      ></v-textarea>
+      <v-col>
+        <v-card
+          flat
+          outlined
+          class="text-editor" overflow-y-auto
+        >
+          <codemirror
+            v-model="body"
+            :extensions="extensions"
+            :autofocus="true"
+            :tab-size="2"
+            :indent-with-tab="true"
+          />
+        </v-card>
+      </v-col>
     </v-row>
     <v-row>
       <v-btn
@@ -45,7 +51,13 @@
 </template>
 
 <script>
+import { Codemirror } from 'vue-codemirror'
+import { basicSetup } from 'codemirror'
+
 export default {
+  components: {
+    Codemirror,
+  },
   data() {
     return {
       saveResultSnackBar: false,
@@ -53,6 +65,7 @@ export default {
       title: '',
       body: '',
       tag: '',
+      extensions: [basicSetup],
     }
   },
   computed: {
@@ -87,3 +100,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.text-editor {
+  height: 400;
+}
+</style>
