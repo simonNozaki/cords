@@ -16,21 +16,7 @@
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <v-col>
-        <v-card
-          flat
-          outlined
-          class="text-editor" overflow-y-auto
-        >
-          <codemirror
-            v-model="body"
-            :extensions="extensions"
-            :autofocus="true"
-            :tab-size="2"
-            :indent-with-tab="true"
-          />
-        </v-card>
-      </v-col>
+      <TextEditor :value="body" />
     </v-row>
     <v-row>
       <v-btn
@@ -51,12 +37,11 @@
 </template>
 
 <script>
-import { Codemirror } from 'vue-codemirror'
-import { basicSetup } from 'codemirror'
+import TextEditor from '@/components/atoms/TextEditor'
 
 export default {
   components: {
-    Codemirror,
+    TextEditor,
   },
   data() {
     return {
@@ -65,7 +50,6 @@ export default {
       title: '',
       body: '',
       tag: '',
-      extensions: [basicSetup],
     }
   },
   computed: {
