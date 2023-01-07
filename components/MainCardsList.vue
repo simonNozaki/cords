@@ -37,55 +37,11 @@
               </v-chip>
             </v-list-item-subtitle>
             <v-list-item-subtitle>
-              <v-dialog
-                v-model="cardDeleteDialog"
-                max-width="500"
-                transition="fade-transition"
-              >
-                <template #activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon> mdi-delete-outline </v-icon>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-container>
-                    <v-card-title class="justify-center">カードを削除します</v-card-title>
-                    <v-row>
-                      <v-card-text class="text-center">
-                        <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
-                        この操作は取り戻せません
-                      </v-card-text>
-                    </v-row>
-                    <v-row justify="center">
-                      <v-btn
-                        text
-                        class="mb-3"
-                        @click="cardDeleteDialog = !cardDeleteDialog"
-                      >
-                        閉じる
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="error"
-                        class="mb-3"
-                        @click="deleteNote(note.id)"
-                      >
-                        削除する
-                      </v-btn>                        
-                    </v-row>
-                  </v-container>
-                </v-card>
-              </v-dialog>
+              <DeleteCardDialog :note-id="note.id" />
             </v-list-item-subtitle>
           </v-card>
         </v-list-item-content>
       </v-list-item>
-      <v-snackbar v-model="snackbar">
-        {{ snackbarText }}
-        <v-btn text color="primary" right @click="snackbar = false">
-          DONE
-        </v-btn>
-      </v-snackbar>
     </v-list>
   </v-card>
 </template>
@@ -94,9 +50,6 @@
 export default {
   data() {
     return {
-      cardDeleteDialog: false,
-      snackbar: false,
-      snackbarText: '',
       filterTags: [],
       // 表示用に柔軟にフィルタしたりする
       notesDisplayed: []
@@ -113,8 +66,6 @@ export default {
   created() {
     this.$store.dispatch('tags/fetchAll')
     this.$store.state.notes.list.forEach((note) => this.notesDisplayed.push(note))
-  },
-  mounted() {
   },
   methods: {
     deleteNote(id) {
