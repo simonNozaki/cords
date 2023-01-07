@@ -21,6 +21,16 @@ export const actions = {
     note.id = id
     context.commit('put', note)
   },
+  async set(context, note) {
+    note.updatedAt = getDateString(note.updatedAt)
+    await this.$fire.firestore.collection('notes').doc(note.id).set({
+      title: note.title,
+      tag: note.tag,
+      body: note.body,
+      updatedAt: note.updatedAt,
+    })
+    context.commit('update', note)
+  },
   async fetchAll(context) {
     const notes = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }

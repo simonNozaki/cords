@@ -15,15 +15,7 @@
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <v-textarea
-        v-model="body"
-        autofocus
-        no-resize
-        full-width
-        outlined
-        rows="12"
-        class="textarea-editor-font"
-      ></v-textarea>
+      <TextEditor />
     </v-row>
     <v-row>
       <v-btn
@@ -42,17 +34,34 @@
 </template>
 
 <script>
+import TextEditor from '@/components/atoms/TextEditor'
+
 export default {
+  components: {
+    TextEditor,
+  },
+  props: {
+    note: {
+      type: Object,
+      default() {
+        return {
+          title: '',
+          tag: '',
+          body: ''
+        }
+      }
+    }
+  },
   data() {
-    const _notes = this.$store.state.notes.list
-    const id = this.$route.params.id
-    const _note = _notes.find((note) => note.id.toString() === id)
+    // const _notes = this.$store.state.notes.list
+    // const id = this.$route.params.id
+    // const _note = _notes.find((note) => note.id.toString() === id)
     return {
       snackbar: false,
       snackbarText: '',
-      title: _note.title,
-      tag: _note.tag,
-      body: _note.body,
+      title: this.note.title,
+      tag: this.note.tag,
+      body: this.note.body,
     }
   },
   computed: {
@@ -69,7 +78,7 @@ export default {
         body: this.body,
         updatedAt: new Date(),
       }
-      this.$store.commit('notes/update', note)
+      this.$store.dispatch('notes/set', note)
 
       this.snackbar = true
       this.snackbarText = 'カードを更新しました'
