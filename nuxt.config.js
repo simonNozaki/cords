@@ -9,8 +9,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - cords',
-    title: 'cords',
+    title: 'cords | Online text editor',
     htmlAttrs: {
       lang: 'en',
     },
