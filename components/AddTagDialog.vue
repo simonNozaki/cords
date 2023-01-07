@@ -33,15 +33,12 @@
                   dense
                 >
                 </v-text-field>
-                <v-btn
+                <FormButton
                   :disabled="!isSubmittable"
-                  elevation="2"
-                  color="amber darken-4"
-                  class="white--text justify-center mx-auto ma-5"
-                  @click="addTag"
+                  :click="addTag"
                 >
                   保存する
-                </v-btn>
+                </FormButton>
               </v-form>
             </v-col>
           </v-row>
@@ -56,7 +53,12 @@
 </template>
 
 <script>
+import FormButton from '@/components/atoms/FormButton'
+
 export default {
+  components: {
+    FormButton,
+  },
   data() {
     return {
       tagDialog: false,

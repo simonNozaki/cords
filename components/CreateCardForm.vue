@@ -19,13 +19,9 @@
       <TextEditor :value="body" />
     </v-row>
     <v-row>
-      <v-btn
-        color="amber darken-4"
-        class="white--text justify-center mx-auto"
-        @click="addNote"
-      >
+      <FormButton :click="addNote">
         保存する
-      </v-btn>
+      </FormButton>
     </v-row>
     <v-snackbar v-model="saveResultSnackBar">
       {{ snackBarText }}
@@ -38,10 +34,12 @@
 
 <script>
 import TextEditor from '@/components/atoms/TextEditor'
+import FormButton from '@/components/atoms/FormButton'
 
 export default {
   components: {
     TextEditor,
+    FormButton,
   },
   data() {
     return {

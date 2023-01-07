@@ -18,13 +18,9 @@
       <TextEditor />
     </v-row>
     <v-row>
-      <v-btn
-        color="amber darken-4"
-        class="white--text justify-center mx-auto"
-        @click="updateNote"
-      >
+      <FormButton :click="updateNote">
         保存する
-      </v-btn>
+      </FormButton>
     </v-row>
     <v-snackbar v-model="snackbar">
       {{ snackbarText }}
@@ -35,10 +31,12 @@
 
 <script>
 import TextEditor from '@/components/atoms/TextEditor'
+import FormButton from '@/components/atoms/FormButton'
 
 export default {
   components: {
     TextEditor,
+    FormButton,
   },
   props: {
     note: {
@@ -53,15 +51,15 @@ export default {
     }
   },
   data() {
-    // const _notes = this.$store.state.notes.list
-    // const id = this.$route.params.id
-    // const _note = _notes.find((note) => note.id.toString() === id)
+    const _notes = this.$store.state.notes.list
+    const id = this.$route.params.id
+    const _note = _notes.find((note) => note.id.toString() === id)
     return {
       snackbar: false,
       snackbarText: '',
-      title: this.note.title,
-      tag: this.note.tag,
-      body: this.note.body,
+      title: _note.title,
+      tag: _note.tag,
+      body: _note.body,
     }
   },
   computed: {

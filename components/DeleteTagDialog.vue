@@ -32,15 +32,12 @@
                 label="削除したいタグを一つ以上選択"
               >
               </v-select>
-              <v-btn
+              <FormButton
                 :disabled="!isDeletable"
-                elevation="2"
-                color="amber darken-4"
-                class="white--text justify-center mx-auto ma-5 text-center"
-                @click="deleteTag"
+                :click="deleteTag"
               >
                 削除する
-              </v-btn>
+              </FormButton>
             </v-col>
           </v-row>
         </v-container>
@@ -54,7 +51,12 @@
 </template>
 
 <script>
+import FormButton from '@/components/atoms/FormButton'
+
 export default {
+  components: {
+    FormButton,
+  },
   props: {
     tags: {
       type: Array,
