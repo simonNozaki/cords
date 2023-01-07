@@ -44,7 +44,7 @@ export default {
   googleFonts: {
     families: {
       NotoSansJapanese: [300, 400, 500],
-      JetBrainsMono: [300],
+      JetBrainsMono: [500],
     },
   },
 
