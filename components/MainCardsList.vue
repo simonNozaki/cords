@@ -1,9 +1,20 @@
 <template>
-  <v-card flat>
+  <v-card flat class="grey lighten-5">
+    <v-btn text small outlined color="amber darken-4" to="/">
+      <v-icon> mdi-plus </v-icon> 新しいカード
+    </v-btn>
+    <v-select
+      v-model="filterTags"
+      :items="tags.map(t => t.name)"
+      item-color="amber darken-4"
+      multiple
+      small
+      chips
+      label="フィルタ"
+      @change="filterByTags"
+    >
+    </v-select>
     <v-list dense height="536" class="grey lighten-5 force-size">
-      <v-btn text small outlined color="amber darken-4" to="/">
-        <v-icon> mdi-plus </v-icon> 新しいカード
-      </v-btn>
       <v-list-item v-for="note in notes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1 ma-0" outlined>
@@ -86,15 +97,24 @@ export default {
       cardDeleteDialog: false,
       snackbar: false,
       snackbarText: '',
+      filterTags: [],
+      // 表示用に柔軟にフィルタしたりする
+      notesDisplayed: []
     }
   },
   computed: {
     notes() {
       return this.$store.state.notes.list
     },
+    tags() {
+      return this.$store.state.tags.list
+    }
   },
   created() {
     this.$store.dispatch('tags/fetchAll')
+    this.$store.state.notes.list.forEach((note) => this.notesDisplayed.push(note))
+  },
+  mounted() {
   },
   methods: {
     deleteNote(id) {
@@ -104,6 +124,9 @@ export default {
       this.snackbar = true
       this.snackbarText = 'カードを削除しました'
     },
+    filterByTags(event) {
+      console.log(event.length, event[0])
+    }
   },
 }
 </script>
