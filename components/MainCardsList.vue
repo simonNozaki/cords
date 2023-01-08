@@ -18,14 +18,22 @@
       <v-list-item v-for="note in notes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1 ma-0" outlined>
-            <v-list-item-title>
-              <nuxt-link
-                :to="`/notes/${note.id}`"
-                class="ma-2 text-md-body-1 text-decoration-none"
-              >
-                {{ note.title }}
-              </nuxt-link>
-            </v-list-item-title>
+            <v-tooltip top>
+              <template #activator="{ on, attrs }">
+                <v-list-item-title
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <nuxt-link
+                    :to="`/notes/${note.id}`"
+                    class="ma-2 text-md-body-1 text-decoration-none"
+                  >
+                    {{ note.title }}
+                  </nuxt-link>
+                </v-list-item-title>
+              </template>
+              <span> {{ note.title }} </span>
+            </v-tooltip>
             <v-list-item-subtitle>
               <v-chip class="ma-1 text-caption" label>
                 {{ note.tag }}
