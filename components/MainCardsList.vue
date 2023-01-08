@@ -16,7 +16,7 @@
     >
     </v-select>
     <v-list dense height="536" class="grey lighten-5 force-size">
-      <v-list-item v-for="note in listNotes" :key="note.id">
+      <v-list-item v-for="note in notes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1 ma-0" outlined>
             <v-tooltip top>
@@ -65,7 +65,7 @@ export default {
   computed: {
     notes: {
       get: function() {
-        return this.listNotes
+        return this.$store.getters['notes/findAll']
       },
       set: function(notes) {
         this.listNotes = notes
@@ -88,6 +88,7 @@ export default {
       // eventが配列形式になっているのでそのまま渡してOK
       // 存在判定だけなので集合に変えて要素の存在判定のみ(tagsのstate自体集合にしていいかも)
       const filteringTags = new Set(event)
+      // フィルタしない場合は全部持ってくる
       if (filteringTags.size === 0) {
         this.notes = this.$store.getters['notes/findAll']
       } else {

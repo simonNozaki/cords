@@ -40,7 +40,7 @@ export default {
     Snackbar,
   },
   data() {
-    const _notes = this.$store.getters['notes/getNotes']
+    const _notes = this.$store.getters['notes/findAll']
     const id = this.$route.params.id
     const _note = _notes.find((note) => note.id.toString() === id)
     return {
