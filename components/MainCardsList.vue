@@ -59,7 +59,7 @@
 export default {
   data() {
     return {
-      listNotes: this.$store.getters['notes/getNotes'],
+      listNotes: this.$store.getters['notes/findAll'],
     }
   },
   computed: {
@@ -89,7 +89,7 @@ export default {
       // 存在判定だけなので集合に変えて要素の存在判定のみ(tagsのstate自体集合にしていいかも)
       const filteringTags = new Set(event)
       if (filteringTags.size === 0) {
-        this.notes = this.$store.getters['notes/getNotes']
+        this.notes = this.$store.getters['notes/findAll']
       } else {
         const filteredNotes = this.$store.getters['notes/findByTags'](filteringTags)
         this.notes = filteredNotes

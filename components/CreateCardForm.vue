@@ -50,10 +50,10 @@ export default {
   },
   computed: {
     notes() {
-      return this.$store.state.notes.list
+      return this.$store.getters['notes/findAll']
     },
     tags() {
-      return this.$store.state.tags.list.map(t => t.name)
+      return this.$store.getters['tags/findAll'].map(t => t.name)
     },
   },
   created() {

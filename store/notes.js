@@ -5,7 +5,7 @@ export const state = () => {
 }
 
 export const getters = {
-  getNotes(state) {
+  findAll(state) {
     return state.list
   },
   findByTags(state) {

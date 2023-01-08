@@ -40,7 +40,7 @@ export default {
     Snackbar,
   },
   data() {
-    const _notes = this.$store.state.notes.list
+    const _notes = this.$store.getters['notes/getNotes']
     const id = this.$route.params.id
     const _note = _notes.find((note) => note.id.toString() === id)
     return {
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.state.tags.list.map(t => t.name)
+      return this.$store.getters['tags/findAll'].map(t => t.name)
     },
   },
   methods: {

@@ -4,6 +4,12 @@ export const state = () => {
   }
 }
 
+export const getters = {
+  findAll(state) {
+    return state.list
+  }
+}
+
 export const actions = {
   async add(context, tagName) {
     let id;

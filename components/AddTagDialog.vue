@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.state.tags.list
+      return this.$store.getters['tags/findAll']
     },
     isSubmittable() {
       return this.newTag || this.newTag !== ''
