@@ -4,6 +4,17 @@ export const state = () => {
   }
 }
 
+export const getters = {
+  getNotes(state) {
+    return state.list
+  },
+  findByTags(state) {
+    return (tags) => {
+      return state.list.filter((note) => tags.has(note.tag))
+    }
+  }
+}
+
 export const actions = {
   async add(context, note) {
     note.tag = note.tag ? note.tag : 'なし'

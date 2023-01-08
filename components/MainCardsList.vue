@@ -4,18 +4,19 @@
       <v-icon> mdi-plus </v-icon> 新しいカード
     </v-btn>
     <v-select
-      v-model="filterTags"
       :items="tags.map(t => t.name)"
       item-color="amber darken-4"
       multiple
       small
       chips
+      flat
+      dense
       label="フィルタ"
-      @change="filterByTags"
+      @change="findByTags"
     >
     </v-select>
     <v-list dense height="536" class="grey lighten-5 force-size">
-      <v-list-item v-for="note in notes" :key="note.id">
+      <v-list-item v-for="note in listNotes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1 ma-0" outlined>
             <v-tooltip top>
@@ -58,14 +59,17 @@
 export default {
   data() {
     return {
-      filterTags: [],
-      // 表示用に柔軟にフィルタしたりする
-      notesDisplayed: []
+      listNotes: this.$store.getters['notes/getNotes'],
     }
   },
   computed: {
-    notes() {
-      return this.$store.state.notes.list
+    notes: {
+      get: function() {
+        return this.listNotes
+      },
+      set: function(notes) {
+        this.listNotes = notes
+      }
     },
     tags() {
       return this.$store.state.tags.list
@@ -73,7 +77,6 @@ export default {
   },
   created() {
     this.$store.dispatch('tags/fetchAll')
-    this.$store.state.notes.list.forEach((note) => this.notesDisplayed.push(note))
   },
   methods: {
     deleteNote(id) {
@@ -81,8 +84,16 @@ export default {
 
       this.cardDeleteDialog = false
     },
-    filterByTags(event) {
-      console.log(event.length, event[0])
+    findByTags(event) {
+      // eventが配列形式になっているのでそのまま渡してOK
+      // 存在判定だけなので集合に変えて要素の存在判定のみ(tagsのstate自体集合にしていいかも)
+      const filteringTags = new Set(event)
+      if (filteringTags.size === 0) {
+        this.notes = this.$store.getters['notes/getNotes']
+      } else {
+        const filteredNotes = this.$store.getters['notes/findByTags'](filteringTags)
+        this.notes = filteredNotes
+      }
     }
   },
 }
