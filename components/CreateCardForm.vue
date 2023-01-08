@@ -2,7 +2,6 @@
   <v-form class="ml-2">
     <v-container fluid>
       <v-row no-gutters>
-        <!-- <v-col cols="2"> 見出し </v-col> -->
         <v-col>
           <v-text-field v-model="title" label="要約" outlined dense> </v-text-field>
         </v-col>
@@ -23,28 +22,27 @@
         保存する
       </FormButton>
     </v-row>
-    <v-snackbar v-model="saveResultSnackBar">
-      {{ snackBarText }}
-      <v-btn color="primary" text right @click="saveResultSnackBar = false">
-        DONE
-      </v-btn>
-    </v-snackbar>
+    <Snackbar :open="snackbar" :close="close">
+      {{ snackbarText }}
+    </Snackbar>
   </v-form>
 </template>
 
 <script>
 import TextEditor from '@/components/atoms/TextEditor'
 import FormButton from '@/components/atoms/FormButton'
+import Snackbar from '@/components/atoms/Snackbar'
 
 export default {
   components: {
     TextEditor,
     FormButton,
+    Snackbar,
   },
   data() {
     return {
-      saveResultSnackBar: false,
-      snackBarText: '',
+      snackbar: false,
+      snackbarText: '',
       title: '',
       body: '',
       tag: '',
@@ -73,12 +71,15 @@ export default {
       }
 
       this.$store.dispatch('notes/add', note)
-      this.saveResultSnackBar = true
-      this.snackBarText = 'カードが保存されました'
+      this.snackbar = true
+      this.snackbarText = 'カードが保存されました'
       this.title = ''
       this.tag = ''
       this.body = ''
     },
+    close() {
+      this.snackbar = false
+    }
   },
 }
 </script>

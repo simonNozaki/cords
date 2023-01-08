@@ -45,19 +45,20 @@
         </v-container>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="snackbar">
+    <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
-      <v-btn color="primary" text right @click="snackbar = false"> DONE </v-btn>
-    </v-snackbar>
+    </Snackbar>
   </div>
 </template>
 
 <script>
 import FormButton from '@/components/atoms/FormButton'
+import Snackbar from '@/components/atoms/Snackbar'
 
 export default {
   components: {
     FormButton,
+    Snackbar,
   },
   data() {
     return {
@@ -90,6 +91,9 @@ export default {
       this.tagDialog = false
       this.snackbar = true
       this.snackbarText = `タグ ${this.newTag} を追加しました`
+    },
+    close() {
+      this.snackbar = false
     },
   },
 }

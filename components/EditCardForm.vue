@@ -22,33 +22,22 @@
         保存する
       </FormButton>
     </v-row>
-    <v-snackbar v-model="snackbar">
+    <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
-      <v-btn color="primary" text right @click="snackbar = false"> DONE </v-btn>
-    </v-snackbar>
+    </Snackbar>
   </v-form>
 </template>
 
 <script>
 import TextEditor from '@/components/atoms/TextEditor'
 import FormButton from '@/components/atoms/FormButton'
+import Snackbar from '@/components/atoms/Snackbar'
 
 export default {
   components: {
     TextEditor,
     FormButton,
-  },
-  props: {
-    note: {
-      type: Object,
-      default() {
-        return {
-          title: '',
-          tag: '',
-          body: ''
-        }
-      }
-    }
+    Snackbar,
   },
   data() {
     const _notes = this.$store.state.notes.list
@@ -81,6 +70,9 @@ export default {
       this.snackbar = true
       this.snackbarText = 'カードを更新しました'
     },
+    close() {
+      this.snackbar = false
+    }
   },
 }
 </script>

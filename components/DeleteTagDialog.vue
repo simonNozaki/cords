@@ -43,19 +43,20 @@
         </v-container>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="snackbar">
+    <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
-      <v-btn color="primary" text right @click="snackbar = false"> 完了 </v-btn>
-    </v-snackbar>
+    </Snackbar>
   </div>
 </template>
 
 <script>
 import FormButton from '@/components/atoms/FormButton'
+import Snackbar from '@/components/atoms/Snackbar'
 
 export default {
   components: {
     FormButton,
+    Snackbar,
   },
   props: {
     tags: {
@@ -81,6 +82,9 @@ export default {
       this.$store.dispatch('tags/delete', this.deletingTags)
       this.snackbar = true
       this.snackbarText = `タグ ${this.deletingTags.reduce((l, r) => l + r)} を削除しました`
+    },
+    close() {
+      this.snackbar = false
     }
   }
 }

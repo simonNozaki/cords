@@ -72,8 +72,6 @@ export default {
       this.$store.dispatch('notes/delete', id)
 
       this.cardDeleteDialog = false
-      this.snackbar = true
-      this.snackbarText = 'カードを削除しました'
     },
     filterByTags(event) {
       console.log(event.length, event[0])

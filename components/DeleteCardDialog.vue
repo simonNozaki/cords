@@ -39,17 +39,19 @@
         </v-container>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="snackbar">
+    <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
-      <v-btn text color="primary" right @click="snackbar = false">
-        完了
-      </v-btn>
-    </v-snackbar>
+    </Snackbar>
   </div>
 </template>
 
 <script>
+import Snackbar from '@/components/atoms/Snackbar'
+
 export default {
+  components: {
+    Snackbar,
+  },
   props: {
     noteId: {
       type: String,
@@ -72,6 +74,9 @@ export default {
       this.cardDeleteDialog = false
       this.snackbar = true
       this.snackbarText = 'カードを削除しました'
+    },
+    close() {
+      this.snackbar = false
     },
   },
 }
