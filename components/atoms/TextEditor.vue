@@ -1,6 +1,6 @@
 <template>
   <v-textarea
-    :value="body"
+    v-model="editorBody"
     autofocus
     no-resize
     full-width
@@ -17,28 +17,39 @@
 const WHITE_SPACE_TWICE = '  '
 
 export default {
-  data() {
-    return {
-      body: '',
+  props: {
+    value: {
+      type: String,
+      default: '',
+    }
+  },
+  computed: {
+    editorBody: {
+      get: function() {
+        return this.value
+      },
+      set: function (v) {
+        this.$emit('input', v)
+      },
     }
   },
   methods: {
     completeToken(event) {
       const lastInputed = event[event.length - 1]
       if (lastInputed === '(') {
-        this.body += ')'
+        this.editorBody += ')'
       }
       if (lastInputed === '{') {
-        this.body += '}'
+        this.editorBody += '}'
       }
       if (lastInputed === '[') {
-        this.body += ']'
+        this.editorBody += ']'
       }
     },
     appendToken(event) {
       if (event.key === 'Tab') {
         event.preventDefault()
-        this.body += WHITE_SPACE_TWICE
+        this.editorBody += WHITE_SPACE_TWICE
       }
     },
   }

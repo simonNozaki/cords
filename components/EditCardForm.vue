@@ -15,7 +15,7 @@
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <TextEditor />
+      <TextEditor v-model="body" />
     </v-row>
     <v-row>
       <FormButton :click="updateNote">
