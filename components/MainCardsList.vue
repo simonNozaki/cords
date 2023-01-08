@@ -72,11 +72,12 @@ export default {
       }
     },
     tags() {
-      return this.$store.state.tags.list
+      return this.$store.getters['tags/findAll']
     }
   },
   created() {
     this.$store.dispatch('tags/fetchAll')
+    this.$store.dispatch('notes/fetchAll')
   },
   methods: {
     deleteNote(id) {
