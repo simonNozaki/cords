@@ -1,6 +1,11 @@
 require('dotenv').config()
 
 export default {
+  vue: {
+    config: {
+      devtools: true,
+    }
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
 
@@ -42,7 +47,8 @@ export default {
 
   googleFonts: {
     families: {
-      NotoSansJapanese: [300, 400, 500],
+      download: false,
+      NotoSansJapanese: [400],
       JetBrainsMono: [500],
     },
   },
@@ -74,6 +80,11 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    defaultAssets: {
+      font: {
+        family: 'Noto Sans Japanese'
+      }
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
