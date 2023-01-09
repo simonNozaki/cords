@@ -81,7 +81,8 @@ export default {
     deleteTag() {
       this.$store.dispatch('tags/delete', this.deletingTags)
       this.snackbar = true
-      this.snackbarText = `タグ ${this.deletingTags.reduce((l, r) => l + r)} を削除しました`
+      const deletedTags = this.deletingTags.reduce((l, r) => `${l}, ${r}`)
+      this.snackbarText = `タグ ${deletedTags} を削除しました`
     },
     close() {
       this.snackbar = false
