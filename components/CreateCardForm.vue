@@ -49,15 +49,9 @@ export default {
     }
   },
   computed: {
-    notes() {
-      return this.$store.getters['notes/findAll']
-    },
     tags() {
       return this.$store.getters['tags/findAll'].map(t => t.name)
     },
-  },
-  created() {
-    this.$store.dispatch('notes/fetchAll')
   },
   methods: {
     addNote() {
