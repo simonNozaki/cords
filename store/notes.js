@@ -8,11 +8,6 @@ export const getters = {
   findAll(state) {
     return state.list
   },
-  findByTags(state) {
-    return (tags) => {
-      return state.list.filter((note) => tags.has(note.tag))
-    }
-  }
 }
 
 export const actions = {

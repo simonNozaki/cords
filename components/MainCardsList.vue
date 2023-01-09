@@ -93,7 +93,7 @@ export default {
       if (filteringTags.size === 0) {
         this.notes = this.$store.getters['notes/findAll']
       } else {
-        const filteredNotes = this.$store.getters['notes/findByTags'](filteringTags)
+        const filteredNotes = this.$store.getters['notes/findAll'].filter((note) => filteringTags.has(note.tag))
         this.notes = filteredNotes
       }
     }
