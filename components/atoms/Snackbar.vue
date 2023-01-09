@@ -2,9 +2,16 @@
   <div class="text-center">
     <v-snackbar :value="open">
       <slot></slot>
-      <v-btn color="primary" text @click="close">
-        完了
-      </v-btn>
+      <template #action="{ attrs }">
+        <v-btn
+          color="primary"
+          text
+          v-bind="attrs"
+          @click="close"
+        >
+          完了
+        </v-btn>
+      </template>
     </v-snackbar>
   </div>
 </template>
