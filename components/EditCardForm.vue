@@ -40,7 +40,16 @@ export default {
     Snackbar,
   },
   data() {
-    const _notes = this.$store.getters['notes/findAll']
+    const _notes = []
+    this.$fire.firestore.collection('notes').get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const note = doc.data()
+          note.id = doc.id
+          _notes.push(note)
+        })
+      })
+    // const _notes = this.$store.getters['notes/findAll']
     const id = this.$route.params.id
     const _note = _notes.find((note) => note.id.toString() === id)
     return {
