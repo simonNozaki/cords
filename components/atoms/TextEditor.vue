@@ -37,13 +37,13 @@ export default {
     completeToken(event) {
       const lastInputed = event[event.length - 1]
       if (lastInputed === '(') {
-        this.editorBody += ')'
+        this.editorBody += '()'
       }
       if (lastInputed === '{') {
-        this.editorBody += '}'
+        this.editorBody += '{}'
       }
       if (lastInputed === '[') {
-        this.editorBody += ']'
+        this.editorBody += '[]'
       }
     },
     appendToken(event) {
