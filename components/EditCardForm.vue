@@ -3,19 +3,19 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="title" label="要約" outlined dense> </v-text-field>
+          <v-text-field v-model="note.title" label="要約" outlined dense> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <AddTagDialog class="ma-1" />
         <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="tag" :items="tags" label="タグ" outlined dense> </v-select>
+          <v-select v-model="note.tag" :items="tags" label="タグ" outlined dense> </v-select>
         </v-col>
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <TextEditor v-model="body" />
+      <TextEditor v-model="note.body" />
     </v-row>
     <v-row>
       <FormButton :click="updateNote">
@@ -40,24 +40,14 @@ export default {
     Snackbar,
   },
   data() {
-    const _notes = []
-    this.$fire.firestore.collection('notes').get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const note = doc.data()
-          note.id = doc.id
-          _notes.push(note)
-        })
-      })
-    // const _notes = this.$store.getters['notes/findAll']
-    const id = this.$route.params.id
-    const _note = _notes.find((note) => note.id.toString() === id)
     return {
       snackbar: false,
       snackbarText: '',
-      title: _note.title,
-      tag: _note.tag,
-      body: _note.body,
+      note: {
+        title: '',
+        tag: '',
+        body: '',
+      },
     }
   },
   computed: {
@@ -65,16 +55,23 @@ export default {
       return this.$store.getters['tags/findAll'].map(t => t.name)
     },
   },
+  async created() {
+    await this.$fire.firestore.collection('notes').get()
+    .then((querySnapshot) => {
+        const _notes = []
+        querySnapshot.forEach((doc) => {
+          const note = doc.data()
+          note.id = doc.id
+          _notes.push(note)
+        })
+        const id = this.$route.params.id
+        this.note = _notes.find((note) => note.id.toString() === id)
+      })
+  },
   methods: {
     updateNote() {
-      const note = {
-        id: this.$route.params.id,
-        title: this.title,
-        tag: this.tag,
-        body: this.body,
-        updatedAt: new Date(),
-      }
-      this.$store.dispatch('notes/set', note)
+      this.note.updatedAt = new Date()
+      this.$store.dispatch('notes/set', this.note)
 
       this.snackbar = true
       this.snackbarText = 'カードを更新しました'
