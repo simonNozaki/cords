@@ -15,7 +15,7 @@
       @change="findByTags"
     >
     </v-select>
-    <v-list dense height="536" class="grey lighten-5 force-size">
+    <v-list dense :height="listHeight" class="grey lighten-5 force-size">
       <v-list-item v-for="note in notes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1 ma-0" outlined>
@@ -73,7 +73,16 @@ export default {
     },
     tags() {
       return this.$store.getters['tags/findAll']
-    }
+    },
+    listHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm': return 500
+        case 'md': return 536
+        case 'lg': return 586
+        case 'xl': return 650
+        default : return 400
+      }
+    },
   },
   created() {
     this.$store.dispatch('tags/fetchAll')

@@ -5,7 +5,7 @@
     no-resize
     full-width
     outlined
-    rows="12"
+    :rows="row"
     class="textarea-editor-font"
     @input="completeToken"
     @keydown="appendToken"
@@ -31,6 +31,15 @@ export default {
       set: function (v) {
         this.$emit('input', v)
       },
+    },
+    row() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm': return 12
+        case 'md': return 15
+        case 'lg': return 15
+        case 'xl': return 20
+        default : return 10
+      }
     }
   },
   methods: {
