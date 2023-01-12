@@ -12,7 +12,7 @@
       </template>
       <v-card>
         <v-container>
-          <v-card-title class="justify-center">カードを削除します</v-card-title>
+          <v-card-title class="justify-center">カード "{{ noteTitle }}" を削除します</v-card-title>
           <v-row>
             <v-card-text class="text-center">
               <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
@@ -54,6 +54,12 @@ export default {
   },
   props: {
     noteId: {
+      type: String,
+      default() {
+        return ''
+      }
+    },
+    noteTitle: {
       type: String,
       default() {
         return ''

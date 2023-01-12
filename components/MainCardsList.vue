@@ -46,7 +46,7 @@
               </v-chip>
             </v-list-item-subtitle>
             <v-list-item-subtitle>
-              <DeleteCardDialog :note-id="note.id" />
+              <DeleteCardDialog :note-id="note.id" :note-title="note.title" />
             </v-list-item-subtitle>
           </v-card>
         </v-list-item-content>
