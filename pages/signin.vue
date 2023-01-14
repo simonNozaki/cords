@@ -77,7 +77,16 @@ export default {
           this.$router.push('/')
         })
         .catch((e) => {
-          this.snackbarText = `サインインできませんでした... ${e}`
+          switch(e.code) {
+            case 'auth/user-not-found':
+              this.snackbarText = 'アカウントがありません'
+              break
+            case 'auth/wrong-password':
+              this.snackbarText = 'メールアドレスまたはパスワードが間違えています'
+              break
+            default:
+              this.snackbarText = `サインインできませんでした... ${e}`
+          }
           this.snackbar = true
         })
     },

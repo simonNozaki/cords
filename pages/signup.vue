@@ -10,7 +10,7 @@
       <v-card-text class="text-center ma-0">        
         もうアカウントを持ってる？
         <v-btn text color="primary" to="/signin">
-          サインアップ
+          サインイン
         </v-btn>
       </v-card-text>
       <v-form v-model="valid">
@@ -80,7 +80,9 @@ export default {
           this.$router.push('/')
         })
         .catch((e) => {
-          this.snackbarText = `アカウントが作成できませんでした... ${e}`
+          this.snackbarText = (e.code === 'auth/email-already-in-use')
+            ? `${this.email} はすでに使われています`
+            : `アカウントが作成できませんでした... ${e}`
           this.snackbar = true
         })
     },
