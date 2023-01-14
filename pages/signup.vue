@@ -29,7 +29,6 @@
           アカウントを作成
         </FormButton>
       </v-form>
-      {{ message }}
     </v-card>
     <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
@@ -55,7 +54,6 @@ export default {
       snackbar: false,
       snackbarText: '',
       valid: true,
-      message: '',
       emailRules: [
         v => !!v || 'メールアドレスは必須です',
         v => this.$isEmailFormat(v) || 'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
