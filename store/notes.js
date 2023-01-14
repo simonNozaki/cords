@@ -12,6 +12,7 @@ export const getters = {
 
 export const actions = {
   async add(context, note) {
+    const currentUser = context.rootGetters['users/getCurrent']
     note.tag = note.tag ? note.tag : 'なし'
     note.updatedAt = getDateString(note.updatedAt)
     let id;
@@ -19,6 +20,7 @@ export const actions = {
       title: note.title,
       tag: note.tag,
       body: note.body,
+      userId: currentUser.id, 
       updatedAt: note.updatedAt,
     })
       .then((docRef) => {
@@ -37,10 +39,12 @@ export const actions = {
     })
     context.commit('update', note)
   },
-  async fetchAll(context) {
+  async fetchAll(context, userId) {
     const notes = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-    await this.$fire.firestore.collection('notes').get()
+    await this.$fire.firestore.collection('notes')
+      .where('userId', '==', userId)
+      .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const note = doc.data()

@@ -11,10 +11,11 @@ export const getters = {
 }
 
 export const actions = {
-  async add(context, tagName) {
+  async add(context, newTag) {
     let id;
     const tag = {
-      name: tagName,
+      name: newTag.tagName,
+      userId: newTag.userId,
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -36,10 +37,12 @@ export const actions = {
     }
     context.commit('remove', tagNames)
   },
-  async fetchAll(context) {
+  async fetchAll(context, userId) {
     const tags = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-    await this.$fire.firestore.collection('tags').get()
+    await this.$fire.firestore.collection('tags')
+      .where('userId', '==', userId)
+      .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const tag = doc.data()

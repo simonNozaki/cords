@@ -70,8 +70,8 @@ export default {
     signin() {
       this.$fire.auth
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(_ => {
-          this.$store.commit('users/set', this.email)
+        .then((userCredential) => {
+          this.$store.commit('users/set', { name: this.email, id: userCredential.user.uid })
           this.$router.push('/')
         })
         .catch((e) => {

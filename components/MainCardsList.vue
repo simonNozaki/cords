@@ -85,8 +85,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('tags/fetchAll')
-    this.$store.dispatch('notes/fetchAll')
+    const currentUser = this.$store.getters['users/getCurrent']
+    this.$store.dispatch('tags/fetchAll', currentUser.id)
+    this.$store.dispatch('notes/fetchAll', currentUser.id)
   },
   methods: {
     deleteNote(id) {

@@ -1,17 +1,25 @@
 export const state = () => {
   return {
-    accountName: '',
+    id: '',
+    name: '',
   }
 }
 
 export const getters = {
-  findCurrentUser(state) {
-    return state.accountName
+  getCurrent(state) {
+    return {
+      id: state.id,
+      name: state.name,
+    }
+  },
+  isAuthenticated() {
+    return state.name !== '' && state.id !== ''
   }
 }
 
 export const mutations = {
-  set(state, accountName) {
-    state.accountName = accountName
+  set(state, user) {
+    state.name = user.name
+    state.id = user.id
   }
 }

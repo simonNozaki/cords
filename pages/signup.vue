@@ -83,8 +83,8 @@ export default {
     signup() {
       this.$fire.auth
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(_ => {
-          this.$store.dispatch('users/set', this.email)
+        .then((userCredential) => {
+          this.$store.commit('users/set', { name: this.email, id:  userCredential.user.uid })
           this.$router.push('/')
         })
         .catch((e) => {

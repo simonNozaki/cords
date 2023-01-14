@@ -86,7 +86,8 @@ export default {
         this.snackbarText = `タグ ${this.newTag} はすでに登録されています`
         return
       }
-      this.$store.dispatch('tags/add', this.newTag)
+      const currentUser = this.$store.getters['users/getCurrent']
+      this.$store.dispatch('tags/add', { userId: currentUser.id, tagName: this.newTag })
       this.newTag = ''
       this.tagDialog = false
       this.snackbar = true
