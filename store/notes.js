@@ -35,6 +35,7 @@ export const actions = {
       title: note.title,
       tag: note.tag,
       body: note.body,
+      userId: note.userId,
       updatedAt: note.updatedAt,
     })
     context.commit('update', note)
