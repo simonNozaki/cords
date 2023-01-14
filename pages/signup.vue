@@ -13,7 +13,7 @@
           サインイン
         </v-btn>
       </v-card-text>
-      <v-form v-model="valid">
+      <v-form v-model="valid" class="text-center">
         <TextInput
           v-model="email"
           label="メールアドレス"
