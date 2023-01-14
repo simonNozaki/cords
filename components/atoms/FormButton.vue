@@ -1,7 +1,7 @@
 <template>
   <v-btn
     color="amber darken-4"
-    class="white--text justify-center mx-auto"
+    class="white--text"
     :disabled="disabled"
     @click="click"
   >
