@@ -25,6 +25,12 @@
           type="password"
           :rules="passwordRules"
         />
+        <TextInput
+          v-model="passwordConfirmation"
+          label="パスワードをもう一度確認"
+          type="password"
+          :rules="passwordConfirmationRules"
+        />
         <FormButton :disabled="!isSubmittable" :click="signup">
           アカウントを作成
         </FormButton>
@@ -51,6 +57,7 @@ export default {
     return {
       email: '',
       password: '',
+      passwordConfirmation: '',
       snackbar: false,
       snackbarText: '',
       valid: true,
@@ -61,6 +68,9 @@ export default {
       passwordRules: [
         v => !!v || 'パスワードは必須です',
         v => this.$isPasswordLength(v) || '6桁以上の英数字を使って、パスワードを入力してください',
+      ],
+      passwordConfirmationRules: [
+        v => v === this.password || 'パスワードが一致しません'
       ],
     }
   },
