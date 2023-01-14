@@ -5,8 +5,8 @@ export const state = () => {
 }
 
 export const getters = {
-  findCurrentUser() {
-    return this.accountName
+  findCurrentUser(state) {
+    return state.accountName
   }
 }
 

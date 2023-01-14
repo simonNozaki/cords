@@ -4,8 +4,8 @@
       class="user-form ma-10 pa-10 mx-auto"
     >
       <v-card-title class="justify-center"> Cordsにサインイン </v-card-title>
-      <v-card-text class="justify-center">
-        すでにアカウントをお持ちですか？
+      <v-card-text class="text-center">
+        まだアカウントを作っていない？
         <v-btn text color="primary" to="/signup">
           サインアップ
         </v-btn>
@@ -22,7 +22,7 @@
           type="password"
           :rules="passwordRules"
         />
-        <FormButton :disabled="!isSubmittable" :click="signup">
+        <FormButton :disabled="!isSubmittable" :click="signin">
           サインイン
         </FormButton>
       </v-form>
@@ -55,10 +55,11 @@ export default {
       message: '',
       emailRules: [
         v => !!v || 'メールアドレスは必須です',
+        v => this.$isEmailFormat(v) || 'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
       ],
       passwordRules: [
         v => !!v || 'パスワードは必須です',
-        v => (v && v.length >= 6) || '6桁以上の英数字を使って、パスワードを入力してください',
+        v => this.$isPasswordLength(v) || '6桁以上の英数字を使って、パスワードを入力してください',
       ],
     }
   },
@@ -68,11 +69,11 @@ export default {
     },
   },
   methods: {
-    signup() {
+    signin() {
       this.$fire.auth
         .signInWithEmailAndPassword(this.email, this.password)
         .then(_ => {
-          this.$store.dispatch('users/set', this.email)
+          this.$store.commit('users/set', this.email)
           this.$router.push('/')
         })
         .catch((e) => {

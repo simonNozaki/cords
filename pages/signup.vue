@@ -5,7 +5,13 @@
     >
       <v-card-title class="justify-center"> Cordsにサインアップ </v-card-title>
       <v-card-text class="text-center">
-        アカウントを作成すると、メモを残せるようになります
+        アカウントを作成すると、メモを残せるようになります。
+      </v-card-text>
+      <v-card-text class="text-center ma-0">        
+        もうアカウントを持ってる？
+        <v-btn text color="primary" to="/signin">
+          サインアップ
+        </v-btn>
       </v-card-text>
       <v-form v-model="valid">
         <TextInput
@@ -52,10 +58,11 @@ export default {
       message: '',
       emailRules: [
         v => !!v || 'メールアドレスは必須です',
+        v => this.$isEmailFormat(v) || 'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
       ],
       passwordRules: [
         v => !!v || 'パスワードは必須です',
-        v => (v && v.length >= 6) || '6桁以上の英数字を使って、パスワードを入力してください',
+        v => this.$isPasswordLength(v) || '6桁以上の英数字を使って、パスワードを入力してください',
       ],
     }
   },
