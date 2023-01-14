@@ -71,7 +71,10 @@ export default {
       this.$fire.auth
         .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
-          this.$store.commit('users/set', { name: this.email, id: userCredential.user.uid })
+          const uid = userCredential.user.uid
+          sessionStorage.setItem('uid', uid)
+          sessionStorage.setItem('name', this.email)
+          this.$store.commit('users/set', { name: this.email, id: uid })
           this.$router.push('/')
         })
         .catch((e) => {

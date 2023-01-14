@@ -7,13 +7,23 @@ export const state = () => {
 
 export const getters = {
   getCurrent(state) {
+    // セッションストレージの値が有効ならそちらを優先
+    const uid = sessionStorage.getItem('uid')
+    const name = sessionStorage.getItem('name')
+    if (uid || name) {
+      return {
+        id: uid,
+        name,
+      }
+    }
+
     return {
       id: state.id,
       name: state.name,
     }
   },
   isAuthenticated(state) {
-    return state.name !== '' || state.id !== ''
+    return sessionStorage.getItem('uid') || ( state.name !== '' || state.id !== '')
   }
 }
 
