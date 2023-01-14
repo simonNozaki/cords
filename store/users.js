@@ -12,8 +12,8 @@ export const getters = {
       name: state.name,
     }
   },
-  isAuthenticated() {
-    return state.name !== '' && state.id !== ''
+  isAuthenticated(state) {
+    return state.name !== '' || state.id !== ''
   }
 }
 
