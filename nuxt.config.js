@@ -6,6 +6,9 @@ export default {
       devtools: true,
     }
   },
+  router: {
+    middleware: ['auth']
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
 
@@ -31,7 +34,7 @@ export default {
   css: ['~/assets/css/style.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@plugins/input.rules'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
