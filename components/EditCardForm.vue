@@ -3,14 +3,14 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="note.title" label="要約" outlined dense> </v-text-field>
+          <v-text-field v-model="note.title" label="要約" solo flat dense> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <AddTagDialog class="ma-1" />
         <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="note.tag" :items="tags" label="タグ" outlined dense> </v-select>
+          <v-select v-model="note.tag" :items="tags" label="タグ" solo flat dense> </v-select>
         </v-col>
       </v-row>
     </v-container>

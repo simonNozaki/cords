@@ -4,7 +4,8 @@
     autofocus
     no-resize
     full-width
-    outlined
+    solo
+    flat
     :rows="row"
     class="textarea-editor-font"
     @input="completeToken"
