@@ -16,7 +16,7 @@
     >
     </v-select>
     <v-list dense :height="listHeight" class="grey lighten-5 force-size">
-      <v-list-item v-for="note in notes" :key="note.id">
+      <v-list-item v-for="note in listNotes" :key="note.id">
         <v-list-item-content>
           <v-card class="pa-1 ma-0" outlined>
             <v-tooltip top>
@@ -59,7 +59,8 @@
 export default {
   data() {
     return {
-      listNotes: this.$store.getters['notes/findAll'],
+      // state(notes.list)のディープコピー、コンポーネント表示にのみ用いる
+      listNotes: [],
     }
   },
   computed: {
@@ -84,10 +85,11 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
     const currentUser = this.$store.getters['users/getCurrent']
-    this.$store.dispatch('tags/fetchAll', currentUser.id)
-    this.$store.dispatch('notes/fetchAll', currentUser.id)
+    await this.$store.dispatch('tags/fetchAll', currentUser.id)
+    await this.$store.dispatch('notes/fetchAll', currentUser.id)
+    this.listNotes = this.$store.getters['notes/findAll']
   },
   methods: {
     deleteNote(id) {
