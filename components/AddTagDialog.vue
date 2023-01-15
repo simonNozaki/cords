@@ -8,7 +8,8 @@
       <template #activator="{ on, attrs }">
         <v-btn
           small
-          outlined
+          icon
+          color="amber darken-4"
           class="justify-center"
           v-bind="attrs"
           v-on="on"
