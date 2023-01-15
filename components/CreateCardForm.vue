@@ -77,9 +77,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.text-editor {
-  height: 400;
-}
-</style>
