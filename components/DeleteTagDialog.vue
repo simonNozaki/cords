@@ -22,7 +22,7 @@
         </v-btn>
         <v-card-title class="justify-center"> 削除したいタグを選択してください </v-card-title>
         <v-container>
-          <v-row justify="center">
+          <v-row justify="center" class="text-center">
             <v-col>
               <v-select
                 v-model="deletingTags"
@@ -84,9 +84,11 @@ export default {
       this.snackbar = true
       const deletedTags = this.deletingTags.reduce((l, r) => `${l}, ${r}`)
       this.snackbarText = `タグ ${deletedTags} を削除しました`
+      this.deletingTags = []
     },
     close() {
       this.snackbar = false
+      this.snackbarText = ''
     }
   }
 }
