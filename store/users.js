@@ -1,7 +1,9 @@
 export const state = () => {
+  const id = sessionStorage.getItem('uid') ? sessionStorage.getItem('uid') : ''
+  const name = sessionStorage.getItem('name') ? sessionStorage.getItem('name') : ''
   return {
-    id: '',
-    name: '',
+    id,
+    name,
   }
 }
 
