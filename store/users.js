@@ -7,23 +7,16 @@ export const state = () => {
 
 export const getters = {
   getCurrent(state) {
-    // セッションストレージの値が有効ならそちらを優先
-    const uid = sessionStorage.getItem('uid')
-    const name = sessionStorage.getItem('name')
-    if (uid || name) {
-      return {
-        id: uid,
-        name,
-      }
-    }
-
     return {
       id: state.id,
       name: state.name,
     }
   },
   isAuthenticated(state) {
-    return sessionStorage.getItem('uid') || ( state.name !== '' || state.id !== '')
+    // TODO: 先に式として評価しておくことで期待した真偽値になる（なぜ？）
+    // eslint-disable-next-line no-unused-expressions
+    (state.name !== '' || state.id !== '')
+    return !!sessionStorage.getItem('uid') || (state.name !== '' || state.id !== '')
   }
 }
 
@@ -31,5 +24,9 @@ export const mutations = {
   set(state, user) {
     state.name = user.name
     state.id = user.id
+  },
+  reset(state) {
+    state.id = ''
+    state.name = ''
   }
 }
