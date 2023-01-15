@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="note.title" label="要約" solo flat dense> </v-text-field>
+          <v-text-field v-model="note.title" label="要約" solo flat> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
