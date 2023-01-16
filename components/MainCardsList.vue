@@ -46,21 +46,76 @@
               </v-chip>
             </v-list-item-subtitle>
             <v-list-item-subtitle>
-              <DeleteCardDialog :note-id="note.id" :note-title="note.title" />
+              <v-dialog
+                v-model="cardDeleteDialog"
+                max-width="500"
+                transition="fade-transition"
+                :retain-focus="false"
+              >
+                <template #activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on" @click="setCurrentNote(note)">
+                    <v-icon> mdi-delete-outline </v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-container>
+                    <v-card-title class="justify-center">カード "{{ currentNote.title ?? '' }}" を削除します</v-card-title>
+                    <v-row>
+                      <v-card-text class="text-center">
+                        <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
+                        この操作は取り戻せません
+                      </v-card-text>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-btn
+                        text
+                        class="mb-3"
+                        @click="cardDeleteDialog = !cardDeleteDialog"
+                      >
+                        閉じる
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="error"
+                        class="mb-3"
+                        @click="deleteNote(currentNote.id)"
+                      >
+                        削除する
+                      </v-btn>
+                    </v-row>
+                  </v-container>
+                </v-card>
+              </v-dialog>
             </v-list-item-subtitle>
           </v-card>
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <Snackbar :open="snackbar" :close="close">
+      {{ snackbarText }}
+    </Snackbar>
   </v-card>
 </template>
 
 <script>
+import Snackbar from '@/components/atoms/Snackbar'
+
 export default {
+  components: {
+    Snackbar,
+  },
   data() {
     return {
       // state(notes.list)のディープコピー、コンポーネント表示にのみ用いる
       listNotes: [],
+      cardDeleteDialog: false,
+      currentNote: {
+        id: '',
+        title: '',
+      },
+      dialog: false,
+      snackbar: false,
+      snackbarText: '',
     }
   },
   computed: {
@@ -96,6 +151,9 @@ export default {
       this.$store.dispatch('notes/delete', id)
 
       this.cardDeleteDialog = false
+      this.snackbar = true
+      this.snackbarText = 'カードを削除しました'
+      this.notes = this.listNotes.filter((note) => note.id !== id)
     },
     findByTags(event) {
       // eventが配列形式になっているのでそのまま渡してOK
@@ -108,6 +166,12 @@ export default {
         const filteredNotes = this.$store.getters['notes/findAll'].filter((note) => filteringTags.has(note.tag))
         this.notes = filteredNotes
       }
+    },
+    close() {
+      this.snackbar = false
+    },
+    setCurrentNote(note) {
+      this.currentNote = note
     }
   },
 }
