@@ -154,6 +154,10 @@ export default {
       this.snackbar = true
       this.snackbarText = 'カードを削除しました'
       this.notes = this.listNotes.filter((note) => note.id !== id)
+      // 削除時に削除するカード上にいたらリダイレクトする
+      if (id === this.$route.params.id) {
+        this.$router.push('/')
+      }
     },
     findByTags(event) {
       // eventが配列形式になっているのでそのまま渡してOK
