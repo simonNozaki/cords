@@ -13,11 +13,12 @@ export const getters = {
 export const actions = {
   async add(context, newTag) {
     let id;
+    const now = new Date()
     const tag = {
       name: newTag.tagName,
       userId: newTag.userId,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: this.$toDatetimeString(now),
+      updatedAt: this.$toDatetimeString(now),
     }
     await this.$fire.firestore.collection('tags').add(tag)
       .then((docRef) => {

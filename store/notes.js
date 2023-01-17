@@ -14,7 +14,7 @@ export const actions = {
   async add(context, note) {
     const currentUser = context.rootGetters['users/getCurrent']
     note.tag = note.tag ? note.tag : 'なし'
-    note.updatedAt = getDateString(note.updatedAt)
+    note.updatedAt = this.$toDatetimeString(note.updatedAt)
     let id;
     await this.$fire.firestore.collection('notes').add({
       title: note.title,
@@ -30,7 +30,7 @@ export const actions = {
     context.commit('put', note)
   },
   async set(context, note) {
-    note.updatedAt = getDateString(note.updatedAt)
+    note.updatedAt = this.$toDatetimeString(note.updatedAt)
     await this.$fire.firestore.collection('notes').doc(note.id).set({
       title: note.title,
       tag: note.tag,
@@ -80,14 +80,4 @@ export const mutations = {
   remove(state, id) {
     state.list = state.list.filter((note) => note.id !== id)
   },
-}
-
-function getDateString(date) {
-  const y = date.getFullYear()
-  const month = date.getMonth() + 1
-  const d = date.getDate()
-  const h = date.getHours()
-  const m = date.getMinutes()
-  const s = date.getSeconds()
-  return `${y}-${month}-${d} ${h}:${m}:${s}`
 }
