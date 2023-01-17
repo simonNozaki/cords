@@ -47,7 +47,6 @@ export default {
         title: '',
         tag: '',
         body: '',
-        userId: '',
       },
     }
   },

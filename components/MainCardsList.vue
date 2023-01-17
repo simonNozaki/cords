@@ -113,7 +113,6 @@ export default {
         id: '',
         title: '',
       },
-      dialog: false,
       snackbar: false,
       snackbarText: '',
     }
