@@ -23,7 +23,7 @@ export default {
       default() {
         return false
       },
-    }
-  }
+    },
+  },
 }
 </script>

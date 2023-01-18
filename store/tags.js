@@ -7,19 +7,21 @@ export const state = () => {
 export const getters = {
   findAll(state) {
     return state.list
-  }
+  },
 }
 
 export const actions = {
   async add(context, newTag) {
-    let id;
+    let id
     const tag = {
       name: newTag.tagName,
       userId: newTag.userId,
       createdAt: this.$toDatetimeString(newTag.createdAt),
       updatedAt: this.$toDatetimeString(newTag.updatedAt),
     }
-    await this.$fire.firestore.collection('tags').add(tag)
+    await this.$fire.firestore
+      .collection('tags')
+      .add(tag)
       .then((docRef) => {
         id = docRef.id
       })
@@ -28,7 +30,8 @@ export const actions = {
   },
   async delete(context, tagNames) {
     for (const name of tagNames) {
-      const record = await this.$fire.firestore.collection('tags')
+      const record = await this.$fire.firestore
+        .collection('tags')
         .where('name', '==', name)
         .get()
       record.forEach((doc) => {
@@ -40,7 +43,8 @@ export const actions = {
   async fetchAll(context, userId) {
     const tags = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-    await this.$fire.firestore.collection('tags')
+    await this.$fire.firestore
+      .collection('tags')
       .where('userId', '==', userId)
       .get()
       .then((querySnapshot) => {
@@ -51,7 +55,7 @@ export const actions = {
         })
       })
     context.commit('init', tags)
-  }
+  },
 }
 
 export const mutations = {
@@ -65,5 +69,5 @@ export const mutations = {
     tagNames.forEach((name) => {
       state.list = state.list.filter((tag) => tag.name !== name)
     })
-  }
+  },
 }

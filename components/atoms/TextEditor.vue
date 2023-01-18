@@ -22,11 +22,11 @@ export default {
     value: {
       type: String,
       default: '',
-    }
+    },
   },
   computed: {
     editorBody: {
-      get: function() {
+      get: function () {
         return this.value
       },
       set: function (v) {
@@ -35,13 +35,18 @@ export default {
     },
     row() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'sm': return 12
-        case 'md': return 15
-        case 'lg': return 15
-        case 'xl': return 20
-        default : return 10
+        case 'sm':
+          return 12
+        case 'md':
+          return 15
+        case 'lg':
+          return 15
+        case 'xl':
+          return 20
+        default:
+          return 10
       }
-    }
+    },
   },
   methods: {
     completeToken(event) {
@@ -62,6 +67,6 @@ export default {
         this.editorBody += WHITE_SPACE_TWICE
       }
     },
-  }
+  },
 }
 </script>

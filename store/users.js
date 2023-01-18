@@ -1,6 +1,8 @@
 export const state = () => {
   const id = sessionStorage.getItem('uid') ? sessionStorage.getItem('uid') : ''
-  const name = sessionStorage.getItem('name') ? sessionStorage.getItem('name') : ''
+  const name = sessionStorage.getItem('name')
+    ? sessionStorage.getItem('name')
+    : ''
   return {
     id,
     name,
@@ -17,9 +19,11 @@ export const getters = {
   isAuthenticated(state) {
     // TODO: 先に式として評価しておくことで期待した真偽値になる（なぜ？）
     // eslint-disable-next-line no-unused-expressions
-    (state.name !== '' || state.id !== '')
-    return !!sessionStorage.getItem('uid') || (state.name !== '' || state.id !== '')
-  }
+    state.name !== '' || state.id !== ''
+    return (
+      !!sessionStorage.getItem('uid') || state.name !== '' || state.id !== ''
+    )
+  },
 }
 
 export const mutations = {
@@ -30,5 +34,5 @@ export const mutations = {
   reset(state) {
     state.id = ''
     state.name = ''
-  }
+  },
 }

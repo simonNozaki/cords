@@ -1,4 +1,4 @@
-const PATH_EXCLUDING = new Set(["/signin", "/signup"])
+const PATH_EXCLUDING = new Set(['/signin', '/signup'])
 
 export default function (context) {
   const isAuthenticated = context.store.getters['users/isAuthenticated']

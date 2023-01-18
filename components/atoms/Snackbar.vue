@@ -3,14 +3,7 @@
     <v-snackbar :value="open">
       <slot></slot>
       <template #action="{ attrs }">
-        <v-btn
-          color="primary"
-          text
-          v-bind="attrs"
-          @click="close"
-        >
-          完了
-        </v-btn>
+        <v-btn color="primary" text v-bind="attrs" @click="close"> 完了 </v-btn>
       </template>
     </v-snackbar>
   </div>
@@ -23,14 +16,14 @@ export default {
       type: Boolean,
       default() {
         return false
-      }
+      },
     },
     close: {
       type: Function,
       default() {
         return () => {}
-      }
-    }
+      },
+    },
   },
 }
 </script>

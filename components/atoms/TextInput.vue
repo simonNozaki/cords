@@ -26,18 +26,18 @@ export default {
     },
     rules: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
   },
   computed: {
     inputText: {
-      get: function() {
+      get: function () {
         return this.value
       },
       set: function (v) {
         this.$emit('input', v)
       },
     },
-  }
+  },
 }
 </script>

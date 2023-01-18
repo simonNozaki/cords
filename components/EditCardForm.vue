@@ -3,24 +3,45 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="note.title" label="要約" solo flat> </v-text-field>
+          <v-text-field v-model="note.title" label="要約" solo flat>
+          </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <AddTagDialog class="ma-1" />
         <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="note.tag" :items="tags" label="タグ" solo flat dense> </v-select>
+          <v-select
+            v-model="note.tag"
+            :items="tags"
+            label="タグ"
+            solo
+            flat
+            dense
+          >
+          </v-select>
         </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <div class="ml-2 mr-2">
+          作成
+          <v-chip>
+            <v-icon> mdi-clock-outline </v-icon> {{ note.createdAt }}
+          </v-chip>
+        </div>
+        <div class="ml-2 mr-2">
+          更新
+          <v-chip>
+            <v-icon> mdi-clock-outline </v-icon> {{ note.updatedAt }}
+          </v-chip>
+        </div>
       </v-row>
     </v-container>
     <v-row no-gutters>
       <TextEditor v-model="note.body" />
     </v-row>
     <v-row>
-      <FormButton :click="updateNote">
-        保存する
-      </FormButton>
+      <FormButton :click="updateNote"> 保存する </FormButton>
     </v-row>
     <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
@@ -52,12 +73,14 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.getters['tags/findAll'].map(t => t.name)
+      return this.$store.getters['tags/findAll'].map((t) => t.name)
     },
   },
   async created() {
-    await this.$fire.firestore.collection('notes').get()
-    .then((querySnapshot) => {
+    await this.$fire.firestore
+      .collection('notes')
+      .get()
+      .then((querySnapshot) => {
         const _notes = []
         querySnapshot.forEach((doc) => {
           const note = doc.data()
@@ -78,7 +101,7 @@ export default {
     },
     close() {
       this.snackbar = false
-    }
+    },
   },
 }
 </script>

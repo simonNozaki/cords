@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-dialog
-      v-model="tagDialog"
-      max-width="500"
-      transition="fade-transition"
-    >
+    <v-dialog v-model="tagDialog" max-width="500" transition="fade-transition">
       <template #activator="{ on, attrs }">
         <v-btn
           small
@@ -34,10 +30,7 @@
                   dense
                 >
                 </v-text-field>
-                <FormButton
-                  :disabled="!isSubmittable"
-                  :click="addTag"
-                >
+                <FormButton :disabled="!isSubmittable" :click="addTag">
                   保存する
                 </FormButton>
               </v-form>

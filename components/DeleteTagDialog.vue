@@ -6,13 +6,7 @@
       transition="fade-transition"
     >
       <template #activator="{ on, attrs }">
-        <v-btn
-          small
-          icon
-          color="amber darken-4"
-          v-bind="attrs"
-          v-on="on"
-        >
+        <v-btn small icon color="amber darken-4" v-bind="attrs" v-on="on">
           <v-icon center dense> mdi-minus </v-icon>
         </v-btn>
       </template>
@@ -20,7 +14,9 @@
         <v-btn class="ma-6" text @click="tagDeleteDialog = !tagDeleteDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
-        <v-card-title class="justify-center"> 削除したいタグを選択してください </v-card-title>
+        <v-card-title class="justify-center">
+          削除したいタグを選択してください
+        </v-card-title>
         <v-container>
           <v-row justify="center" class="text-center">
             <v-col>
@@ -33,10 +29,7 @@
                 label="削除したいタグを一つ以上選択"
               >
               </v-select>
-              <FormButton
-                :disabled="!isDeletable"
-                :click="deleteTag"
-              >
+              <FormButton :disabled="!isDeletable" :click="deleteTag">
                 削除する
               </FormButton>
             </v-col>
@@ -62,8 +55,8 @@ export default {
   props: {
     tags: {
       type: Array,
-      default: () => ([]),
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -71,7 +64,7 @@ export default {
       deletingTags: [],
       snackbar: false,
       snackbarText: '',
-    };
+    }
   },
   computed: {
     isDeletable() {
@@ -89,7 +82,7 @@ export default {
     close() {
       this.snackbar = false
       this.snackbarText = ''
-    }
-  }
+    },
+  },
 }
 </script>

@@ -1,24 +1,16 @@
 <template>
   <div>
-    <v-card
-      class="user-form ma-10 pa-10 mx-auto"
-    >
+    <v-card class="user-form ma-10 pa-10 mx-auto">
       <v-card-title class="justify-center"> Cordsにサインアップ </v-card-title>
       <v-card-text class="text-center">
         アカウントを作成すると、メモを残せるようになります。
       </v-card-text>
-      <v-card-text class="text-center ma-0">        
+      <v-card-text class="text-center ma-0">
         もうアカウントを持ってる？
-        <v-btn text color="primary" to="/signin">
-          サインイン
-        </v-btn>
+        <v-btn text color="primary" to="/signin"> サインイン </v-btn>
       </v-card-text>
       <v-form v-model="valid" class="text-center">
-        <TextInput
-          v-model="email"
-          label="メールアドレス"
-          :rules="emailRules"
-        />
+        <TextInput v-model="email" label="メールアドレス" :rules="emailRules" />
         <TextInput
           v-model="password"
           label="パスワード"
@@ -62,15 +54,19 @@ export default {
       snackbarText: '',
       valid: true,
       emailRules: [
-        v => !!v || 'メールアドレスは必須です',
-        v => this.$isEmailFormat(v) || 'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
+        (v) => !!v || 'メールアドレスは必須です',
+        (v) =>
+          this.$isEmailFormat(v) ||
+          'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください',
       ],
       passwordRules: [
-        v => !!v || 'パスワードは必須です',
-        v => this.$isPasswordLength(v) || '6桁以上の英数字を使って、パスワードを入力してください',
+        (v) => !!v || 'パスワードは必須です',
+        (v) =>
+          this.$isPasswordLength(v) ||
+          '6桁以上の英数字を使って、パスワードを入力してください',
       ],
       passwordConfirmationRules: [
-        v => v === this.password || 'パスワードが一致しません'
+        (v) => v === this.password || 'パスワードが一致しません',
       ],
     }
   },
@@ -91,9 +87,10 @@ export default {
           this.$router.push('/')
         })
         .catch((e) => {
-          this.snackbarText = (e.code === 'auth/email-already-in-use')
-            ? `${this.email} はすでに使われています`
-            : `アカウントが作成できませんでした... ${e}`
+          this.snackbarText =
+            e.code === 'auth/email-already-in-use'
+              ? `${this.email} はすでに使われています`
+              : `アカウントが作成できませんでした... ${e}`
           this.snackbar = true
         })
     },

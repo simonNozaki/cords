@@ -4,7 +4,7 @@
       <v-icon> mdi-plus </v-icon> 新しいカード
     </v-btn>
     <v-select
-      :items="tags.map(t => t.name)"
+      :items="tags.map((t) => t.name)"
       item-color="amber darken-4"
       multiple
       small
@@ -21,10 +21,7 @@
           <v-card class="pa-1 ma-0" outlined>
             <v-tooltip top>
               <template #activator="{ on, attrs }">
-                <v-list-item-title
-                  v-bind="attrs"
-                  v-on="on"
-                >
+                <v-list-item-title v-bind="attrs" v-on="on">
                   <nuxt-link
                     :to="`/notes/${note.id}`"
                     class="ma-2 text-md-body-1 text-decoration-none"
@@ -53,13 +50,21 @@
                 :retain-focus="false"
               >
                 <template #activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on" @click="setCurrentNote(note)">
+                  <v-btn
+                    icon
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="setCurrentNote(note)"
+                  >
                     <v-icon> mdi-delete-outline </v-icon>
                   </v-btn>
                 </template>
                 <v-card>
                   <v-container>
-                    <v-card-title class="justify-center">カード "{{ currentNote.title ?? '' }}" を削除します</v-card-title>
+                    <v-card-title class="justify-center"
+                      >カード "{{ currentNote.title ?? '' }}"
+                      を削除します</v-card-title
+                    >
                     <v-row>
                       <v-card-text class="text-center">
                         <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
@@ -119,23 +124,28 @@ export default {
   },
   computed: {
     notes: {
-      get: function() {
+      get: function () {
         return this.$store.getters['notes/findAll']
       },
-      set: function(notes) {
+      set: function (notes) {
         this.listNotes = notes
-      }
+      },
     },
     tags() {
       return this.$store.getters['tags/findAll']
     },
     listHeight() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'sm': return 500
-        case 'md': return 536
-        case 'lg': return 586
-        case 'xl': return 650
-        default : return 400
+        case 'sm':
+          return 500
+        case 'md':
+          return 536
+        case 'lg':
+          return 586
+        case 'xl':
+          return 650
+        default:
+          return 400
       }
     },
   },
@@ -166,7 +176,9 @@ export default {
       if (filteringTags.size === 0) {
         this.notes = this.$store.getters['notes/findAll']
       } else {
-        const filteredNotes = this.$store.getters['notes/findAll'].filter((note) => filteringTags.has(note.tag))
+        const filteredNotes = this.$store.getters['notes/findAll'].filter(
+          (note) => filteringTags.has(note.tag)
+        )
         this.notes = filteredNotes
       }
     },
@@ -175,7 +187,7 @@ export default {
     },
     setCurrentNote(note) {
       this.currentNote = note
-    }
+    },
   },
 }
 </script>

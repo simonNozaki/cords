@@ -1,10 +1,5 @@
 <template>
-  <v-btn
-    text
-    color="primary"
-    class="text-button"
-    @click="click"
-  >
+  <v-btn text color="primary" class="text-button" @click="click">
     <slot></slot>
   </v-btn>
 </template>

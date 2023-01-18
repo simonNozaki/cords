@@ -16,18 +16,20 @@ export const actions = {
     note.tag = note.tag ? note.tag : 'なし'
     note.createdAt = this.$toDatetimeString(note.createdAt)
     note.updatedAt = this.$toDatetimeString(note.updatedAt)
-    let id;
-    await this.$fire.firestore.collection('notes').add({
-      title: note.title,
-      tag: note.tag,
-      body: note.body,
-      userId: currentUser.id, 
-      createdAt: note.createdAt,
-      updatedAt: note.updatedAt,
-    })
+    let id
+    await this.$fire.firestore
+      .collection('notes')
+      .add({
+        title: note.title,
+        tag: note.tag,
+        body: note.body,
+        userId: currentUser.id,
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
+      })
       .then((docRef) => {
-        id = docRef.id;
-      });
+        id = docRef.id
+      })
     note.id = id
     context.commit('put', note)
   },
@@ -46,7 +48,8 @@ export const actions = {
   async fetchAll(context, userId) {
     const notes = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-    await this.$fire.firestore.collection('notes')
+    await this.$fire.firestore
+      .collection('notes')
       .where('userId', '==', userId)
       .get()
       .then((querySnapshot) => {
@@ -59,10 +62,11 @@ export const actions = {
     context.commit('init', notes)
   },
   delete(context, id) {
-    this.$fire.firestore.collection('notes')
+    this.$fire.firestore
+      .collection('notes')
       .doc(id)
       .delete()
-      .then(_ => _)
+      .then((_) => _)
     context.commit('remove', id)
   },
 }

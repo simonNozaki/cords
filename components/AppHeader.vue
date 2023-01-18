@@ -1,10 +1,7 @@
 <template>
   <v-app-bar app dense class="grey lighten-5" flat>
     <v-app-bar-title> Cords </v-app-bar-title>
-    <v-container
-      v-if="isAuthenticated"
-      class="justify-right"
-    >
+    <v-container v-if="isAuthenticated" class="justify-right">
       <v-row>
         <v-spacer></v-spacer>
         <v-menu offset-y>
@@ -62,8 +59,9 @@ export default {
   },
   methods: {
     signout() {
-      this.$fire.auth.signOut()
-        .then(_ => {
+      this.$fire.auth
+        .signOut()
+        .then((_) => {
           sessionStorage.removeItem('uid')
           sessionStorage.removeItem('name')
           this.$store.commit('users/reset')
@@ -76,8 +74,8 @@ export default {
     },
     close() {
       this.snackbar = false
-    }
-  }
+    },
+  },
 }
 </script>
 

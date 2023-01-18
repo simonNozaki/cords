@@ -10,7 +10,8 @@
         <AddTagDialog class="ma-1" />
         <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="tag" :items="tags" label="タグ" solo flat dense> </v-select>
+          <v-select v-model="tag" :items="tags" label="タグ" solo flat dense>
+          </v-select>
         </v-col>
       </v-row>
     </v-container>
@@ -18,9 +19,7 @@
       <TextEditor v-model="body" />
     </v-row>
     <v-row>
-      <FormButton :click="addNote">
-        保存する
-      </FormButton>
+      <FormButton :click="addNote"> 保存する </FormButton>
     </v-row>
     <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
@@ -50,7 +49,7 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.getters['tags/findAll'].map(t => t.name)
+      return this.$store.getters['tags/findAll'].map((t) => t.name)
     },
   },
   methods: {
@@ -75,7 +74,7 @@ export default {
     },
     close() {
       this.snackbar = false
-    }
+    },
   },
 }
 </script>

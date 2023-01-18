@@ -1,10 +1,10 @@
 <template>
   <div>
-      <v-dialog
-        v-model="cardDeleteDialog"
-        max-width="500"
-        transition="fade-transition"
-      >
+    <v-dialog
+      v-model="cardDeleteDialog"
+      max-width="500"
+      transition="fade-transition"
+    >
       <template #activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon> mdi-delete-outline </v-icon>
@@ -12,7 +12,9 @@
       </template>
       <v-card>
         <v-container>
-          <v-card-title class="justify-center">カード "{{ noteTitle }}" を削除します</v-card-title>
+          <v-card-title class="justify-center"
+            >カード "{{ noteTitle }}" を削除します</v-card-title
+          >
           <v-row>
             <v-card-text class="text-center">
               <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
@@ -27,14 +29,9 @@
             >
               閉じる
             </v-btn>
-            <v-btn
-              text
-              color="error"
-              class="mb-3"
-              @click="deleteNote(noteId)"
-            >
+            <v-btn text color="error" class="mb-3" @click="deleteNote(noteId)">
               削除する
-            </v-btn>                        
+            </v-btn>
           </v-row>
         </v-container>
       </v-card>
@@ -57,14 +54,14 @@ export default {
       type: String,
       default() {
         return ''
-      }
+      },
     },
     noteTitle: {
       type: String,
       default() {
         return ''
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -87,4 +84,3 @@ export default {
   },
 }
 </script>
-

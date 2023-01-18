@@ -4,10 +4,10 @@ export default {
   vue: {
     config: {
       devtools: true,
-    }
+    },
   },
   router: {
-    middleware: ['auth']
+    middleware: ['auth'],
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -72,11 +72,11 @@ export default {
       auth: {
         persistence: 'local',
         initialize: {
-          subscribeManually: false
+          subscribeManually: false,
         },
       },
       firestore: true,
-      storage: true
+      storage: true,
     },
   },
 
@@ -85,9 +85,9 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     defaultAssets: {
       font: {
-        family: 'Noto Sans Japanese'
-      }
-    }
+        family: 'Noto Sans Japanese',
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

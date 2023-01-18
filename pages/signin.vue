@@ -1,21 +1,13 @@
 <template>
   <div>
-    <v-card
-      class="user-form ma-10 pa-10 mx-auto"
-    >
+    <v-card class="user-form ma-10 pa-10 mx-auto">
       <v-card-title class="justify-center"> Cordsにサインイン </v-card-title>
       <v-card-text class="text-center">
         まだアカウントを作っていない？
-        <v-btn text color="primary" to="/signup">
-          サインアップ
-        </v-btn>
+        <v-btn text color="primary" to="/signup"> サインアップ </v-btn>
       </v-card-text>
       <v-form v-model="valid" class="text-center">
-        <TextInput
-          v-model="email"
-          label="メールアドレス"
-          :rules="emailRules"
-        />
+        <TextInput v-model="email" label="メールアドレス" :rules="emailRules" />
         <TextInput
           v-model="password"
           label="パスワード"
@@ -52,12 +44,16 @@ export default {
       snackbarText: '',
       valid: true,
       emailRules: [
-        v => !!v || 'メールアドレスは必須です',
-        v => this.$isEmailFormat(v) || 'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
+        (v) => !!v || 'メールアドレスは必須です',
+        (v) =>
+          this.$isEmailFormat(v) ||
+          'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください',
       ],
       passwordRules: [
-        v => !!v || 'パスワードは必須です',
-        v => this.$isPasswordLength(v) || '6桁以上の英数字を使って、パスワードを入力してください',
+        (v) => !!v || 'パスワードは必須です',
+        (v) =>
+          this.$isPasswordLength(v) ||
+          '6桁以上の英数字を使って、パスワードを入力してください',
       ],
     }
   },
@@ -78,12 +74,13 @@ export default {
           this.$router.push('/')
         })
         .catch((e) => {
-          switch(e.code) {
+          switch (e.code) {
             case 'auth/user-not-found':
               this.snackbarText = 'アカウントがありません'
               break
             case 'auth/wrong-password':
-              this.snackbarText = 'メールアドレスまたはパスワードが間違えています'
+              this.snackbarText =
+                'メールアドレスまたはパスワードが間違えています'
               break
             default:
               this.snackbarText = `サインインできませんでした... ${e}`
