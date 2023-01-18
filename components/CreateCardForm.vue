@@ -57,11 +57,13 @@ export default {
     addNote() {
       const titleOrUntitled = this.title ? this.title : '無題'
 
+      const now = new Date()
       const note = {
         title: titleOrUntitled,
         tag: this.tag,
         body: this.body,
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       }
 
       this.$store.dispatch('notes/add', note)

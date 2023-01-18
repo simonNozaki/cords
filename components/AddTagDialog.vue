@@ -88,7 +88,14 @@ export default {
         return
       }
       const currentUser = this.$store.getters['users/getCurrent']
-      this.$store.dispatch('tags/add', { userId: currentUser.id, tagName: this.newTag })
+      const now = new Date()
+      const tag = {
+        userId: currentUser.id,
+        tagName: this.newTag,
+        createdAt: now,
+        updatedAt: now,
+      }
+      this.$store.dispatch('tags/add', tag)
       this.newTag = ''
       this.tagDialog = false
       this.snackbar = true

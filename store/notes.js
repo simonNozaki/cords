@@ -14,6 +14,7 @@ export const actions = {
   async add(context, note) {
     const currentUser = context.rootGetters['users/getCurrent']
     note.tag = note.tag ? note.tag : 'なし'
+    note.createdAt = this.$toDatetimeString(note.createdAt)
     note.updatedAt = this.$toDatetimeString(note.updatedAt)
     let id;
     await this.$fire.firestore.collection('notes').add({
@@ -21,6 +22,7 @@ export const actions = {
       tag: note.tag,
       body: note.body,
       userId: currentUser.id, 
+      createdAt: note.createdAt,
       updatedAt: note.updatedAt,
     })
       .then((docRef) => {
@@ -36,6 +38,7 @@ export const actions = {
       tag: note.tag,
       body: note.body,
       userId: note.userId,
+      createdAt: note.createdAt,
       updatedAt: note.updatedAt,
     })
     context.commit('update', note)
@@ -76,6 +79,7 @@ export const mutations = {
     _note.title = note.title
     _note.tag = note.tag
     _note.body = note.body
+    _note.updatedAt = note.updatedAt
   },
   remove(state, id) {
     state.list = state.list.filter((note) => note.id !== id)
