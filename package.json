@@ -16,7 +16,7 @@
   "dependencies": {
     "@nuxtjs/firebase": "^8.2.2",
     "@nuxtjs/google-fonts": "^2.0.0",
-    "core-js": "^3.25.3",
+    "core-js": "^3.27.2",
     "dotenv": "^16.0.3",
     "firebase": "^9.15.0",
     "moment-timezone": "^0.5.40",
