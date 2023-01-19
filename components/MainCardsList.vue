@@ -9,8 +9,9 @@
       multiple
       small
       chips
-      flat
       dense
+      solo
+      class="mt-2 mb-2"
       label="フィルタ"
       @change="findByTags"
     >
