@@ -13,7 +13,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              {{ name }}
+              <v-icon class="mr-1"> mdi-account-outline </v-icon> {{ name }}
             </v-btn>
           </template>
           <v-list>

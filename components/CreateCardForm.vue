@@ -67,7 +67,7 @@ export default {
 
       this.$store.dispatch('notes/add', note)
       this.snackbar = true
-      this.snackbarText = 'カードが保存されました'
+      this.snackbarText = 'カードを保存しました'
       this.title = ''
       this.tag = ''
       this.body = ''
