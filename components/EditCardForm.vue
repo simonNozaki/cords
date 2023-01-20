@@ -23,18 +23,26 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <div class="ml-2 mr-2">
-          作成
+        <v-card
+          flat
+          outlined
+          class="ml-2 mr-2 pa-1" >
           <v-chip>
-            <v-icon> mdi-clock-outline </v-icon> {{ note.createdAt }}
+            <v-icon> mdi-clock-outline </v-icon>
+            作成
           </v-chip>
-        </div>
-        <div class="ml-2 mr-2">
-          更新
+          {{ note.createdAt }}
+        </v-card>
+        <v-card
+          flat
+          outlined
+          class="ml-2 mr-2 pa-1" >
           <v-chip>
-            <v-icon> mdi-clock-outline </v-icon> {{ note.updatedAt }}
+            <v-icon> mdi-clock-outline </v-icon>
+            更新
           </v-chip>
-        </div>
+          {{ note.updatedAt }}
+        </v-card>
       </v-row>
     </v-container>
     <v-row no-gutters>
@@ -92,12 +100,16 @@ export default {
       })
   },
   methods: {
-    updateNote() {
+    async updateNote() {
       this.note.updatedAt = new Date()
-      this.$store.dispatch('notes/set', this.note)
-
-      this.snackbar = true
-      this.snackbarText = 'カードを更新しました'
+      try {
+        await this.$store.dispatch('notes/set', this.note)
+        this.snackbar = true
+        this.snackbarText = 'カードを更新しました'
+      } catch (e) {
+        this.snackbar = true
+        this.snackbarText = `カードを更新できませんでした... ${e}`
+      }
     },
     close() {
       this.snackbar = false
