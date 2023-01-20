@@ -1,7 +1,7 @@
 const moment = require('moment-timezone')
 
 const toDatetimeString = (date) => {
-  return moment().tz(date.toString(), 'asia/tokyo').format()
+  return moment.tz(date, 'Asia/Tokyo').format()
 }
 
 export default ({ app }, inject) => {
