@@ -29,33 +29,19 @@
             >
               閉じる
             </v-btn>
-            <v-btn text color="error" class="mb-3" @click="deleteNote(noteId)">
+            <v-btn text color="error" class="mb-3" @click="deleteNote()">
               削除する
             </v-btn>
           </v-row>
         </v-container>
       </v-card>
     </v-dialog>
-    <Snackbar :open="snackbar" :close="close">
-      {{ snackbarText }}
-    </Snackbar>
   </div>
 </template>
 
 <script>
-import Snackbar from '@/components/atoms/Snackbar'
-
 export default {
-  components: {
-    Snackbar,
-  },
   props: {
-    noteId: {
-      type: String,
-      default() {
-        return ''
-      },
-    },
     noteTitle: {
       type: String,
       default() {
@@ -71,15 +57,10 @@ export default {
     }
   },
   methods: {
-    deleteNote(id) {
-      this.$store.dispatch('notes/delete', id)
-
+    deleteNote() {
       this.cardDeleteDialog = false
-      this.snackbar = true
-      this.snackbarText = 'カードを削除しました'
-    },
-    close() {
-      this.snackbar = false
+      // カード削除イベントをパブリッシュ（親側で監視して処理を行う）
+      this.$emit('cardDelete')
     },
   },
 }

@@ -44,54 +44,10 @@
               </v-chip>
             </v-list-item-subtitle>
             <v-list-item-subtitle>
-              <v-dialog
-                v-model="cardDeleteDialog"
-                max-width="500"
-                transition="fade-transition"
-                :retain-focus="false"
-              >
-                <template #activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="setCurrentNote(note)"
-                  >
-                    <v-icon> mdi-delete-outline </v-icon>
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-container>
-                    <v-card-title class="justify-center"
-                      >カード "{{ currentNote.title ?? '' }}"
-                      を削除します</v-card-title
-                    >
-                    <v-row>
-                      <v-card-text class="text-center">
-                        <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
-                        この操作は取り戻せません
-                      </v-card-text>
-                    </v-row>
-                    <v-row justify="center">
-                      <v-btn
-                        text
-                        class="mb-3"
-                        @click="cardDeleteDialog = !cardDeleteDialog"
-                      >
-                        閉じる
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="error"
-                        class="mb-3"
-                        @click="deleteNote(currentNote.id)"
-                      >
-                        削除する
-                      </v-btn>
-                    </v-row>
-                  </v-container>
-                </v-card>
-              </v-dialog>
+              <!-- ダイアログの動きを監視してリストを操作する関数をトリガーする -->
+              <DeleteCardDialog
+                :note-title="note.title"
+                @cardDelete="deleteNote(note.id)" />
             </v-list-item-subtitle>
           </v-card>
         </v-list-item-content>
@@ -105,20 +61,18 @@
 
 <script>
 import Snackbar from '@/components/atoms/Snackbar'
+import DeleteCardDialog from '@/components/DeleteCardDialog'
 
 export default {
   components: {
     Snackbar,
+    DeleteCardDialog,
   },
   data() {
     return {
       // state(notes.list)のディープコピー、コンポーネント表示にのみ用いる
       listNotes: [],
       cardDeleteDialog: false,
-      currentNote: {
-        id: '',
-        title: '',
-      },
       snackbar: false,
       snackbarText: '',
     }
@@ -159,11 +113,9 @@ export default {
   methods: {
     deleteNote(id) {
       this.$store.dispatch('notes/delete', id)
-
-      this.cardDeleteDialog = false
+      this.notes = this.listNotes.filter((note) => note.id !== id)
       this.snackbar = true
       this.snackbarText = 'カードを削除しました'
-      this.notes = this.listNotes.filter((note) => note.id !== id)
       // 削除時に削除するカード上にいたらリダイレクトする
       if (id === this.$route.params.id) {
         this.$router.push('/')
@@ -185,9 +137,6 @@ export default {
     },
     close() {
       this.snackbar = false
-    },
-    setCurrentNote(note) {
-      this.currentNote = note
     },
   },
 }
