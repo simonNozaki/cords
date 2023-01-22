@@ -2,6 +2,7 @@
   <v-textarea
     v-model="editorBody"
     autofocus
+    auto-grow
     no-resize
     full-width
     solo

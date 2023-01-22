@@ -47,7 +47,8 @@
               <!-- ダイアログの動きを監視してリストを操作する関数をトリガーする -->
               <DeleteCardDialog
                 :note-title="note.title"
-                @cardDelete="deleteNote(note.id)" />
+                @cardDelete="deleteNote(note.id)"
+              />
             </v-list-item-subtitle>
           </v-card>
         </v-list-item-content>

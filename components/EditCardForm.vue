@@ -23,20 +23,14 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-card
-          flat
-          outlined
-          class="ml-2 mr-2 pa-1" >
+        <v-card flat outlined class="ml-2 mr-2 pa-1">
           <v-chip>
             <v-icon> mdi-clock-outline </v-icon>
             作成
           </v-chip>
           {{ note.createdAt }}
         </v-card>
-        <v-card
-          flat
-          outlined
-          class="ml-2 mr-2 pa-1" >
+        <v-card flat outlined class="ml-2 mr-2 pa-1">
           <v-chip>
             <v-icon> mdi-clock-outline </v-icon>
             更新
@@ -52,7 +46,8 @@
         <RichEditor
           v-if="note.body"
           :value="note.body"
-          @update:value="(latest) => body = latest" />
+          @update:value="(latest) => (body = latest)"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -102,7 +97,9 @@ export default {
           note.id = doc.id
           _notes.push(note)
         })
-        this.note = _notes.find((note) => note.id.toString() === this.$route.params.id)
+        this.note = _notes.find(
+          (note) => note.id.toString() === this.$route.params.id
+        )
       })
   },
   methods: {

@@ -17,7 +17,7 @@
     </v-container>
     <v-row no-gutters>
       <v-col>
-        <RichEditor @update:value="(latest) => body = latest" />
+        <RichEditor @update:value="(latest) => (body = latest)" />
       </v-col>
     </v-row>
     <v-row>
