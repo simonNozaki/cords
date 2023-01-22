@@ -46,7 +46,14 @@
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <TextEditor v-model="note.body" />
+      <v-col>
+        <!-- v-ifでcreated初期化を待つ -->
+        <!-- https://stackoverflow.com/questions/60928796/render-a-child-component-only-after-async-method-is-completed-in-parents-mounte -->
+        <RichEditor
+          v-if="note.body"
+          :value="note.body"
+          @update:value="(latest) => body = latest" />
+      </v-col>
     </v-row>
     <v-row>
       <FormButton :click="updateNote"> 保存する </FormButton>
@@ -58,15 +65,15 @@
 </template>
 
 <script>
-import TextEditor from '@/components/atoms/TextEditor'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
+import RichEditor from '@/components/atoms/editors/RichEditor'
 
 export default {
   components: {
-    TextEditor,
     FormButton,
     Snackbar,
+    RichEditor,
   },
   data() {
     return {
@@ -75,7 +82,7 @@ export default {
       note: {
         title: '',
         tag: '',
-        body: '',
+        body: null,
       },
     }
   },
@@ -95,8 +102,7 @@ export default {
           note.id = doc.id
           _notes.push(note)
         })
-        const id = this.$route.params.id
-        this.note = _notes.find((note) => note.id.toString() === id)
+        this.note = _notes.find((note) => note.id.toString() === this.$route.params.id)
       })
   },
   methods: {

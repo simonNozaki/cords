@@ -1,0 +1,9 @@
+.ProseMirror {
+  background-color: #ffffff;
+  padding: 8px;
+}
+
+.ProseMirror p {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, Monaco, monospace;
+  font-weight: 500;
+}

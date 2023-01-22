@@ -16,7 +16,9 @@
       </v-row>
     </v-container>
     <v-row no-gutters>
-      <TextEditor v-model="body" />
+      <v-col>
+        <RichEditor @update:value="(latest) => body = latest" />
+      </v-col>
     </v-row>
     <v-row>
       <FormButton :click="addNote"> 保存する </FormButton>
@@ -28,15 +30,15 @@
 </template>
 
 <script>
-import TextEditor from '@/components/atoms/TextEditor'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
+import RichEditor from '@/components/atoms/editors/RichEditor'
 
 export default {
   components: {
-    TextEditor,
     FormButton,
     Snackbar,
+    RichEditor,
   },
   data() {
     return {
@@ -67,7 +69,7 @@ export default {
 
       this.$store.dispatch('notes/add', note)
       this.snackbar = true
-      this.snackbarText = 'カードを保存しました'
+      this.snackbarText = `カード ${titleOrUntitled} を保存しました`
       this.title = ''
       this.tag = ''
       this.body = ''

@@ -11,3 +11,18 @@
 .user-form {
   width: 50%;
 }
+
+/** tiptapに生成されるドキュメント要素にスタイルをつける */
+blockquote {
+  margin: 0;
+  border-left: 0.15rem solid #000000;
+}
+
+blockquote p {
+  padding: 12px;
+}
+
+hr {
+  margin: 4px;
+  color: #000000;
+}
