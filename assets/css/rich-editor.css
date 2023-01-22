@@ -1,3 +1,7 @@
+/*
+  ProseMirrorのクラスを拡張することで独自のスタイルを当てられる
+  https://tiptap.dev/guide/styling#option-1-style-the-plain-html
+*/
 .ProseMirror {
   background-color: #ffffff;
   padding: 8px;
@@ -6,4 +10,12 @@
 .ProseMirror p {
   font-family: 'JetBrains Mono', 'Courier New', Courier, Monaco, monospace;
   font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+/* エディタ内行にカーソルを当てるとリンクっぽい見栄えにさせる */
+.ProseMirror *:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
 }
