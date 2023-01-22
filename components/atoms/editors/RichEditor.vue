@@ -90,7 +90,7 @@
         </v-list-item>
       </v-list>
     </BubbleMenu>
-    <EditorContent :editor="editor" :value="value"/>
+    <EditorContent :editor="editor" />
   </div>
 </template>
 
@@ -103,8 +103,6 @@ export default {
     EditorContent,
     BubbleMenu,
   },
-  // https://jp.vuejs.org/v2/api/index.html#model
-  // https://github.com/ueberdosis/tiptap/issues/1821
   props: {
     value: {
       type: String,
@@ -117,7 +115,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.value)
     this.editor = new Editor({
       content: this.value,
       extensions: [
