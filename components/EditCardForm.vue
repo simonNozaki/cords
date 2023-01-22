@@ -46,7 +46,7 @@
         <RichEditor
           v-if="note.body"
           :value="note.body"
-          @update:value="(latest) => (body = latest)"
+          @update:value="(latest) => (newContent = latest)"
         />
       </v-col>
     </v-row>
@@ -79,6 +79,7 @@ export default {
         tag: '',
         body: null,
       },
+      newContent: '',
     }
   },
   computed: {
@@ -105,6 +106,7 @@ export default {
   methods: {
     async updateNote() {
       this.note.updatedAt = new Date()
+      this.note.body = this.newContent
       try {
         await this.$store.dispatch('notes/set', this.note)
         this.snackbar = true
