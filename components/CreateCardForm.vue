@@ -19,7 +19,8 @@
       <v-col>
         <RichEditor
           v-model="initialBody"
-          @update:value="(latest) => (body = latest)" />
+          @update:value="(latest) => (body = latest)"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -72,7 +73,7 @@ export default {
           // 7行
           return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
       }
-    }
+    },
   },
   methods: {
     addNote() {
