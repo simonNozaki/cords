@@ -17,7 +17,9 @@
     </v-container>
     <v-row no-gutters>
       <v-col>
-        <RichEditor @update:value="(latest) => (body = latest)" />
+        <RichEditor
+          v-model="initialBody"
+          @update:value="(latest) => (body = latest)" />
       </v-col>
     </v-row>
     <v-row>
@@ -53,6 +55,24 @@ export default {
     tags() {
       return this.$store.getters['tags/findAll'].map((t) => t.name)
     },
+    initialBody() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm':
+          // 5行
+          return '<p></p><p></p><p></p><p></p><p></p>'
+        case 'md':
+          // 9行
+          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+        case 'lg':
+          // 11行
+          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+        case 'xl':
+          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+        default:
+          // 7行
+          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+      }
+    }
   },
   methods: {
     addNote() {
