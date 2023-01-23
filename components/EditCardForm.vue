@@ -46,9 +46,8 @@
         <RichEditor
           v-if="note.body"
           :value="note.body"
-          @update:value="(latest) => (newContent = latest)"
+          @update:value="(latest) => (newNote.body = latest)"
         />
-        {{ newContent }}
       </v-col>
     </v-row>
     <v-row>
@@ -80,7 +79,11 @@ export default {
         tag: '',
         body: null,
       },
-      newContent: '',
+      newNote: {
+        title: '',
+        tag: '',
+        body: '',
+      },
     }
   },
   computed: {
@@ -102,15 +105,14 @@ export default {
         this.note = _notes.find(
           (note) => note.id.toString() === this.$route.params.id
         )
-        this.newContent = this.note.body
+        this.newNote = this.note
       })
   },
   methods: {
     async updateNote() {
-      this.note.updatedAt = new Date()
-      this.note.body = this.newContent
+      this.newNote.updatedAt = new Date()
       try {
-        await this.$store.dispatch('notes/set', this.note)
+        await this.$store.dispatch('notes/set', this.newNote)
         this.snackbar = true
         this.snackbarText = 'カードを更新しました'
       } catch (e) {
