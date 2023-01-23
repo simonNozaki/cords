@@ -1,5 +1,5 @@
 <template>
-  <v-form class="ml-2">
+  <v-form class="ma-2">
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
