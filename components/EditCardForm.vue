@@ -48,6 +48,7 @@
           :value="note.body"
           @update:value="(latest) => (newContent = latest)"
         />
+        {{ newContent }}
       </v-col>
     </v-row>
     <v-row>
@@ -101,6 +102,7 @@ export default {
         this.note = _notes.find(
           (note) => note.id.toString() === this.$route.params.id
         )
+        this.newContent = this.note.body
       })
   },
   methods: {
