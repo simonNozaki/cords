@@ -2,8 +2,12 @@ import {
   collection,
   getFirestore,
   getDocs,
+  addDoc,
+  setDoc,
+  deleteDoc,
   where,
-  query
+  query,
+  doc
 } from 'firebase/firestore'
 
 export const state = () => {
@@ -22,28 +26,20 @@ export const actions = {
   async add(context, note) {
     const currentUser = context.rootGetters['users/getCurrent']
     note.tag = note.tag ? note.tag : 'なし'
-    note.createdAt = this.$toDatetimeString(note.createdAt)
-    note.updatedAt = this.$toDatetimeString(note.updatedAt)
-    let id
-    await this.$fire.firestore
-      .collection('notes')
-      .add({
-        title: note.title,
-        tag: note.tag,
-        body: note.body,
-        userId: currentUser.id,
-        createdAt: note.createdAt,
-        updatedAt: note.updatedAt,
-      })
-      .then((docRef) => {
-        id = docRef.id
-      })
-    note.id = id
+    const noteDocRef = await addDoc(collection(getFirestore(this.$fire), 'notes'), {
+      title: note.title,
+      tag: note.tag,
+      body: note.body,
+      userId: currentUser.id,
+      createdAt: this.$toDatetimeString(note.createdAt),
+      updatedAt: this.$toDatetimeString(note.updatedAt)
+    })
+    note.id = noteDocRef.id
     context.commit('put', note)
   },
   async set(context, note) {
     note.updatedAt = this.$toDatetimeString(note.updatedAt)
-    await this.$fire.firestore.collection('notes').doc(note.id).set({
+    await setDoc(doc(getFirestore(this.$fire), 'notes', note.id), {
       title: note.title,
       tag: note.tag,
       body: note.body,
@@ -63,16 +59,11 @@ export const actions = {
       const note = doc.data()
       note.id = doc.id
       notes.push(note)
-      console.log(note)
     })
     context.commit('init', notes)
   },
-  delete(context, id) {
-    this.$fire.firestore
-      .collection('notes')
-      .doc(id)
-      .delete()
-      .then((_) => _)
+  async delete(context, id) {
+    await deleteDoc(doc(getFirestore(this.$fire), 'notes', id))
     context.commit('remove', id)
   },
 }
