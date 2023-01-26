@@ -1,23 +1,14 @@
 import { initializeApp } from "firebase/app";
-require('dotenv').config()
-
-const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-};
-
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
 
 export default  ({ app }, inject) => {
-  const $fire = {
-    app: firebaseApp.app,
-    auth: firebaseApp.auth,
-    firestore: firebaseApp.firestore
-  }
-  inject('$fire', $fire)
+  const firebaseApp = initializeApp({
+    apiKey: app.$config.apiKey,
+    authDomain: app.$config.authDomain,
+    projectId: app.$config.projectId,
+    storageBucket: app.$config.storageBucket,
+    messagingSenderId: app.$config.messagingSenderId,
+    appId: app.$config.appId,
+  });
+
+  inject('fire', firebaseApp)
 }

@@ -60,6 +60,11 @@
 </template>
 
 <script>
+import {
+  collection,
+  getFirestore,
+  getDocs
+} from 'firebase/firestore'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
 import RichEditor from '@/components/atoms/editors/RichEditor'
@@ -92,21 +97,17 @@ export default {
     },
   },
   async created() {
-    await this.$fire.firestore
-      .collection('notes')
-      .get()
-      .then((querySnapshot) => {
-        const _notes = []
-        querySnapshot.forEach((doc) => {
-          const note = doc.data()
-          note.id = doc.id
-          _notes.push(note)
-        })
-        this.note = _notes.find(
-          (note) => note.id.toString() === this.$route.params.id
-        )
-        this.newNote = this.note
-      })
+    const _notes = []
+    const snapshots = await getDocs(collection(getFirestore(this.$fire), 'notes'))
+    snapshots.forEach((doc) => {
+      const note = doc.data()
+      note.id = doc.id
+      _notes.push(note)
+    })
+    this.note = _notes.find(
+      (note) => note.id.toString() === this.$route.params.id
+    )
+    this.newNote = this.note
   },
   methods: {
     async updateNote() {

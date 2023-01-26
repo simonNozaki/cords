@@ -1,3 +1,11 @@
+import {
+  collection,
+  getFirestore,
+  getDocs,
+  where,
+  query
+} from 'firebase/firestore'
+
 export const state = () => {
   return {
     list: [],
@@ -48,17 +56,15 @@ export const actions = {
   async fetchAll(context, userId) {
     const notes = []
     // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-    await this.$fire.firestore
-      .collection('notes')
-      .where('userId', '==', userId)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const note = doc.data()
-          note.id = doc.id
-          notes.push(note)
-        })
-      })
+    const snapshots = await getDocs(query(      
+      collection(getFirestore(this.$fire), 'notes'), where('userId', '==', userId)
+    ))
+    snapshots.forEach((doc) => {
+      const note = doc.data()
+      note.id = doc.id
+      notes.push(note)
+      console.log(note)
+    })
     context.commit('init', notes)
   },
   delete(context, id) {

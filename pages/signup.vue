@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import TextInput from '@/components/atoms/TextInput'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '~/components/atoms/Snackbar'
@@ -77,8 +78,7 @@ export default {
   },
   methods: {
     signup() {
-      this.$fire.auth
-        .createUserWithEmailAndPassword(this.email, this.password)
+      createUserWithEmailAndPassword(getAuth(this.$fire), this.email, this.password)
         .then((userCredential) => {
           const uid = userCredential.user.uid
           sessionStorage.setItem('uid', uid)

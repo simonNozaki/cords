@@ -34,7 +34,16 @@ export default {
   css: ['~/assets/css/style.css', '~/assets/css/rich-editor.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@plugins/input.rules', '@plugins/datetime.formatter'],
+  plugins: ['@plugins/input.rules', '@plugins/datetime.formatter', '@plugins/firebase'],
+
+  publicRuntimeConfig: {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -57,28 +66,7 @@ export default {
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/firebase'],
-
-  firebase: {
-    config: {
-      apiKey: process.env.API_KEY,
-      authDomain: process.env.AUTH_DOMAIN,
-      projectId: process.env.PROJECT_ID,
-      storageBucket: process.env.STORAGE_BUCKET,
-      messagingSenderId: process.env.MESSAGING_SENDER_ID,
-      appId: process.env.APP_ID,
-    },
-    services: {
-      auth: {
-        persistence: 'local',
-        initialize: {
-          subscribeManually: false,
-        },
-      },
-      firestore: true,
-      storage: true,
-    },
-  },
+  modules: [],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
