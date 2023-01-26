@@ -75,6 +75,9 @@ export default {
       }
     },
   },
+  created() {
+    this.body = this.initialBody
+  },
   methods: {
     addNote() {
       const titleOrUntitled = this.title ? this.title : '無題'
