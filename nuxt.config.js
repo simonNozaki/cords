@@ -1,6 +1,8 @@
+import { defineNuxtConfig } from '@nuxt/bridge'
 require('dotenv').config()
 
-export default {
+export default defineNuxtConfig({
+  bridge: {},
   vue: {
     config: {
       devtools: true,
@@ -34,7 +36,7 @@ export default {
   css: ['~/assets/css/style.css', '~/assets/css/rich-editor.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@plugins/input.rules', '@plugins/datetime.formatter', '@plugins/firebase'],
+  plugins: [],
 
   publicRuntimeConfig: {
     apiKey: process.env.API_KEY,
@@ -79,5 +81,13 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
-}
+  build: {
+    transpile: ["class-validator"],
+  },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['class-validator']
+    }
+  }
+})
