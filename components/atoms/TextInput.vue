@@ -1,8 +1,8 @@
 <template>
   <v-text-field
     v-model="inputText"
-    outlined
-    dense
+    variant="outlined"
+    density="compact"
     :label="label"
     :type="type"
     :rules="rules"

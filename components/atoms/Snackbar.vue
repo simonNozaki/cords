@@ -1,8 +1,8 @@
 <template>
   <div class="text-center">
-    <v-snackbar :value="open">
+    <v-snackbar :modelValue="open">
       <slot></slot>
-      <template #action="{ attrs }">
+      <template #actions>
         <v-btn color="primary" text v-bind="attrs" @click="close"> 完了 </v-btn>
       </template>
     </v-snackbar>
