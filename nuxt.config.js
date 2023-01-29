@@ -1,8 +1,6 @@
-import { defineNuxtConfig } from '@nuxt/bridge'
 require('dotenv').config()
 
 export default defineNuxtConfig({
-  bridge: {},
   vue: {
     config: {
       devtools: true,
@@ -33,18 +31,25 @@ export default defineNuxtConfig({
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/css/style.css', '~/assets/css/rich-editor.css'],
+  css: [
+    '~/assets/css/style.css',
+    '~/assets/css/rich-editor.css',
+    'vuetify/lib/styles/main.sass',
+    'mdi/css/materialdesignicons.min.css'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
 
-  publicRuntimeConfig: {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
+  runtimeConfig: {
+    public: {
+      apiKey: process.env.API_KEY,
+      authDomain: process.env.AUTH_DOMAIN,
+      projectId: process.env.PROJECT_ID,
+      storageBucket: process.env.STORAGE_BUCKET,
+      messagingSenderId: process.env.MESSAGING_SENDER_ID,
+      appId: process.env.APP_ID,
+    }
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -68,7 +73,8 @@ export default defineNuxtConfig({
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  // vuexからほぼそのまま移行したいのでいったんpiniaを使っておく（のちにcomposablesにしても）
+  modules: ['@pinia/nuxt'],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -82,12 +88,12 @@ export default defineNuxtConfig({
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ["class-validator"],
+    transpile: ["vuetify"],
   },
 
   vite: {
-    optimizeDeps: {
-      exclude: ['class-validator']
-    }
+    // optimizeDeps: {
+    //   exclude: ['class-validator']
+    // }
   }
 })

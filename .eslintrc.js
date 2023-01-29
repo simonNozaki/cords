@@ -5,12 +5,13 @@ module.exports = {
     'jest/globals': true,
     node: true,
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    parser: '@babel/eslint-parser',
     requireConfigFile: false,
+    project: 'tsconfig.json',
   },
   extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
-  plugins: ['jest'],
+  plugins: ['jest', '@typescript-eslint/eslint-plugin'],
   // add your custom rules here
   rules: {
     // これがないと単一名称のコンポーネントを置けない
