@@ -5,13 +5,12 @@
       <v-row>
         <v-spacer></v-spacer>
         <v-menu offset-y>
-          <template #activator="{ on, attrs }">
+          <template #activator="{ props }">
             <v-btn
               text
               color="primary"
               class="text-button"
-              v-bind="attrs"
-              v-on="on"
+              v-bind="props"
             >
               <v-icon class="mr-1"> mdi-account-outline </v-icon> {{ name }}
             </v-btn>
@@ -33,10 +32,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
+import { useUserStore } from '@/store/user.store'
 import ButtonLink from '@/components/atoms/BunttonLink'
 import Snackbar from '@/components/atoms/Snackbar'
 
-export default {
+export default defineComponent({
   components: {
     ButtonLink,
     Snackbar,
@@ -49,12 +50,10 @@ export default {
   },
   computed: {
     isAuthenticated() {
-      return this.$store.getters['users/isAuthenticated']
+      return useUserStore().isAuthenticated
     },
     name() {
-      return this.$store.getters['users/getCurrent'].name
-        ? this.$store.getters['users/getCurrent'].name
-        : ''
+      return useUserStore().getCurrent.name
     },
   },
   methods: {
@@ -76,7 +75,7 @@ export default {
       this.snackbar = false
     },
   },
-}
+})
 </script>
 
 <style scoped>

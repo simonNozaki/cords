@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-card class="user-form ma-10 pa-10 mx-auto">
-      <v-card-title class="justify-center"> Cordsにサインアップ </v-card-title>
+      <v-card-title class="d-flex justify-center"> Cordsにサインアップ </v-card-title>
       <v-card-text class="text-center">
         アカウントを作成すると、メモを残せるようになります。
       </v-card-text>
       <v-card-text class="text-center ma-0">
         もうアカウントを持ってる？
-        <v-btn text color="primary" to="/signin"> サインイン </v-btn>
+        <v-btn variant="text" color="secondary" to="/signin"> サインイン </v-btn>
       </v-card-text>
       <v-form v-model="valid" class="text-center">
         <TextInput v-model="email" label="メールアドレス" :rules="emailRules" />
@@ -39,6 +39,8 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import TextInput from '@/components/atoms/TextInput'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '~/components/atoms/Snackbar'
+import { useUserStore } from '~/store/user.store';
+const router = useRouter()
 
 export default {
   components: {
@@ -84,7 +86,8 @@ export default {
           sessionStorage.setItem('uid', uid)
           sessionStorage.setItem('name', this.email)
           this.$store.commit('users/set', { name: this.email, id: uid })
-          this.$router.push('/')
+          useUserStore().set({ name: this.email, id: uid })
+          router.push('/')
         })
         .catch((e) => {
           this.snackbarText =

@@ -1,16 +1,15 @@
 <template>
   <v-card flat class="grey lighten-5">
-    <v-btn text small outlined color="amber darken-4" to="/">
+    <v-btn variant="text outlined" color="amber darken-4" to="/">
       <v-icon> mdi-plus </v-icon> 新しいカード
     </v-btn>
     <v-select
       :items="tags.map((t) => t.name)"
       item-color="amber darken-4"
       multiple
-      small
       chips
-      dense
-      solo
+      density="compact"
+      variant="solo"
       class="mt-2 mb-2"
       label="フィルタ"
       @change="findByTags"
@@ -61,8 +60,14 @@
 </template>
 
 <script>
+import { useUserStore } from '@/store/user.store'
+import { useNoteStore } from '@/store/note.store'
+import { useTagStore } from '@/store/tag.store'
 import Snackbar from '@/components/atoms/Snackbar'
 import DeleteCardDialog from '@/components/DeleteCardDialog'
+const { fetchAll: fetchAllNotes, findAll: findAllNotes } = useNoteStore()
+const { fetchAll: fetchAllTags, findAll: findAllTags } = useTagStore()
+import { useDisplay } from 'vuetify'
 
 export default {
   components: {
@@ -81,17 +86,18 @@ export default {
   computed: {
     notes: {
       get: function () {
-        return this.$store.getters['notes/findAll']
+        return findAllNotes
       },
       set: function (notes) {
         this.listNotes = notes
       },
     },
     tags() {
-      return this.$store.getters['tags/findAll']
+      return findAllTags
     },
     listHeight() {
-      switch (this.$vuetify.breakpoint.name) {
+      const { name } = useDisplay()
+      switch (name.value) {
         case 'sm':
           return 500
         case 'md':
@@ -106,10 +112,10 @@ export default {
     },
   },
   async created() {
-    const currentUser = this.$store.getters['users/getCurrent']
-    await this.$store.dispatch('tags/fetchAll', currentUser.id)
-    await this.$store.dispatch('notes/fetchAll', currentUser.id)
-    this.listNotes = this.$store.getters['notes/findAll']
+    const currentId = useUserStore().getCurrent.id
+    await fetchAllNotes(currentId)
+    await fetchAllTags(currentId)
+    this.listNotes = findAllNotes
   },
   methods: {
     deleteNote(id) {

@@ -3,14 +3,14 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="title" label="要約" solo flat> </v-text-field>
+          <v-text-field v-model="title" label="要約" solo variant="outlined" density="compact"> </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <AddTagDialog class="ma-1" />
         <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="tag" :items="tags" label="タグ" solo flat dense>
+          <v-select v-model="tag" :items="tags" label="タグ" solo variant="outlined" density="compact">
           </v-select>
         </v-col>
       </v-row>
@@ -36,6 +36,11 @@
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
 import RichEditor from '@/components/atoms/editors/RichEditor'
+import { useDisplay } from 'vuetify'
+import { useTagStore } from '@/store/tag.store'
+import { useNoteStore } from '@/store/note.store'
+const { findAll: findAllTags } = useTagStore()
+const { add } = useNoteStore()
 
 export default {
   components: {
@@ -54,10 +59,11 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.getters['tags/findAll'].map((t) => t.name)
+      return findAllTags.map((t) => t.name)
     },
     initialBody() {
-      switch (this.$vuetify.breakpoint.name) {
+      const { name } = useDisplay()
+      switch (name.value) {
         case 'sm':
           // 5行
           return '<p></p><p></p><p></p><p></p><p></p>'
@@ -91,7 +97,7 @@ export default {
         updatedAt: now,
       }
 
-      this.$store.dispatch('notes/add', note)
+      add(note)
       this.snackbar = true
       this.snackbarText = `カード ${titleOrUntitled} を保存しました`
       this.title = ''

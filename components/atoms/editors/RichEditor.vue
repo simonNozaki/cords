@@ -6,7 +6,7 @@
       :tippy-options="{ duration: 100 }"
     >
       <v-list>
-        <v-list-item class="ma-0 pa-0">
+        <v-list-item>
           <MenuItem
             :class="{ 'is-active': editor.isActive('bold') }"
             @click="editor.chain().focus().toggleBold().run()"
@@ -100,7 +100,7 @@
             @click="editor.chain().focus().toggleUnderline().run()"
           >
             <v-icon> mdi-format-underline </v-icon>
-            <p style="-decoration: underline;"> underline </p>
+            <p style="text-decoration: underline;"> underline </p>
           </MenuItem>
         </v-list-item>
       </v-list>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-2'
+import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import { StarterKit } from '@tiptap/starter-kit'
 import MenuItem from '@/components/atoms/editors/MenuItem'
 

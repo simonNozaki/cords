@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-card class="user-form ma-10 pa-10 mx-auto">
-      <v-card-title class="justify-center"> Cordsにサインイン </v-card-title>
+      <v-card-title class="d-flex justify-center"> Cordsにサインイン </v-card-title>
       <v-card-text class="text-center">
         まだアカウントを作っていない？
-        <v-btn text color="primary" to="/signup"> サインアップ </v-btn>
+        <v-btn variant="text" color="primary" to="/signup"> サインアップ </v-btn>
       </v-card-text>
       <v-form v-model="valid" class="text-center">
         <TextInput v-model="email" label="メールアドレス" :rules="emailRules" />
@@ -26,12 +26,14 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import TextInput from '@/components/atoms/TextInput'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '~/components/atoms/Snackbar'
+import { useUserStore } from '~/store/user.store';
 
-export default {
+export default defineComponent({
   components: {
     TextInput,
     FormButton,
@@ -65,13 +67,14 @@ export default {
   },
   methods: {
     signin() {
+        const router = useRouter()
         signInWithEmailAndPassword(getAuth(this.$fire), this.email, this.password)
         .then((userCredential) => {
           const uid = userCredential.user.uid
           sessionStorage.setItem('uid', uid)
           sessionStorage.setItem('name', this.email)
-          this.$store.commit('users/set', { name: this.email, id: uid })
-          this.$router.push('/')
+          useUserStore().set({ name: this.email, id: uid })
+          router.push('/')
         })
         .catch((e) => {
           switch (e.code) {
@@ -92,5 +95,5 @@ export default {
       this.snackbar = false
     },
   },
-}
+})
 </script>
