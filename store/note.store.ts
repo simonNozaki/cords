@@ -74,14 +74,13 @@ export const useNoteStore = defineStore('notes', {
       }
     },
     async fetchAll(userId: string) {
-      const notes: Note[] = []
       // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
       const snapshots = await getDocs(query(      
         collection(getFirestore($fire), 'notes'), where('userId', '==', userId)
       ))
-      snapshots.forEach((doc) => {
+      this.list = snapshots.docs.map((doc) => {
         const note = doc.data()
-        notes.push({
+        return {
           id: doc.id,
           title: note.title,
           tag: note.tag,
@@ -89,9 +88,8 @@ export const useNoteStore = defineStore('notes', {
           userId: note.userId,
           createdAt: note.createdAt,
           updatedAt: note.updatedAt
-        })
+        }
       })
-      this.list = notes
     },
     async delete(id: string) {
       await deleteDoc(doc(getFirestore($fire), 'notes', id))
