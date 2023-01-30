@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+definePageMeta({
+  middleware: ['auth']
+})
+</script>
+
 <template>
   <v-container fluid>
     <v-row no-gutters>
