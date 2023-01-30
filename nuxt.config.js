@@ -6,8 +6,8 @@ export default defineNuxtConfig({
       devtools: true,
     },
   },
-  router: {
-    middleware: ['auth'],
+  typescript: {
+    shim: false,
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,

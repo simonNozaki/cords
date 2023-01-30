@@ -2,16 +2,23 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    'jest/globals': true,
     node: true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     requireConfigFile: false,
     project: 'tsconfig.json',
+    sourceType: 'module',
+    extraFileExtensions: [
+      '.vue',
+    ],
   },
-  extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
-  plugins: ['jest', '@typescript-eslint/eslint-plugin'],
+  "parser": "vue-eslint-parser",
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'prettier'
+  ],
+  plugins: ['vue', 'import'],
   // add your custom rules here
   rules: {
     // これがないと単一名称のコンポーネントを置けない
