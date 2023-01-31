@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="grey lighten-5">
-    <v-btn variant="text outlined" color="amber darken-4" to="/">
+    <v-btn variant="outlined" color="amber-darken-4" to="/">
       <v-icon> mdi-plus </v-icon> 新しいカード
     </v-btn>
     <v-select
@@ -17,7 +17,7 @@
     </v-select>
     <v-list dense :height="listHeight" class="grey lighten-5 force-size">
       <v-list-item v-for="note in listNotes" :key="note.id">
-        <v-list-item-content>
+        <div>
           <v-card class="pa-1 ma-0" outlined>
             <v-tooltip top>
               <template #activator="{ on, attrs }">
@@ -46,11 +46,11 @@
               <!-- ダイアログの動きを監視してリストを操作する関数をトリガーする -->
               <DeleteCardDialog
                 :note-title="note.title"
-                @cardDelete="deleteNote(note.id)"
+                @card-delete="deleteNote(note.id)"
               />
             </v-list-item-subtitle>
           </v-card>
-        </v-list-item-content>
+        </div>
       </v-list-item>
     </v-list>
     <Snackbar :open="snackbar" :close="close">
