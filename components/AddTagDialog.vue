@@ -1,16 +1,15 @@
 <template>
   <div>
     <v-dialog v-model="tagDialog" max-width="500" transition="fade-transition">
-      <template #activator="{ on, attrs }">
+      <template #activator="{ props }">
         <v-btn
-          small
           icon
-          color="amber darken-4"
+          variant="plain"
+          color="amber-darken-4"
           class="justify-center"
-          v-bind="attrs"
-          v-on="on"
+          v-bind="props"
         >
-          <v-icon center dense> mdi-plus </v-icon>
+          <v-icon> mdi-plus </v-icon>
         </v-btn>
       </template>
       <v-card>

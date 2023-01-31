@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app dense class="grey lighten-5" flat>
+  <v-app-bar app dense class="grey-lighten-5" flat>
     <v-app-bar-title> Cords </v-app-bar-title>
     <v-container v-if="isAuthenticated" class="justify-right">
       <v-row>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
 import { defineComponent } from 'vue'
 import { useUserStore } from '@/store/user.store'
 import ButtonLink from '@/components/atoms/BunttonLink'
@@ -58,13 +59,15 @@ export default defineComponent({
   },
   methods: {
     signout() {
-      this.$fire.auth
-        .signOut()
+      const { $fire } = useNuxtApp()
+      const { reset } = useUserStore()
+      const { push } = useRouter()
+      signOut(getAuth($fire))
         .then((_) => {
           sessionStorage.removeItem('uid')
           sessionStorage.removeItem('name')
-          this.$store.commit('users/reset')
-          this.$router.push('/signin')
+          reset()
+          push('/signin')
         })
         .catch((e) => {
           this.snackbarText = `サインアウトできませんでした... ${e}`

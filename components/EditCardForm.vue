@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="note.title" label="要約" solo flat>
+          <v-text-field v-model="note.title" label="要約" solo variant="flat" density="compact">
           </v-text-field>
         </v-col>
       </v-row>
@@ -16,8 +16,8 @@
             :items="tags"
             label="タグ"
             solo
-            flat
-            dense
+            variant="flat"
+            density="compact"
           >
           </v-select>
         </v-col>
@@ -65,6 +65,7 @@ import {
   getFirestore,
   getDocs
 } from 'firebase/firestore'
+import { useTagStore } from '@/store/tag.store'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
 import RichEditor from '@/components/atoms/editors/RichEditor'
@@ -93,7 +94,8 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.getters['tags/findAll'].map((t) => t.name)
+      const { findAll: findAllTags } = useTagStore()
+      return findAllTags.map((t) => t.name)
     },
   },
   async created() {

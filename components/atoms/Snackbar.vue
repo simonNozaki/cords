@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-snackbar :modelValue="open">
+    <v-snackbar :model-value="open">
       <slot></slot>
       <template #actions>
         <v-btn color="primary" text v-bind="attrs" @click="close"> 完了 </v-btn>

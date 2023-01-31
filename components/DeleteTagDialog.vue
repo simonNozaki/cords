@@ -5,8 +5,12 @@
       max-width="500"
       transition="fade-transition"
     >
-      <template #activator="{ on, attrs }">
-        <v-btn small icon color="amber darken-4" v-bind="attrs" v-on="on">
+      <template #activator="{ props }">
+        <v-btn
+          icon
+          variant="plain"
+          color="amber-darken-4"
+          v-bind="props" >
           <v-icon center dense> mdi-minus </v-icon>
         </v-btn>
       </template>
