@@ -10,7 +10,7 @@ import {
   query,
   doc
 } from 'firebase/firestore'
-const { $toDatetimeString, $fire } = useNuxtApp()
+const nuxtApp = useNuxtApp()
 import { useUserStore } from '@/store/user.store'
 
 // TODO: ファイルに切り出したい
@@ -43,20 +43,20 @@ export const useNoteStore = defineStore('notes', {
     async add(note: Note) {
       const currentUser = useUserStore().getCurrent
       note.tag = note.tag ? note.tag : 'なし'
-      const noteDocRef = await addDoc(collection(getFirestore($fire), 'notes'), {
+      const noteDocRef = await addDoc(collection(getFirestore(nuxtApp.$fire), 'notes'), {
         title: note.title,
         tag: note.tag,
         body: note.body,
         userId: currentUser.id,
-        createdAt: $toDatetimeString(note.createdAt),
-        updatedAt: $toDatetimeString(note.updatedAt)
+        createdAt: nuxtApp.$toDatetimeString(note.createdAt),
+        updatedAt: nuxtApp.$toDatetimeString(note.updatedAt)
       })
       note.id = noteDocRef.id
       this.list.push(note)
     },
     async set(note: Note) {
-      note.updatedAt = $toDatetimeString(note.updatedAt)
-      await setDoc(doc(getFirestore($fire), 'notes', note.id), {
+      note.updatedAt = nuxtApp.$toDatetimeString(note.updatedAt)
+      await setDoc(doc(getFirestore(nuxtApp.$fire), 'notes', note.id), {
         title: note.title,
         tag: note.tag,
         body: note.body,
@@ -76,7 +76,7 @@ export const useNoteStore = defineStore('notes', {
     async fetchAll(userId: string) {
       // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
       const snapshots = await getDocs(query(      
-        collection(getFirestore($fire), 'notes'), where('userId', '==', userId)
+        collection(getFirestore(nuxtApp.$fire), 'notes'), where('userId', '==', userId)
       ))
       this.list = snapshots.docs.map((doc) => {
         const note = doc.data()
@@ -92,7 +92,7 @@ export const useNoteStore = defineStore('notes', {
       })
     },
     async delete(id: string) {
-      await deleteDoc(doc(getFirestore($fire), 'notes', id))
+      await deleteDoc(doc(getFirestore(nuxtApp.$fire), 'notes', id))
       this.list = this.list.filter((note) => note.id !== id)
     },
   }

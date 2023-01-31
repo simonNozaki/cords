@@ -8,7 +8,7 @@ import {
   where,
   query
 } from 'firebase/firestore'
-const { $toDatetimeString, $fire } = useNuxtApp()
+const nuxtApp = useNuxtApp()
 
 interface Tag {
   id: string
@@ -38,16 +38,16 @@ export const useTagStore = defineStore('tags', {
       const tag = {
         name: newTag.name,
         userId: newTag.userId,
-        createdAt: $toDatetimeString(newTag.createdAt),
-        updatedAt: $toDatetimeString(newTag.updatedAt),
+        createdAt: nuxtApp.$toDatetimeString(newTag.createdAt),
+        updatedAt: nuxtApp.$toDatetimeString(newTag.updatedAt),
       }
-      const tagDocRef = await addDoc(collection(getFirestore($fire), 'tags'), tag)
+      const tagDocRef = await addDoc(collection(getFirestore(nuxtApp.$fire), 'tags'), tag)
       this.list.push({ ...tag, id: tagDocRef.id })
     },
     async delete(tagNames: string[]) {
       for (const name of tagNames) {
         const snapshots = await getDocs(query(collection(
-          getFirestore($fire), 'tags'),
+          getFirestore(nuxtApp.$fire), 'tags'),
           where('name', '==', name)
         ))
         snapshots.forEach(async (s) => (await deleteDoc(s.ref)))
@@ -60,7 +60,7 @@ export const useTagStore = defineStore('tags', {
       const tags: Tag[] = []
       // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
       const snapshots = await getDocs(query(
-        collection(getFirestore($fire), 'tags'), where('userId', '==', userId)
+        collection(getFirestore(nuxtApp.$fire), 'tags'), where('userId', '==', userId)
       ))
       snapshots.forEach((doc) => {
         const tag = doc.data()
