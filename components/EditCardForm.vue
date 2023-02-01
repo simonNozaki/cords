@@ -3,8 +3,7 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="note.title" label="要約" solo variant="flat" density="compact">
-          </v-text-field>
+          <v-text-field v-model="note.title" label="要約" variant="flat" density="compact" />
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -69,6 +68,8 @@ import { useTagStore } from '@/store/tag.store'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
 import RichEditor from '@/components/atoms/editors/RichEditor'
+const nuxtApp = useNuxtApp()
+const route = useRoute()
 
 export default {
   components: {
@@ -100,15 +101,25 @@ export default {
   },
   async created() {
     const _notes = []
-    const snapshots = await getDocs(collection(getFirestore(this.$fire), 'notes'))
+    const snapshots = await getDocs(collection(getFirestore(nuxtApp.$fire), 'notes'))
     snapshots.forEach((doc) => {
       const note = doc.data()
       note.id = doc.id
       _notes.push(note)
     })
-    this.note = _notes.find(
-      (note) => note.id.toString() === this.$route.params.id
-    )
+    this.note = snapshots.docs.map((doc) => {
+      const note = doc.data()
+      return {
+        id: doc.id,
+        title: note.title,
+        tag: note.tag,
+        body: note.body,
+        userId: note.userId,
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt
+      }
+    })
+    .find((note) => note.id.toString() === route.params.id)
     this.newNote = this.note
   },
   methods: {
