@@ -8,7 +8,7 @@ definePageMeta({
   <v-container fluid>
     <v-row no-gutters>
       <v-col cols="2">
-        <MainCardsList />
+        <CardList />
       </v-col>
       <v-col>
         <EditCardForm />
