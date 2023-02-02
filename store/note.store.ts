@@ -13,8 +13,8 @@ import {
 const nuxtApp = useNuxtApp()
 import { useUserStore } from '@/store/user.store'
 
-// TODO: ファイルに切り出したい
-interface Note {
+// TODO: ファイルに切り出したい、ドメインオブジェクト化
+export interface Note {
   id: string
   title: string
   tag: string
@@ -90,6 +90,7 @@ export const useNoteStore = defineStore('notes', {
           updatedAt: note.updatedAt
         }
       })
+      return this.list
     },
     async delete(id: string) {
       await deleteDoc(doc(getFirestore(nuxtApp.$fire), 'notes', id))
