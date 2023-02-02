@@ -5,16 +5,21 @@
       max-width="500"
       transition="fade-transition"
     >
-      <template #activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon> mdi-delete-outline </v-icon>
+      <template #activator="{ props }">
+        <v-btn
+          icon
+          variant="plain"
+          color="amber-darken-4"
+          v-bind="props"
+        >
+          <v-icon> mdi-delete </v-icon>
         </v-btn>
       </template>
       <v-card>
         <v-container>
-          <v-card-title class="justify-center"
-            >カード "{{ noteTitle }}" を削除します</v-card-title
-          >
+          <v-card-title class="justify-center">
+            カード "{{ noteTitle }}" を削除します
+          </v-card-title>
           <v-row>
             <v-card-text class="text-center">
               <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
