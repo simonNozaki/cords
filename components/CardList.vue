@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/store/user.store'
-import { useNoteStore } from '@/store/note.store'
+import { Note, useNoteStore } from '@/store/note.store'
 import { useTagStore } from '@/store/tag.store'
 import { useDisplay } from 'vuetify'
 
@@ -10,12 +10,10 @@ const { getCurrent } = useUserStore()
 const router = useRouter()
 const route = useRoute()
 
-let listNotes = []
 const currentId = getCurrent.id
-fetchAllNotes(currentId).then((n) => listNotes = n)
-fetchAllTags(currentId)
+let listNotes: Note[] = await fetchAllNotes(currentId)
+await fetchAllTags(currentId)
 
-let cardDeleteDialog = false
 let snackbar = false
 let snackbarText = ''
 
@@ -25,8 +23,6 @@ const notes = computed({
     listNotes = note
   }
 })
-listNotes = findAllNotes
-console.log(listNotes)
 
 const tags = computed(() => findAllTags)
 
@@ -98,7 +94,7 @@ const close = () => {
     <v-list dense :height="listHeight" class="grey lighten-5 force-size">
       <v-list-item v-for="note in listNotes" :key="note.id">
         <div>
-          <v-card class="pa-1 ma-0" outlined>
+          <v-card class="pa-1 ma-0" variant="outlined">
             <v-tooltip top>
               <template #activator="{ on, attrs }">
                 <v-list-item-title v-bind="attrs" v-on="on">
