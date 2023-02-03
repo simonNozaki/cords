@@ -13,7 +13,7 @@
         </v-btn>
       </template>
       <v-card>
-        <v-btn class="ma-6" text @click="tagDialog = !tagDialog">
+        <v-btn class="ma-6" icon variant="plain" @click="tagDialog = !tagDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
         <v-card-title class="justify-center"> タグを登録します </v-card-title>
@@ -24,9 +24,9 @@
                 <v-text-field
                   v-model="newTag"
                   :rules="rules.tag"
-                  outlined
+                  variant="outlined"
                   required
-                  dense
+                  density="compact"
                 >
                 </v-text-field>
                 <FormButton :disabled="!isSubmittable" :click="addTag">
@@ -47,6 +47,10 @@
 <script>
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
+import { useTagStore } from '@/store/tag.store'
+import { useUserStore } from '@/store/user.store'
+const tagStore = useTagStore()
+const userStore = useUserStore()
 
 export default {
   components: {
@@ -66,28 +70,26 @@ export default {
   },
   computed: {
     tags() {
-      return this.$store.getters['tags/findAll']
+      return tagStore.findAll
     },
     isSubmittable() {
       return this.newTag || this.newTag !== ''
     },
   },
   methods: {
-    addTag() {
+    async addTag() {
       if (this.tags.includes(this.newTag)) {
         this.snackbar = true
         this.snackbarText = `タグ ${this.newTag} はすでに登録されています`
         return
       }
-      const currentUser = this.$store.getters['users/getCurrent']
       const now = new Date()
-      const tag = {
-        userId: currentUser.id,
-        tagName: this.newTag,
+      await tagStore.add({
+        userId: userStore.getCurrent.id,
+        name: this.newTag,
         createdAt: now,
         updatedAt: now,
-      }
-      this.$store.dispatch('tags/add', tag)
+      })
       this.newTag = ''
       this.tagDialog = false
       this.snackbar = true

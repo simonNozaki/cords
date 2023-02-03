@@ -23,15 +23,14 @@
       </v-row>
       <v-row no-gutters>
         <v-card flat outlined class="ml-2 mr-2 pa-1">
-          <v-chip>
-            <v-icon> mdi-clock-outline </v-icon>
-            作成
+          <v-chip label>
+            <v-icon start> mdi-clock </v-icon> 作成
           </v-chip>
           {{ note.createdAt }}
         </v-card>
         <v-card flat outlined class="ml-2 mr-2 pa-1">
-          <v-chip>
-            <v-icon> mdi-clock-outline </v-icon>
+          <v-chip label>
+            <v-icon start> mdi-clock </v-icon>
             更新
           </v-chip>
           {{ note.updatedAt }}
@@ -70,6 +69,7 @@ import Snackbar from '@/components/atoms/Snackbar'
 import RichEditor from '@/components/atoms/editors/RichEditor'
 const nuxtApp = useNuxtApp()
 const route = useRoute()
+const tagStore = useTagStore()
 
 export default {
   components: {
@@ -95,8 +95,7 @@ export default {
   },
   computed: {
     tags() {
-      const { findAll: findAllTags } = useTagStore()
-      return findAllTags.map((t) => t.name)
+      return tagStore.findAll.map((t) => t.name)
     },
   },
   async created() {
@@ -116,7 +115,8 @@ export default {
         body: note.body,
         userId: note.userId,
         createdAt: note.createdAt,
-        updatedAt: note.updatedAt
+        updatedAt: note.updatedAt,
+        ...note
       }
     })
     .find((note) => note.id.toString() === route.params.id)

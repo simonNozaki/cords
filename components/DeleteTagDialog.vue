@@ -15,7 +15,7 @@
         </v-btn>
       </template>
       <v-card>
-        <v-btn class="ma-6" text @click="tagDeleteDialog = !tagDeleteDialog">
+        <v-btn class="ma-6" icon variant="plain" @click="tagDeleteDialog = !tagDeleteDialog">
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
         <v-card-title class="justify-center">
@@ -29,7 +29,7 @@
                 :items="tags"
                 multiple
                 chips
-                solo
+                variant="outlined"
                 label="削除したいタグを一つ以上選択"
               >
               </v-select>
@@ -50,6 +50,8 @@
 <script>
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
+import { useTagStore } from '@/store/tag.store'
+const tagStore = useTagStore()
 
 export default {
   components: {
@@ -76,8 +78,8 @@ export default {
     },
   },
   methods: {
-    deleteTag() {
-      this.$store.dispatch('tags/delete', this.deletingTags)
+    async deleteTag() {
+      tagStore.delete(this.deletingTags)
       this.snackbar = true
       const deletedTags = this.deletingTags.reduce((l, r) => `${l}, ${r}`)
       this.snackbarText = `タグ ${deletedTags} を削除しました`

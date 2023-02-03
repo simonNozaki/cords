@@ -39,8 +39,8 @@ import RichEditor from '@/components/atoms/editors/RichEditor'
 import { useDisplay } from 'vuetify'
 import { useTagStore } from '@/store/tag.store'
 import { useNoteStore } from '@/store/note.store'
-const { findAll: findAllTags } = useTagStore()
-const { add } = useNoteStore()
+const tagStore = useTagStore()
+const noteStore = useNoteStore()
 
 export default {
   components: {
@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     tags() {
-      return findAllTags.map((t) => t.name)
+      return tagStore.findAll.map((t) => t.name)
     },
     initialBody() {
       const { name } = useDisplay()
@@ -89,15 +89,13 @@ export default {
       const titleOrUntitled = this.title ? this.title : '無題'
 
       const now = new Date()
-      const note = {
+      noteStore.add({
         title: titleOrUntitled,
         tag: this.tag,
         body: this.body,
         createdAt: now,
         updatedAt: now,
-      }
-
-      add(note)
+      })
       this.snackbar = true
       this.snackbarText = `カード ${titleOrUntitled} を保存しました`
       this.title = ''
