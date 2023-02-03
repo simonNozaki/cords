@@ -3,6 +3,7 @@
     v-model="inputText"
     variant="outlined"
     density="compact"
+    autocomplete="on"
     :label="label"
     :type="type"
     :rules="rules"

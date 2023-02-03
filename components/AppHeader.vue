@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app dense class="grey-lighten-5" flat>
+  <v-app-bar app dense color="grey-lighten-4" flat>
     <v-app-bar-title> Cords </v-app-bar-title>
     <v-container v-if="isAuthenticated" class="justify-right">
       <v-row>

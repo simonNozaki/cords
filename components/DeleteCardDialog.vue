@@ -17,7 +17,7 @@
       </template>
       <v-card>
         <v-container>
-          <v-card-title class="justify-center">
+          <v-card-title class="d-flex justify-center">
             カード "{{ noteTitle }}" を削除します
           </v-card-title>
           <v-row>
@@ -29,12 +29,12 @@
           <v-row justify="center">
             <v-btn
               text
-              class="mb-3"
+              class="ma-2"
               @click="cardDeleteDialog = !cardDeleteDialog"
             >
               閉じる
             </v-btn>
-            <v-btn text color="error" class="mb-3" @click="deleteNote()">
+            <v-btn text color="error" class="ma-2" @click="deleteNote()">
               削除する
             </v-btn>
           </v-row>
