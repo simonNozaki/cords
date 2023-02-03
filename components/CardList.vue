@@ -5,17 +5,17 @@ import { useTagStore } from '@/store/tag.store'
 import { useDisplay } from 'vuetify'
 
 const { fetchAll: fetchAllNotes, findAll: findAllNotes, delete: remove } = useNoteStore()
-const { fetchAll: fetchAllTags, findAll: findAllTags } = useTagStore()
+const tagStore = useTagStore()
 const { getCurrent } = useUserStore()
 const router = useRouter()
 const route = useRoute()
 
 const currentId = getCurrent.id
 let listNotes: Note[] = await fetchAllNotes(currentId)
-await fetchAllTags(currentId)
+await tagStore.fetchAll(currentId)
 
-let snackbar = false
-let snackbarText = ''
+let snackbar = ref(false)
+let snackbarText = ref('')
 
 const notes = computed({
   get: () => findAllNotes,
@@ -24,7 +24,7 @@ const notes = computed({
   }
 })
 
-const tags = computed(() => findAllTags)
+const tags = computed(() => tagStore.findAll)
 
 const listHeight = computed(() => {
   const { name } = useDisplay()
@@ -42,11 +42,11 @@ const listHeight = computed(() => {
   }
 })
 
-const deleteNote = (id: string): void => {
-  remove(id)
+const deleteNote = async (id: string): Promise<void> => {
+  await remove(id)
   notes.value = listNotes.filter((note) => note.id !== id)
-  snackbar = true
-  snackbarText = 'カードを削除しました'
+  snackbar.value = true
+  snackbarText.value = 'カードを削除しました'
   // 削除時に削除するカード上にいたらリダイレクトする
   if (id === route.params.id) {
     router.push('/')
@@ -69,9 +69,12 @@ const findByTags = (event: string[]): void => {
 }
 
 const close = () => {
-  snackbar = false
+  snackbar.value = false
 }
+</script>
 
+<script lang="ts">
+import Snackbar from '@/components/atoms/Snackbar'
 </script>
 
 <template>
@@ -85,7 +88,7 @@ const close = () => {
       multiple
       chips
       density="compact"
-      variant="solo"
+      variant="plain"
       class="mt-2 mb-2"
       label="フィルタ"
       @change="findByTags"
@@ -95,19 +98,17 @@ const close = () => {
       <v-list-item v-for="note in listNotes" :key="note.id">
         <div>
           <v-card class="pa-1 ma-0" variant="outlined">
-            <v-tooltip top>
-              <template #activator="{ on, attrs }">
-                <v-list-item-title v-bind="attrs" v-on="on">
-                  <nuxt-link
-                    :to="`/notes/${note.id}`"
-                    class="ma-2 text-md-body-1 text-decoration-none"
-                  >
-                    {{ note.title }}
-                  </nuxt-link>
-                </v-list-item-title>
-              </template>
-              <span> {{ note.title }} </span>
-            </v-tooltip>
+            <v-list-item-title>
+              <nuxt-link
+                :to="`/notes/${note.id}`"
+                class="ma-2 text-md-body-1 text-decoration-none"
+              >
+                {{ note.title }}
+              </nuxt-link>
+              <v-tooltip activator="parent" location="top">
+                <span> {{ note.title }} </span>
+              </v-tooltip>
+            </v-list-item-title>
             <v-list-item-subtitle>
               <v-chip class="ma-1 text-caption" label>
                 {{ note.tag }}
