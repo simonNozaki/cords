@@ -16,7 +16,8 @@ module.exports = {
   "parser": "vue-eslint-parser",
   extends: [
     'plugin:vue/vue3-recommended',
-    'prettier'
+    'prettier',
+    '@nuxt/eslint-config-typescript',
   ],
   plugins: ['vue', 'import'],
   // add your custom rules here
