@@ -11,7 +11,7 @@ definePageMeta({
         <CardList />
       </v-col>
       <v-col>
-        <EditCardForm />
+        <UpdateCardForm />
       </v-col>
     </v-row>
   </v-container>
