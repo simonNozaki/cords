@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import Snackbar from '@/components/atoms/Snackbar.vue'
 import { useUserStore } from '@/store/user.store'
 import { Note, useNoteStore } from '@/store/note.store'
 import { useTagStore } from '@/store/tag.store'
@@ -71,10 +72,6 @@ const findByTags = (event: string[]): void => {
 const close = () => {
   snackbar.value = false
 }
-</script>
-
-<script lang="ts">
-import Snackbar from '@/components/atoms/Snackbar'
 </script>
 
 <template>
