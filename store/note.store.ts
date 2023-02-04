@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore'
 const nuxtApp = useNuxtApp()
 import { useUserStore } from '@/store/user.store'
+const userStore = useUserStore()
 
 // TODO: ファイルに切り出したい、ドメインオブジェクト化
 export interface Note {
@@ -41,18 +42,16 @@ export const useNoteStore = defineStore('notes', {
   },
   actions: {
     async add(note: Note) {
-      const currentUser = useUserStore().getCurrent
       note.tag = note.tag ? note.tag : 'なし'
-      const noteDocRef = await addDoc(collection(getFirestore(nuxtApp.$fire), 'notes'), {
-        title: note.title,
-        tag: note.tag,
-        body: note.body,
-        userId: currentUser.id,
+      const newNote = {
+        ...note,
+        userId: userStore.getCurrent.id,
         createdAt: nuxtApp.$toDatetimeString(note.createdAt),
         updatedAt: nuxtApp.$toDatetimeString(note.updatedAt)
-      })
-      note.id = noteDocRef.id
-      this.list.push(note)
+      }
+      const noteDocRef = await addDoc(collection(getFirestore(nuxtApp.$fire), 'notes'), newNote)
+      newNote.id = noteDocRef.id
+      this.list.push(newNote)
     },
     async set(note: Note) {
       note.updatedAt = nuxtApp.$toDatetimeString(note.updatedAt)

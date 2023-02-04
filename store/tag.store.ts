@@ -57,23 +57,21 @@ export const useTagStore = defineStore('tags', {
       })
     },
     async fetchAll(userId: string) {
-      const tags: Tag[] = []
       // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
       const snapshots = await getDocs(query(
         collection(getFirestore(nuxtApp.$fire), 'tags'), where('userId', '==', userId)
       ))
-      snapshots.forEach((doc) => {
+      this.list = snapshots.docs.map((doc) => {
         const tag = doc.data()
-        tag.id = doc.id
-        tags.push({
+        return {
           id: doc.data().id,
           name: tag.name,
           userId: tag.userId,
           createdAt: tag.createdAt,
           updatedAt: tag.updatedAt,
-        })
+        }
       })
-      this.list = tags
+      return this.list
     }
   }
 })
