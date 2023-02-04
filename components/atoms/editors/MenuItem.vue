@@ -1,7 +1,7 @@
 <template>
   <v-btn
-    text
-    small
+    variant="text"
+    density="compact"
     class="bubble-menu-button"
   >
     <slot></slot>
