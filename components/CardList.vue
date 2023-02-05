@@ -5,26 +5,24 @@ import { useUserStore } from '@/store/user.store'
 import { Note, useNoteStore } from '@/store/note.store'
 import { useTagStore } from '@/store/tag.store'
 
-const {
-  fetchAll: fetchAllNotes,
-  findAll: findAllNotes,
-  delete: remove
-} = useNoteStore()
 const tagStore = useTagStore()
-const { getCurrent } = useUserStore()
+const noteStore = useNoteStore()
+const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
+const display = useDisplay()
 
-const currentId = getCurrent.id
-let listNotes: Note[] = await fetchAllNotes(currentId)
-await tagStore.fetchAll(currentId)
+await noteStore.fetchAll(userStore.getCurrent.id)
+let listNotes: Note[] = noteStore.findAll
+await tagStore.fetchAll(userStore.getCurrent.id)
 
+const filteringTags = ref([])
 const snackbar = ref(false)
 const snackbarText = ref('')
 
 const notes = computed({
-  get: () => findAllNotes,
-  set: (note) => {
+  get: () => listNotes,
+  set: (note: Note[]) => {
     listNotes = note
   }
 })
@@ -32,8 +30,7 @@ const notes = computed({
 const tags = computed(() => tagStore.findAll)
 
 const listHeight = computed(() => {
-  const { name } = useDisplay()
-  switch (name.value) {
+  switch (display.name.value) {
     case 'sm':
       return 500
     case 'md':
@@ -48,7 +45,7 @@ const listHeight = computed(() => {
 })
 
 const deleteNote = async (id: string): Promise<void> => {
-  await remove(id)
+  await noteStore.delete(id)
   notes.value = listNotes.filter(note => note.id !== id)
   snackbar.value = true
   snackbarText.value = 'カードを削除しました'
@@ -61,16 +58,12 @@ const deleteNote = async (id: string): Promise<void> => {
 const findByTags = (event: string[]): void => {
   // eventが配列形式になっているのでそのまま渡してOK
   // 存在判定だけなので集合に変えて要素の存在判定のみ(tagsのstate自体集合にしていいかも)
-  const filteringTags = new Set(event)
   // フィルタしない場合は全部持ってくる
-  if (filteringTags.size === 0) {
-    notes.value = findAllNotes
-  } else {
-    const filteredNotes = findAllNotes.filter(note =>
-      filteringTags.has(note.tag)
+  notes.value = new Set(event).size === 0
+    ? noteStore.findAll
+    : noteStore.findAll.filter(note =>
+      new Set(event).has(note.tag)
     )
-    notes.value = filteredNotes
-  }
 }
 
 const close = () => {
@@ -84,6 +77,7 @@ const close = () => {
       <v-icon> mdi-plus </v-icon> 新しいカード
     </v-btn>
     <v-select
+      v-model="filteringTags"
       :items="tags.map((t) => t.name)"
       item-color="amber darken-4"
       multiple
@@ -92,9 +86,9 @@ const close = () => {
       variant="plain"
       class="mt-2 mb-2"
       label="フィルタ"
-      @change="findByTags"
+      @update:model-value="findByTags"
     />
-    <v-list dense :height="listHeight" class="grey lighten-5 force-size">
+    <v-list :height="listHeight" class="grey lighten-5 force-size" density="compact">
       <v-list-item v-for="note in listNotes" :key="note.id">
         <div>
           <v-card class="pa-1 ma-0" variant="outlined">
