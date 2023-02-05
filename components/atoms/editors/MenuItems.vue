@@ -102,7 +102,9 @@
         @click="editor.chain().focus().toggleUnderline().run()"
       >
         <v-icon> mdi-format-underline </v-icon>
-        <p style="text-decoration: underline;"> underline </p>
+        <p style="text-decoration: underline">
+          underline
+        </p>
       </MenuItem>
     </v-list-item>
   </v-list>
@@ -114,7 +116,7 @@ import MenuItem from '@/components/atoms/editors/MenuItem'
 
 export default {
   components: {
-    MenuItem,
+    MenuItem
   },
   props: {
     editor: {

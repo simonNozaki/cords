@@ -29,38 +29,46 @@ export const useTagStore = defineStore('tags', {
     }
   },
   getters: {
-    findAll(state): Tag[] {
+    findAll (state): Tag[] {
       return state.list
     }
   },
   actions: {
-    async add(newTag: Tag) {
+    async add (newTag: Tag) {
       const tag = {
         name: newTag.name,
         userId: newTag.userId,
         createdAt: nuxtApp.$toDatetimeString(newTag.createdAt),
-        updatedAt: nuxtApp.$toDatetimeString(newTag.updatedAt),
+        updatedAt: nuxtApp.$toDatetimeString(newTag.updatedAt)
       }
-      const tagDocRef = await addDoc(collection(getFirestore(nuxtApp.$fire), 'tags'), tag)
+      const tagDocRef = await addDoc(
+        collection(getFirestore(nuxtApp.$fire), 'tags'),
+        tag
+      )
       this.list.push({ ...tag, id: tagDocRef.id })
     },
-    async delete(tagNames: string[]) {
+    async delete (tagNames: string[]) {
       for (const name of tagNames) {
-        const snapshots = await getDocs(query(collection(
-          getFirestore(nuxtApp.$fire), 'tags'),
-          where('name', '==', name)
-        ))
-        snapshots.forEach(async (s) => (await deleteDoc(s.ref)))
+        const snapshots = await getDocs(
+          query(
+            collection(getFirestore(nuxtApp.$fire), 'tags'),
+            where('name', '==', name)
+          )
+        )
+        snapshots.forEach(async s => await deleteDoc(s.ref))
       }
       tagNames.forEach((name) => {
-        this.list = this.list.filter((tag) => tag.name !== name)
+        this.list = this.list.filter(tag => tag.name !== name)
       })
     },
-    async fetchAll(userId: string) {
+    async fetchAll (userId: string) {
       // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-      const snapshots = await getDocs(query(
-        collection(getFirestore(nuxtApp.$fire), 'tags'), where('userId', '==', userId)
-      ))
+      const snapshots = await getDocs(
+        query(
+          collection(getFirestore(nuxtApp.$fire), 'tags'),
+          where('userId', '==', userId)
+        )
+      )
       this.list = snapshots.docs.map((doc) => {
         const tag = doc.data()
         return {
@@ -68,7 +76,7 @@ export const useTagStore = defineStore('tags', {
           name: tag.name,
           userId: tag.userId,
           createdAt: tag.createdAt,
-          updatedAt: tag.updatedAt,
+          updatedAt: tag.updatedAt
         }
       })
       return this.list

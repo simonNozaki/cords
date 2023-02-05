@@ -6,12 +6,7 @@
       transition="fade-transition"
     >
       <template #activator="{ props }">
-        <v-btn
-          icon
-          variant="plain"
-          color="amber-darken-4"
-          v-bind="props"
-        >
+        <v-btn icon variant="plain" color="amber-darken-4" v-bind="props">
           <v-icon> mdi-delete </v-icon>
         </v-btn>
       </template>
@@ -22,7 +17,9 @@
           </v-card-title>
           <v-row>
             <v-card-text class="text-center">
-              <v-icon class="ma-2"> mdi-alert-circle-outline </v-icon>
+              <v-icon class="ma-2">
+                mdi-alert-circle-outline
+              </v-icon>
               この操作は取り戻せません
             </v-card-text>
           </v-row>
@@ -49,24 +46,25 @@ export default {
   props: {
     noteTitle: {
       type: String,
-      default() {
+      default () {
         return ''
-      },
-    },
+      }
+    }
   },
-  data() {
+  emits: ['cardDelete'],
+  data () {
     return {
       cardDeleteDialog: false,
       snackbar: false,
-      snackbarText: '',
+      snackbarText: ''
     }
   },
   methods: {
-    deleteNote() {
+    deleteNote () {
       this.cardDeleteDialog = false
       // カード削除イベントをパブリッシュ（親側で監視して処理を行う）
       this.$emit('cardDelete')
-    },
-  },
+    }
+  }
 }
 </script>

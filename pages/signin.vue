@@ -1,10 +1,14 @@
 <template>
   <div>
     <v-card class="user-form ma-10 pa-10 mx-auto">
-      <v-card-title class="d-flex justify-center"> Cordsにサインイン </v-card-title>
+      <v-card-title class="d-flex justify-center">
+        Cordsにサインイン
+      </v-card-title>
       <v-card-text class="text-center">
         まだアカウントを作っていない？
-        <v-btn variant="text" color="primary" to="/signup"> サインアップ </v-btn>
+        <v-btn variant="text" color="primary" to="/signup">
+          サインアップ
+        </v-btn>
       </v-card-text>
       <v-form v-model="valid" class="text-center">
         <TextInput v-model="email" label="メールアドレス" :rules="emailRules" />
@@ -27,19 +31,19 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import TextInput from '@/components/atoms/TextInput'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '~/components/atoms/Snackbar'
-import { useUserStore } from '~/store/user.store';
+import { useUserStore } from '~/store/user.store'
 
 export default defineComponent({
   components: {
     TextInput,
     FormButton,
-    Snackbar,
+    Snackbar
   },
-  data() {
+  data () {
     return {
       email: '',
       password: '',
@@ -47,28 +51,28 @@ export default defineComponent({
       snackbarText: '',
       valid: true,
       emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
+        v => !!v || 'メールアドレスは必須です',
+        v =>
           this.$isEmailFormat(v) ||
-          'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください',
+          'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
       ],
       passwordRules: [
-        (v) => !!v || 'パスワードは必須です',
-        (v) =>
+        v => !!v || 'パスワードは必須です',
+        v =>
           this.$isPasswordLength(v) ||
-          '6桁以上の英数字を使って、パスワードを入力してください',
-      ],
+          '6桁以上の英数字を使って、パスワードを入力してください'
+      ]
     }
   },
   computed: {
-    isSubmittable() {
+    isSubmittable () {
       return this.valid
-    },
+    }
   },
   methods: {
-    signin() {
-        const router = useRouter()
-        signInWithEmailAndPassword(getAuth(this.$fire), this.email, this.password)
+    signin () {
+      const router = useRouter()
+      signInWithEmailAndPassword(getAuth(this.$fire), this.email, this.password)
         .then((userCredential) => {
           const uid = userCredential.user.uid
           sessionStorage.setItem('uid', uid)
@@ -91,9 +95,9 @@ export default defineComponent({
           this.snackbar = true
         })
     },
-    close() {
+    close () {
       this.snackbar = false
-    },
-  },
+    }
+  }
 })
 </script>

@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app'
 
 export default defineNuxtPlugin(() => {
   const runtimeConfig = useRuntimeConfig()
@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
     projectId: runtimeConfig.public.projectId,
     storageBucket: runtimeConfig.public.storageBucket,
     messagingSenderId: runtimeConfig.public.messagingSenderId,
-    appId: runtimeConfig.public.appId,
+    appId: runtimeConfig.public.appId
   })
   return {
     provide: { fire }

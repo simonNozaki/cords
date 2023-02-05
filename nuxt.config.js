@@ -1,13 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
 
 export default defineNuxtConfig({
   vue: {
     config: {
-      devtools: true,
-    },
+      devtools: true
+    }
   },
   typescript: {
-    shim: false,
+    shim: false
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -19,15 +20,15 @@ export default defineNuxtConfig({
   head: {
     title: 'cords | Online text editor',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'format-detection', content: 'telephone=no' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -48,7 +49,7 @@ export default defineNuxtConfig({
       projectId: process.env.PROJECT_ID,
       storageBucket: process.env.STORAGE_BUCKET,
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
-      appId: process.env.APP_ID,
+      appId: process.env.APP_ID
     }
   },
 
@@ -61,15 +62,15 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/google-fonts',
+    '@nuxtjs/google-fonts'
   ],
 
   googleFonts: {
     families: {
       download: false,
       NotoSansJapanese: [400],
-      JetBrainsMono: [500],
-    },
+      JetBrainsMono: [500]
+    }
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -81,14 +82,14 @@ export default defineNuxtConfig({
     customVariables: ['~/assets/variables.scss'],
     defaultAssets: {
       font: {
-        family: 'Noto Sans Japanese',
-      },
-    },
+        family: 'Noto Sans Japanese'
+      }
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ["vuetify"],
+    transpile: ['vuetify']
   },
 
   vite: {

@@ -10,16 +10,17 @@ const tagStore = useTagStore()
 const userStore = useUserStore()
 const noteStore = useNoteStore()
 
-const tags = computed(() => tagStore.findAll.map((t) => t.name))
+const tags = computed(() => tagStore.findAll.map(t => t.name))
 const snackbar = ref(false)
 
 const snackbarText = ref('')
 
-const note = (await noteStore.fetchAll(userStore.getCurrent.id)).find((n) => n.id === route.params.id)
+const note = (await noteStore.fetchAll(userStore.getCurrent.id))
+  .find(n => n.id === route.params.id)
 if (!note) {
-  throw new Error('')
+  throw new Error('ページが存在しないかも')
 }
-let newNote = note
+const newNote = note
 
 const updateNote = async (): Promise<void> => {
   newNote.updatedAt = new Date().toString()
@@ -43,7 +44,12 @@ const close = (): void => {
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="note.title" label="要約" variant="plain" density="compact" />
+          <v-text-field
+            v-model="note.title"
+            label="要約"
+            variant="plain"
+            density="compact"
+          />
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -56,20 +62,23 @@ const close = (): void => {
             label="タグ"
             variant="plain"
             density="compact"
-          >
-          </v-select>
+          />
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-card flat outlined class="ml-2 mr-2 pa-1">
           <v-chip label>
-            <v-icon start> mdi-clock </v-icon> 作成
+            <v-icon start>
+              mdi-clock
+            </v-icon> 作成
           </v-chip>
           {{ note.createdAt }}
         </v-card>
         <v-card flat outlined class="ml-2 mr-2 pa-1">
           <v-chip label>
-            <v-icon start> mdi-clock </v-icon>
+            <v-icon start>
+              mdi-clock
+            </v-icon>
             更新
           </v-chip>
           {{ note.updatedAt }}
@@ -88,7 +97,9 @@ const close = (): void => {
       </v-col>
     </v-row>
     <v-row>
-      <FormButton :click="updateNote"> 保存する </FormButton>
+      <FormButton :click="updateNote">
+        保存する
+      </FormButton>
     </v-row>
     <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}

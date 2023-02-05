@@ -1,9 +1,11 @@
 <template>
   <div class="text-center">
     <v-snackbar :model-value="open">
-      <slot></slot>
+      <slot />
       <template #actions>
-        <v-btn color="primary" variant="text" @click="close"> 完了 </v-btn>
+        <v-btn color="primary" variant="text" @click="close">
+          完了
+        </v-btn>
       </template>
     </v-snackbar>
   </div>
@@ -14,16 +16,16 @@ export default {
   props: {
     open: {
       type: Boolean,
-      default() {
+      default () {
         return false
-      },
+      }
     },
     close: {
       type: Function,
-      default() {
+      default () {
         return () => {}
-      },
-    },
-  },
+      }
+    }
+  }
 }
 </script>

@@ -3,15 +3,27 @@
     <v-container fluid>
       <v-row no-gutters>
         <v-col>
-          <v-text-field v-model="title" label="要約" solo variant="outlined" density="compact"> </v-text-field>
+          <v-text-field
+            v-model="title"
+            label="要約"
+            solo
+            variant="outlined"
+            density="compact"
+          />
         </v-col>
       </v-row>
       <v-row no-gutters>
         <AddTagDialog class="ma-1" />
         <DeleteTagDialog :tags="tags" class="ma-1" />
         <v-col>
-          <v-select v-model="tag" :items="tags" label="タグ" solo variant="outlined" density="compact">
-          </v-select>
+          <v-select
+            v-model="tag"
+            :items="tags"
+            label="タグ"
+            solo
+            variant="outlined"
+            density="compact"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -24,7 +36,9 @@
       </v-col>
     </v-row>
     <v-row>
-      <FormButton :click="addNote"> 保存する </FormButton>
+      <FormButton :click="addNote">
+        保存する
+      </FormButton>
     </v-row>
     <Snackbar :open="snackbar" :close="close">
       {{ snackbarText }}
@@ -33,10 +47,10 @@
 </template>
 
 <script>
+import { useDisplay } from 'vuetify'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '@/components/atoms/Snackbar'
 import RichEditor from '@/components/atoms/editors/RichEditor'
-import { useDisplay } from 'vuetify'
 import { useTagStore } from '@/store/tag.store'
 import { useNoteStore } from '@/store/note.store'
 const tagStore = useTagStore()
@@ -46,22 +60,22 @@ export default {
   components: {
     FormButton,
     Snackbar,
-    RichEditor,
+    RichEditor
   },
-  data() {
+  data () {
     return {
       snackbar: false,
       snackbarText: '',
       title: '',
       body: '',
-      tag: '',
+      tag: ''
     }
   },
   computed: {
-    tags() {
-      return tagStore.findAll.map((t) => t.name)
+    tags () {
+      return tagStore.findAll.map(t => t.name)
     },
-    initialBody() {
+    initialBody () {
       const { name } = useDisplay()
       switch (name.value) {
         case 'sm':
@@ -79,13 +93,13 @@ export default {
           // 7行
           return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
       }
-    },
+    }
   },
-  created() {
+  created () {
     this.body = this.initialBody
   },
   methods: {
-    addNote() {
+    addNote () {
       const titleOrUntitled = this.title ? this.title : '無題'
 
       const now = new Date()
@@ -94,7 +108,7 @@ export default {
         tag: this.tag,
         body: this.body,
         createdAt: now,
-        updatedAt: now,
+        updatedAt: now
       })
       this.snackbar = true
       this.snackbarText = `カード ${titleOrUntitled} を保存しました`
@@ -102,9 +116,9 @@ export default {
       this.tag = ''
       this.body = ''
     },
-    close() {
+    close () {
       this.snackbar = false
-    },
-  },
+    }
+  }
 }
 </script>

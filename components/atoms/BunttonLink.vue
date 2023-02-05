@@ -1,6 +1,6 @@
 <template>
   <v-btn variant="text" color="primary" class="text-button" @click="click">
-    <slot></slot>
+    <slot />
   </v-btn>
 </template>
 
@@ -9,11 +9,11 @@ export default {
   props: {
     click: {
       type: Function,
-      default() {
+      default () {
         return () => {}
-      },
-    },
-  },
+      }
+    }
+  }
 }
 </script>
 

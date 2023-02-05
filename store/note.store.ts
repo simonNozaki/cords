@@ -10,8 +10,8 @@ import {
   query,
   doc
 } from 'firebase/firestore'
-const nuxtApp = useNuxtApp()
 import { useUserStore } from '@/store/user.store'
+const nuxtApp = useNuxtApp()
 const userStore = useUserStore()
 
 // TODO: ファイルに切り出したい、ドメインオブジェクト化
@@ -36,12 +36,12 @@ export const useNoteStore = defineStore('notes', {
     }
   },
   getters: {
-    findAll(state: State): Note[] {
+    findAll (state: State): Note[] {
       return state.list
-    },
+    }
   },
   actions: {
-    async add(note: Note) {
+    async add (note: Note) {
       note.tag = note.tag ? note.tag : 'なし'
       const newNote = {
         ...note,
@@ -49,11 +49,14 @@ export const useNoteStore = defineStore('notes', {
         createdAt: nuxtApp.$toDatetimeString(note.createdAt),
         updatedAt: nuxtApp.$toDatetimeString(note.updatedAt)
       }
-      const noteDocRef = await addDoc(collection(getFirestore(nuxtApp.$fire), 'notes'), newNote)
+      const noteDocRef = await addDoc(
+        collection(getFirestore(nuxtApp.$fire), 'notes'),
+        newNote
+      )
       newNote.id = noteDocRef.id
       this.list.push(newNote)
     },
-    async set(note: Note) {
+    async set (note: Note) {
       note.updatedAt = nuxtApp.$toDatetimeString(note.updatedAt)
       await setDoc(doc(getFirestore(nuxtApp.$fire), 'notes', note.id), {
         title: note.title,
@@ -61,9 +64,9 @@ export const useNoteStore = defineStore('notes', {
         body: note.body,
         userId: note.userId,
         createdAt: note.createdAt,
-        updatedAt: note.updatedAt,
+        updatedAt: note.updatedAt
       })
-      const _note = this.list.find((elm) => elm.id.toString() === note.id)
+      const _note = this.list.find(elm => elm.id.toString() === note.id)
       // TODO: 存在しない場合はエラーのほうが安全
       if (_note) {
         _note.title = note.title
@@ -72,11 +75,14 @@ export const useNoteStore = defineStore('notes', {
         _note.updatedAt = note.updatedAt
       }
     },
-    async fetchAll(userId: string) {
+    async fetchAll (userId: string) {
       // doc.data() => { name: 'tagName', updatedAt: 'date', createdAt: 'date' }
-      const snapshots = await getDocs(query(      
-        collection(getFirestore(nuxtApp.$fire), 'notes'), where('userId', '==', userId)
-      ))
+      const snapshots = await getDocs(
+        query(
+          collection(getFirestore(nuxtApp.$fire), 'notes'),
+          where('userId', '==', userId)
+        )
+      )
       this.list = snapshots.docs.map((doc) => {
         const note = doc.data()
         return {
@@ -91,9 +97,9 @@ export const useNoteStore = defineStore('notes', {
       })
       return this.list
     },
-    async delete(id: string) {
+    async delete (id: string) {
       await deleteDoc(doc(getFirestore(nuxtApp.$fire), 'notes', id))
-      this.list = this.list.filter((note) => note.id !== id)
-    },
+      this.list = this.list.filter(note => note.id !== id)
+    }
   }
 })

@@ -6,16 +6,19 @@
       transition="fade-transition"
     >
       <template #activator="{ props }">
-        <v-btn
-          icon
-          variant="plain"
-          color="amber-darken-4"
-          v-bind="props" >
-          <v-icon center dense> mdi-minus </v-icon>
+        <v-btn icon variant="plain" color="amber-darken-4" v-bind="props">
+          <v-icon center dense>
+            mdi-minus
+          </v-icon>
         </v-btn>
       </template>
       <v-card>
-        <v-btn class="ma-6" icon variant="plain" @click="tagDeleteDialog = !tagDeleteDialog">
+        <v-btn
+          class="ma-6"
+          icon
+          variant="plain"
+          @click="tagDeleteDialog = !tagDeleteDialog"
+        >
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
         <v-card-title class="justify-center">
@@ -31,8 +34,7 @@
                 chips
                 variant="outlined"
                 label="削除したいタグを一つ以上選択"
-              >
-              </v-select>
+              />
               <FormButton :disabled="!isDeletable" :click="deleteTag">
                 削除する
               </FormButton>
@@ -56,39 +58,39 @@ const tagStore = useTagStore()
 export default {
   components: {
     FormButton,
-    Snackbar,
+    Snackbar
   },
   props: {
     tags: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
-  data() {
+  data () {
     return {
       tagDeleteDialog: false,
       deletingTags: [],
       snackbar: false,
-      snackbarText: '',
+      snackbarText: ''
     }
   },
   computed: {
-    isDeletable() {
+    isDeletable () {
       return this.deletingTags.length > 0
-    },
+    }
   },
   methods: {
-    async deleteTag() {
-      tagStore.delete(this.deletingTags)
+    async deleteTag () {
+      await tagStore.delete(this.deletingTags)
       this.snackbar = true
       const deletedTags = this.deletingTags.reduce((l, r) => `${l}, ${r}`)
       this.snackbarText = `タグ ${deletedTags} を削除しました`
       this.deletingTags = []
     },
-    close() {
+    close () {
       this.snackbar = false
       this.snackbarText = ''
-    },
-  },
+    }
+  }
 }
 </script>

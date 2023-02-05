@@ -9,15 +9,13 @@ module.exports = {
     requireConfigFile: false,
     project: 'tsconfig.json',
     sourceType: 'module',
-    extraFileExtensions: [
-      '.vue',
-    ],
+    extraFileExtensions: ['.vue'],
   },
-  "parser": "vue-eslint-parser",
+  parser: 'vue-eslint-parser',
   extends: [
     'plugin:vue/vue3-recommended',
     'prettier',
-    '@nuxt/eslint-config-typescript',
+    '@nuxtjs/eslint-config-typescript',
   ],
   plugins: ['vue', 'import'],
   // add your custom rules here
@@ -25,4 +23,5 @@ module.exports = {
     // これがないと単一名称のコンポーネントを置けない
     'vue/multi-word-component-names': 'off',
   },
+  ignorePatterns: ['.eslintrc.js']
 }

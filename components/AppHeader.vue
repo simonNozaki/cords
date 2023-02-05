@@ -3,16 +3,13 @@
     <v-app-bar-title> Cords </v-app-bar-title>
     <v-container v-if="isAuthenticated" class="justify-right">
       <v-row>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-menu offset-y>
           <template #activator="{ props }">
-            <v-btn
-              text
-              color="primary"
-              class="text-button"
-              v-bind="props"
-            >
-              <v-icon class="mr-1"> mdi-account-outline </v-icon> {{ name }}
+            <v-btn text color="primary" class="text-button" v-bind="props">
+              <v-icon class="mr-1">
+                mdi-account-outline
+              </v-icon> {{ name }}
             </v-btn>
           </template>
           <v-list>
@@ -32,7 +29,7 @@
 </template>
 
 <script>
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut } from 'firebase/auth'
 import { defineComponent } from 'vue'
 import { useUserStore } from '@/store/user.store'
 import ButtonLink from '@/components/atoms/BunttonLink'
@@ -41,24 +38,24 @@ import Snackbar from '@/components/atoms/Snackbar'
 export default defineComponent({
   components: {
     ButtonLink,
-    Snackbar,
+    Snackbar
   },
-  data() {
+  data () {
     return {
       snackbar: false,
-      snackbarText: '',
+      snackbarText: ''
     }
   },
   computed: {
-    isAuthenticated() {
+    isAuthenticated () {
       return useUserStore().isAuthenticated
     },
-    name() {
+    name () {
       return useUserStore().getCurrent.name
-    },
+    }
   },
   methods: {
-    signout() {
+    signout () {
       const { $fire } = useNuxtApp()
       const { reset } = useUserStore()
       const { push } = useRouter()
@@ -74,10 +71,10 @@ export default defineComponent({
           this.snackbar = true
         })
     },
-    close() {
+    close () {
       this.snackbar = false
-    },
-  },
+    }
+  }
 })
 </script>
 

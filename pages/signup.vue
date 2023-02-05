@@ -1,13 +1,17 @@
 <template>
   <div>
     <v-card class="user-form ma-10 pa-10 mx-auto">
-      <v-card-title class="d-flex justify-center"> Cordsにサインアップ </v-card-title>
+      <v-card-title class="d-flex justify-center">
+        Cordsにサインアップ
+      </v-card-title>
       <v-card-text class="text-center">
         アカウントを作成すると、メモを残せるようになります。
       </v-card-text>
       <v-card-text class="text-center ma-0">
         もうアカウントを持ってる？
-        <v-btn variant="text" color="secondary" to="/signin"> サインイン </v-btn>
+        <v-btn variant="text" color="secondary" to="/signin">
+          サインイン
+        </v-btn>
       </v-card-text>
       <v-form v-model="valid" class="text-center">
         <TextInput v-model="email" label="メールアドレス" :rules="emailRules" />
@@ -35,20 +39,20 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import TextInput from '@/components/atoms/TextInput'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '~/components/atoms/Snackbar'
-import { useUserStore } from '~/store/user.store';
+import { useUserStore } from '~/store/user.store'
 const router = useRouter()
 
 export default {
   components: {
     TextInput,
     FormButton,
-    Snackbar,
+    Snackbar
   },
-  data() {
+  data () {
     return {
       email: '',
       password: '',
@@ -57,30 +61,34 @@ export default {
       snackbarText: '',
       valid: true,
       emailRules: [
-        (v) => !!v || 'メールアドレスは必須です',
-        (v) =>
+        v => !!v || 'メールアドレスは必須です',
+        v =>
           this.$isEmailFormat(v) ||
-          'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください',
+          'メールアドレスの形式ではありません。 <アカウント>@<ドメイン>(.jpなど) の形式になっていることをご確認ください'
       ],
       passwordRules: [
-        (v) => !!v || 'パスワードは必須です',
-        (v) =>
+        v => !!v || 'パスワードは必須です',
+        v =>
           this.$isPasswordLength(v) ||
-          '6桁以上の英数字を使って、パスワードを入力してください',
+          '6桁以上の英数字を使って、パスワードを入力してください'
       ],
       passwordConfirmationRules: [
-        (v) => v === this.password || 'パスワードが一致しません',
-      ],
+        v => v === this.password || 'パスワードが一致しません'
+      ]
     }
   },
   computed: {
-    isSubmittable() {
+    isSubmittable () {
       return this.valid
-    },
+    }
   },
   methods: {
-    signup() {
-      createUserWithEmailAndPassword(getAuth(this.$fire), this.email, this.password)
+    signup () {
+      createUserWithEmailAndPassword(
+        getAuth(this.$fire),
+        this.email,
+        this.password
+      )
         .then((userCredential) => {
           const uid = userCredential.user.uid
           sessionStorage.setItem('uid', uid)
@@ -97,9 +105,9 @@ export default {
           this.snackbar = true
         })
     },
-    close() {
+    close () {
       this.snackbar = false
-    },
-  },
+    }
+  }
 }
 </script>

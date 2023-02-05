@@ -1,11 +1,15 @@
 <script lang="ts" setup>
+import { useDisplay } from 'vuetify'
 import Snackbar from '@/components/atoms/Snackbar.vue'
 import { useUserStore } from '@/store/user.store'
 import { Note, useNoteStore } from '@/store/note.store'
 import { useTagStore } from '@/store/tag.store'
-import { useDisplay } from 'vuetify'
 
-const { fetchAll: fetchAllNotes, findAll: findAllNotes, delete: remove } = useNoteStore()
+const {
+  fetchAll: fetchAllNotes,
+  findAll: findAllNotes,
+  delete: remove
+} = useNoteStore()
 const tagStore = useTagStore()
 const { getCurrent } = useUserStore()
 const router = useRouter()
@@ -15,8 +19,8 @@ const currentId = getCurrent.id
 let listNotes: Note[] = await fetchAllNotes(currentId)
 await tagStore.fetchAll(currentId)
 
-let snackbar = ref(false)
-let snackbarText = ref('')
+const snackbar = ref(false)
+const snackbarText = ref('')
 
 const notes = computed({
   get: () => findAllNotes,
@@ -45,7 +49,7 @@ const listHeight = computed(() => {
 
 const deleteNote = async (id: string): Promise<void> => {
   await remove(id)
-  notes.value = listNotes.filter((note) => note.id !== id)
+  notes.value = listNotes.filter(note => note.id !== id)
   snackbar.value = true
   snackbarText.value = 'カードを削除しました'
   // 削除時に削除するカード上にいたらリダイレクトする
@@ -62,8 +66,8 @@ const findByTags = (event: string[]): void => {
   if (filteringTags.size === 0) {
     notes.value = findAllNotes
   } else {
-    const filteredNotes = findAllNotes.filter(
-      (note) => filteringTags.has(note.tag)
+    const filteredNotes = findAllNotes.filter(note =>
+      filteringTags.has(note.tag)
     )
     notes.value = filteredNotes
   }
@@ -89,8 +93,7 @@ const close = () => {
       class="mt-2 mb-2"
       label="フィルタ"
       @change="findByTags"
-    >
-    </v-select>
+    />
     <v-list dense :height="listHeight" class="grey lighten-5 force-size">
       <v-list-item v-for="note in listNotes" :key="note.id">
         <div>

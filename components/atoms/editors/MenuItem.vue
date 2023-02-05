@@ -1,10 +1,6 @@
 <template>
-  <v-btn
-    variant="text"
-    density="compact"
-    class="bubble-menu-button"
-  >
-    <slot></slot>
+  <v-btn variant="text" density="compact" class="bubble-menu-button">
+    <slot />
   </v-btn>
 </template>
 

@@ -7,7 +7,7 @@
     :label="label"
     :type="type"
     :rules="rules"
-  ></v-text-field>
+  />
 </template>
 
 <script>
@@ -15,21 +15,22 @@ export default {
   props: {
     value: {
       type: String,
-      default: '',
+      default: ''
     },
     label: {
       type: String,
-      default: '',
+      default: ''
     },
     type: {
       type: String,
-      default: '',
+      default: ''
     },
     rules: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
+  emits: ['input'],
   computed: {
     inputText: {
       get: function () {
@@ -37,8 +38,8 @@ export default {
       },
       set: function (v) {
         this.$emit('input', v)
-      },
-    },
-  },
+      }
+    }
+  }
 }
 </script>

@@ -5,7 +5,7 @@
     :disabled="disabled"
     @click="click"
   >
-    <slot></slot>
+    <slot />
   </v-btn>
 </template>
 
@@ -14,16 +14,16 @@ export default {
   props: {
     click: {
       type: Function,
-      default() {
+      default () {
         return () => {}
-      },
+      }
     },
     disabled: {
       type: Boolean,
-      default() {
+      default () {
         return false
-      },
-    },
-  },
+      }
+    }
+  }
 }
 </script>
