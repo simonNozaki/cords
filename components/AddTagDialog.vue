@@ -21,7 +21,7 @@
         >
           <v-icon> mdi-window-close </v-icon>
         </v-btn>
-        <v-card-title class="justify-center">
+        <v-card-title class="d-flex justify-center">
           タグを登録します
         </v-card-title>
         <v-container>
