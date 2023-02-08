@@ -14,14 +14,14 @@ import { useUser } from './useUser'
 const nuxtApp = useNuxtApp()
 const user = useUser()
 
-interface NoteState {
-  id: string
+export interface NoteState {
+  id?: string
   title: string
   tag: string
   body: string
   userId: string
-  createdAt: string
-  updatedAt: string
+  createdAt: string | Date
+  updatedAt: string | Date
 }
 
 class Notes {
@@ -46,12 +46,14 @@ class Notes {
       collection(getFirestore(nuxtApp.$fire), 'notes'),
       newNote
     )
-    newNote.id = noteDocRef.id
-    this._notes.value.push(newNote)
+    this._notes.value.push({ ...newNote, id: noteDocRef.id })
   }
 
   async set (note: NoteState) {
     note.updatedAt = nuxtApp.$toDatetimeString(note.updatedAt)
+    if (!note.id) {
+      throw new Error('IDのないメモを更新することはできません')
+    }
     await setDoc(doc(getFirestore(nuxtApp.$fire), 'notes', note.id), {
       title: note.title,
       tag: note.tag,
@@ -60,7 +62,10 @@ class Notes {
       createdAt: note.createdAt,
       updatedAt: note.updatedAt
     })
-    const _note = this._notes.value.find(elm => elm.id.toString() === note.id)
+    const _note = this._notes.value
+      .filter(elm => elm.id)
+      // filterしてるので!で握りつぶしてOK
+      .find(elm => elm.id!.toString() === note.id)
     // TODO: 存在しない場合はエラーのほうが安全
     if (_note) {
       _note.title = note.title
@@ -97,6 +102,7 @@ const createState = async (userId: string): Promise<NoteState[]> => {
   })
 }
 
+// TODO: userIdを外から渡して結合度を下げる
 export const useNote = async (): Promise<Notes> => {
   const states = await createState(user.current.id)
   return new Notes(states)
