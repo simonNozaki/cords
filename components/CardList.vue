@@ -1,20 +1,16 @@
 <script lang="ts" setup>
 import { useDisplay } from 'vuetify'
 import Snackbar from '@/components/atoms/Snackbar.vue'
-import { useUserStore } from '@/store/user.store'
-import { Note, useNoteStore } from '@/store/note.store'
-import { useTagStore } from '@/store/tag.store'
+import { NoteState, useNote } from '@/composables/useNote'
+import { useTag } from '@/composables/useTag'
 
-const tagStore = useTagStore()
-const noteStore = useNoteStore()
-const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const display = useDisplay()
+const noteComposable = await useNote()
+const tagComposable = await useTag()
 
-await noteStore.fetchAll(userStore.getCurrent.id)
-let listNotes: Note[] = noteStore.findAll
-await tagStore.fetchAll(userStore.getCurrent.id)
+let listNotes: NoteState[] = noteComposable.findAll()
 
 const filteringTags = ref([])
 const snackbar = ref(false)
@@ -22,12 +18,12 @@ const snackbarText = ref('')
 
 const notes = computed({
   get: () => listNotes,
-  set: (note: Note[]) => {
+  set: (note: NoteState[]) => {
     listNotes = note
   }
 })
 
-const tags = computed(() => tagStore.findAll)
+const tags = computed(() => tagComposable.findAll())
 
 const listHeight = computed(() => {
   switch (display.name.value) {
@@ -45,7 +41,7 @@ const listHeight = computed(() => {
 })
 
 const deleteNote = async (id: string): Promise<void> => {
-  await noteStore.delete(id)
+  await noteComposable.delete(id)
   notes.value = listNotes.filter(note => note.id !== id)
   snackbar.value = true
   snackbarText.value = 'カードを削除しました'
@@ -60,8 +56,8 @@ const findByTags = (event: string[]): void => {
   // 存在判定だけなので集合に変えて要素の存在判定のみ(tagsのstate自体集合にしていいかも)
   // フィルタしない場合は全部持ってくる
   notes.value = new Set(event).size === 0
-    ? noteStore.findAll
-    : noteStore.findAll.filter(note =>
+    ? noteComposable.findAll()
+    : noteComposable.findAll().filter(note =>
       new Set(event).has(note.tag)
     )
 }
