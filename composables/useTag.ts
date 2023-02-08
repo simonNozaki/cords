@@ -13,11 +13,11 @@ const nuxtApp = useNuxtApp()
 const user = useUser()
 
 interface TagState {
-  id: string
+  id?: string
   name: string
   userId: string
-  createdAt: string
-  updatedAt: string
+  createdAt: string | Date
+  updatedAt: string | Date
 }
 
 class Tags {
