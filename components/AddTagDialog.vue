@@ -1,3 +1,46 @@
+<script lang="ts" setup>
+import FormButton from '@/components/atoms/FormButton.vue'
+import Snackbar from '@/components/atoms/Snackbar.vue'
+import { useTag } from '@/composables/useTag'
+import { useUser } from '@/composables/useUser'
+const tagComposable = await useTag()
+const userComposable = useUser()
+
+const tagDialog = ref(false)
+const newTag = ref('')
+const snackbar = ref(false)
+const snackbarText = ref('')
+const rules = ref({
+  tag: [(val: string) => (val || '').length > 0 || 'タグを入力してください。']
+})
+
+const tags = computed(() => tagComposable.findAll())
+const isSubmittable = computed(() => newTag.value || newTag.value !== '')
+
+const addTag = async () => {
+  if (tags.value.map(t => t.name).includes(newTag.value)) {
+    snackbar.value = true
+    snackbarText.value = `タグ ${newTag.value} はすでに登録されています`
+    return
+  }
+  const now = new Date()
+  await tagComposable.add({
+    userId: userComposable.current.id,
+    name: newTag.value,
+    createdAt: now,
+    updatedAt: now
+  })
+  newTag.value = ''
+  tagDialog.value = false
+  snackbar.value = true
+  snackbarText.value = `タグ ${newTag.value} を追加しました`
+}
+
+const close = () => {
+  snackbar.value = false
+}
+</script>
+
 <template>
   <div>
     <v-dialog v-model="tagDialog" max-width="500" transition="fade-transition">
@@ -49,61 +92,3 @@
     </Snackbar>
   </div>
 </template>
-
-<script>
-import FormButton from '@/components/atoms/FormButton'
-import Snackbar from '@/components/atoms/Snackbar'
-import { useTagStore } from '@/store/tag.store'
-import { useUserStore } from '@/store/user.store'
-const tagStore = useTagStore()
-const userStore = useUserStore()
-
-export default {
-  components: {
-    FormButton,
-    Snackbar
-  },
-  data () {
-    return {
-      tagDialog: false,
-      newTag: '',
-      snackbar: false,
-      snackbarText: '',
-      rules: {
-        tag: [val => (val || '').length > 0 || 'タグを入力してください。']
-      }
-    }
-  },
-  computed: {
-    tags () {
-      return tagStore.findAll
-    },
-    isSubmittable () {
-      return this.newTag || this.newTag !== ''
-    }
-  },
-  methods: {
-    async addTag () {
-      if (this.tags.includes(this.newTag)) {
-        this.snackbar = true
-        this.snackbarText = `タグ ${this.newTag} はすでに登録されています`
-        return
-      }
-      const now = new Date()
-      await tagStore.add({
-        userId: userStore.getCurrent.id,
-        name: this.newTag,
-        createdAt: now,
-        updatedAt: now
-      })
-      this.newTag = ''
-      this.tagDialog = false
-      this.snackbar = true
-      this.snackbarText = `タグ ${this.newTag} を追加しました`
-    },
-    close () {
-      this.snackbar = false
-    }
-  }
-}
-</script>

@@ -1,3 +1,37 @@
+<script lang="ts" setup>
+import { Ref } from 'vue'
+import FormButton from '@/components/atoms/FormButton.vue'
+import Snackbar from '@/components/atoms/Snackbar.vue'
+import { useTag } from '@/composables/useTag'
+const tagComposable = await useTag()
+
+interface Props {
+  tags: string[]
+}
+
+withDefaults(defineProps<Props>(), {})
+
+const tagDeleteDialog = ref(false)
+const deletingTags: Ref<string[]> = ref([])
+const snackbar = ref(false)
+const snackbarText = ref('')
+
+const isDeletable = computed(() => deletingTags.value.length > 0)
+
+const deleteTag = async () => {
+  await tagComposable.delete(deletingTags.value)
+  snackbar.value = true
+  const deletedTags = deletingTags.value.reduce((l: string, r: string) => `${l}, ${r}`)
+  snackbarText.value = `タグ ${deletedTags} を削除しました`
+  deletingTags.value = []
+}
+
+const close = () => {
+  snackbar.value = false
+  snackbarText.value = ''
+}
+</script>
+
 <template>
   <div>
     <v-dialog
@@ -48,49 +82,3 @@
     </Snackbar>
   </div>
 </template>
-
-<script>
-import FormButton from '@/components/atoms/FormButton'
-import Snackbar from '@/components/atoms/Snackbar'
-import { useTagStore } from '@/store/tag.store'
-const tagStore = useTagStore()
-
-export default {
-  components: {
-    FormButton,
-    Snackbar
-  },
-  props: {
-    tags: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data () {
-    return {
-      tagDeleteDialog: false,
-      deletingTags: [],
-      snackbar: false,
-      snackbarText: ''
-    }
-  },
-  computed: {
-    isDeletable () {
-      return this.deletingTags.length > 0
-    }
-  },
-  methods: {
-    async deleteTag () {
-      await tagStore.delete(this.deletingTags)
-      this.snackbar = true
-      const deletedTags = this.deletingTags.reduce((l, r) => `${l}, ${r}`)
-      this.snackbarText = `タグ ${deletedTags} を削除しました`
-      this.deletingTags = []
-    },
-    close () {
-      this.snackbar = false
-      this.snackbarText = ''
-    }
-  }
-}
-</script>
