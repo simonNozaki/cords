@@ -1,21 +1,15 @@
+<script lang="ts" setup>
+export interface Props {
+  click: () => void
+}
+defineProps<Props>()
+</script>
+
 <template>
   <v-btn variant="text" color="primary" class="text-button" @click="click">
     <slot />
   </v-btn>
 </template>
-
-<script>
-export default {
-  props: {
-    click: {
-      type: Function,
-      default () {
-        return () => {}
-      }
-    }
-  }
-}
-</script>
 
 <style scoped>
 .text-button {
