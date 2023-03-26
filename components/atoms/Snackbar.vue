@@ -1,3 +1,14 @@
+<script setup lang="ts">
+export interface Props {
+  open: boolean
+  close: () => void
+}
+withDefaults(defineProps<Props>(), {
+  open: false,
+  close: () => {}
+})
+</script>
+
 <template>
   <div class="text-center">
     <v-snackbar :model-value="open">
@@ -10,22 +21,3 @@
     </v-snackbar>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    open: {
-      type: Boolean,
-      default () {
-        return false
-      }
-    },
-    close: {
-      type: Function,
-      default () {
-        return () => {}
-      }
-    }
-  }
-}
-</script>
