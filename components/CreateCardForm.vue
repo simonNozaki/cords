@@ -1,3 +1,67 @@
+<script lang="ts" setup>
+import { useDisplay } from 'vuetify'
+import { useNote } from '@/composables/useNote'
+import { useTag } from '@/composables/useTag'
+import { useUser } from '@/composables/useUser'
+import FormButton from '@/components/atoms/FormButton.vue'
+import Snackbar from '@/components/atoms/Snackbar.vue'
+import RichEditor from '@/components/atoms/editors/RichEditor.vue'
+const noteComposable = await useNote()
+const tagComposable = await useTag()
+const userComposable = useUser()
+
+const initialBody = computed(() => {
+  const { name } = useDisplay()
+  switch (name.value) {
+    case 'sm':
+      // 5行
+      return '<p></p><p></p><p></p><p></p><p></p>'
+    case 'md':
+      // 9行
+      return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+    case 'lg':
+      // 11行
+      return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+    case 'xl':
+      return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+    default:
+      // 7行
+      return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
+  }
+})
+
+const snackbar = ref(false)
+const snackbarText = ref('')
+const title = ref('')
+const body = ref('')
+const tag = ref('')
+
+const tags = computed(() => tagComposable.findAll().map(t => t.name))
+
+const addNote = (): void => {
+  const titleOrUntitled = title.value ? title.value : '無題'
+
+  const now = new Date()
+  noteComposable.add({
+    title: titleOrUntitled,
+    tag: tag.value,
+    body: body.value,
+    createdAt: now,
+    updatedAt: now,
+    userId: userComposable.current.id
+  })
+  snackbar.value = true
+  snackbarText.value = `カード ${titleOrUntitled} を保存しました`
+  title.value = ''
+  tag.value = ''
+  body.value = ''
+}
+
+const close = (): void => {
+  snackbar.value = false
+}
+</script>
+
 <template>
   <v-form class="ml-2">
     <v-container fluid>
@@ -45,80 +109,3 @@
     </Snackbar>
   </v-form>
 </template>
-
-<script>
-import { useDisplay } from 'vuetify'
-import FormButton from '@/components/atoms/FormButton'
-import Snackbar from '@/components/atoms/Snackbar'
-import RichEditor from '@/components/atoms/editors/RichEditor'
-import { useTagStore } from '@/store/tag.store'
-import { useNoteStore } from '@/store/note.store'
-const tagStore = useTagStore()
-const noteStore = useNoteStore()
-
-export default {
-  components: {
-    FormButton,
-    Snackbar,
-    RichEditor
-  },
-  data () {
-    return {
-      snackbar: false,
-      snackbarText: '',
-      title: '',
-      body: '',
-      tag: ''
-    }
-  },
-  computed: {
-    tags () {
-      return tagStore.findAll.map(t => t.name)
-    },
-    initialBody () {
-      const { name } = useDisplay()
-      switch (name.value) {
-        case 'sm':
-          // 5行
-          return '<p></p><p></p><p></p><p></p><p></p>'
-        case 'md':
-          // 9行
-          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
-        case 'lg':
-          // 11行
-          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
-        case 'xl':
-          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
-        default:
-          // 7行
-          return '<p></p><p></p><p></p><p></p><p></p><p></p><p></p>'
-      }
-    }
-  },
-  created () {
-    this.body = this.initialBody
-  },
-  methods: {
-    addNote () {
-      const titleOrUntitled = this.title ? this.title : '無題'
-
-      const now = new Date()
-      noteStore.add({
-        title: titleOrUntitled,
-        tag: this.tag,
-        body: this.body,
-        createdAt: now,
-        updatedAt: now
-      })
-      this.snackbar = true
-      this.snackbarText = `カード ${titleOrUntitled} を保存しました`
-      this.title = ''
-      this.tag = ''
-      this.body = ''
-    },
-    close () {
-      this.snackbar = false
-    }
-  }
-}
-</script>

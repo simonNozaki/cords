@@ -2,21 +2,18 @@
 import FormButton from '@/components/atoms/FormButton.vue'
 import Snackbar from '@/components/atoms/Snackbar.vue'
 import RichEditor from '@/components/atoms/editors/RichEditor.vue'
-import { useTagStore } from '@/store/tag.store'
-import { useUserStore } from '@/store/user.store'
-import { useNoteStore } from '@/store/note.store'
+import { useTag } from '@/composables/useTag'
+import { useNote } from '@/composables/useNote'
 const route = useRoute()
-const tagStore = useTagStore()
-const userStore = useUserStore()
-const noteStore = useNoteStore()
+const tagComposable = await useTag()
+const noteComposable = await useNote()
 
-const tags = computed(() => tagStore.findAll.map(t => t.name))
+const tags = computed(() => tagComposable.findAll().map(t => t.name))
 const snackbar = ref(false)
 
 const snackbarText = ref('')
 
-const note = (await noteStore.fetchAll(userStore.getCurrent.id))
-  .find(n => n.id === route.params.id)
+const note = noteComposable.findAll().find(n => n.id === route.params.id)
 if (!note) {
   throw new Error('ページが存在しないかも')
 }
@@ -25,7 +22,7 @@ const newNote = note
 const updateNote = async (): Promise<void> => {
   newNote.updatedAt = new Date().toString()
   try {
-    await noteStore.set(newNote)
+    await noteComposable.set(newNote)
     snackbar.value = true
     snackbarText.value = 'カードを更新しました'
   } catch (e) {

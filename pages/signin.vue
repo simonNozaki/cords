@@ -35,7 +35,8 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import TextInput from '@/components/atoms/TextInput'
 import FormButton from '@/components/atoms/FormButton'
 import Snackbar from '~/components/atoms/Snackbar'
-import { useUserStore } from '~/store/user.store'
+import { useUser } from '@/composables/useUser'
+const user = useUser()
 
 export default defineComponent({
   components: {
@@ -77,7 +78,7 @@ export default defineComponent({
           const uid = userCredential.user.uid
           sessionStorage.setItem('uid', uid)
           sessionStorage.setItem('name', this.email)
-          useUserStore().set({ name: this.email, id: uid })
+          user.setState({ name: this.email, id: uid })
           router.push('/')
         })
         .catch((e) => {

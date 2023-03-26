@@ -1,3 +1,25 @@
+<script lang="ts" setup>
+interface Props {
+  noteTitle: string
+}
+
+interface Emits {
+  (e: 'cardDelete'): void
+}
+
+withDefaults(defineProps<Props>(), {
+  noteTitle: ''
+})
+const emits = defineEmits<Emits>()
+
+const cardDeleteDialog = ref(false)
+const deleteNote = () => {
+  cardDeleteDialog.value = false
+  // カード削除イベントをパブリッシュ（親側で監視して処理を行う）
+  emits('cardDelete')
+}
+</script>
+
 <template>
   <div>
     <v-dialog
@@ -40,31 +62,3 @@
     </v-dialog>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    noteTitle: {
-      type: String,
-      default () {
-        return ''
-      }
-    }
-  },
-  emits: ['cardDelete'],
-  data () {
-    return {
-      cardDeleteDialog: false,
-      snackbar: false,
-      snackbarText: ''
-    }
-  },
-  methods: {
-    deleteNote () {
-      this.cardDeleteDialog = false
-      // カード削除イベントをパブリッシュ（親側で監視して処理を行う）
-      this.$emit('cardDelete')
-    }
-  }
-}
-</script>

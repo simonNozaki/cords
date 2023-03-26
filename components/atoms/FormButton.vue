@@ -1,3 +1,14 @@
+<script lang="ts" setup>
+export interface Props {
+  click: () => void
+  disabled: boolean
+}
+withDefaults(defineProps<Props>(), {
+  click: () => {},
+  disabled: false
+})
+</script>
+
 <template>
   <v-btn
     color="amber-darken-4"
@@ -8,22 +19,3 @@
     <slot />
   </v-btn>
 </template>
-
-<script>
-export default {
-  props: {
-    click: {
-      type: Function,
-      default () {
-        return () => {}
-      }
-    },
-    disabled: {
-      type: Boolean,
-      default () {
-        return false
-      }
-    }
-  }
-}
-</script>
