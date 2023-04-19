@@ -8324,10 +8324,10 @@ prosemirror-commands@^1.5.0:
     prosemirror-state "^1.0.0"
     prosemirror-transform "^1.0.0"
 
-prosemirror-dropcursor@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/prosemirror-dropcursor/-/prosemirror-dropcursor-1.6.1.tgz#31f696172105f232bd17543ccf305e0f33e59d1d"
-  integrity sha512-LtyqQpkIknaT7NnZl3vDr3TpkNcG4ABvGRXx37XJ8tJNUGtcrZBh40A0344rDwlRTfUEmynQS/grUsoSWz+HgA==
+prosemirror-dropcursor@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/prosemirror-dropcursor/-/prosemirror-dropcursor-1.8.0.tgz#7bfa11925e0da41d1db869954fe51e1aa55158e4"
+  integrity sha512-TZMitR8nlp9Xh42pDYGcWopCoFPmJduoyGJ7FjYM2/7gZKnfD41TIaZN5Q1cQjm6Fm/P5vk/DpVYFhS8kDdigw==
   dependencies:
     prosemirror-state "^1.0.0"
     prosemirror-transform "^1.1.0"
