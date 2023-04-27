@@ -9908,10 +9908,10 @@ vue@^3.2.47:
     "@vue/server-renderer" "3.2.47"
     "@vue/shared" "3.2.47"
 
-vuetify@^3.1.11:
-  version "3.1.11"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.1.11.tgz#9ae4d3e054753cc80490d83a1541260a5cfc1118"
-  integrity sha512-EAR/7vdYY0jCYW+sn9owl6CC5QsWFw100KJnK0ahdHnFj9B93PR5xetekge8BsEWx6bSnsRIOdPyvud+p29wow==
+vuetify@^3.1.16:
+  version "3.1.16"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.1.16.tgz#25d294c48c82c71c75f2de3b0d31ae09e275816d"
+  integrity sha512-KU3EdCCciqIDeK2M35RJtqKy1Ue6nrYi48H/EtWFsgcI6ZpQrXbzfPAebif71dl2Vy5s1a7p4coPyD8DGOEOuw==
 
 w3c-keyname@^2.2.0:
   version "2.2.6"
