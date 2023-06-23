@@ -23,7 +23,7 @@
     "@typescript-eslint/parser": "^5.56.0",
     "core-js": "^3.25.3",
     "dotenv": "^16.0.3",
-    "firebase": "^9.15.0",
+    "firebase": "^9.23.0",
     "mdi": "^2.2.43",
     "moment-timezone": "^0.5.40",
     "nuxt": "3.4.1",
